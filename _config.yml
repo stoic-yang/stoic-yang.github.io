@@ -198,4 +198,4 @@ feed:
 deploy:
   type: git
   repo: https://github.com/stoic-yang/stoic-yang.github.io.git
-  branch: main  # 或者 master，取决于你的默认分支
+  branch: main
