@@ -8,7 +8,28 @@
     <author>
       <name>Zarathu</name>
     </author>
-    <updated>2024-11-04T11:06:00.000Z</updated>
+    <updated>2024-11-07T14:20:30.000Z</updated>
+    <entry>
+        <id>https://stoic-yang.github.io/2024/11/07/2024-11-7/</id>
+        <title>2024-11-7</title>
+        <link rel="alternate" href="https://stoic-yang.github.io/2024/11/07/2024-11-7/"/>
+        <content type="html">&lt;p&gt;今天考完了思道法，接下来是接近一周的假期，最后到晚上的时候失控的预兆就出现了，刷了刷 Q 群，发现自己对计算机就业还有各个领域都认识浅薄，而且发现自己现在真的很幼稚愚蠢，还好，现在有了博客，可以不用把内容放在动态里面了，动态就只是发记录就行了，还有计划。&lt;/p&gt;
+&lt;p&gt;世界真的是复杂呀，远比我想象的要复杂，我现在要不要赶紧跑路？计算机的水好深，现在感觉自己像一个白痴，不能再随便发动态了，不然要羞耻退网了，多刷刷 Q 群还是可以长长见识的，多冲浪自己才能成熟。&lt;/p&gt;
+</content>
+        <category term="打卡" scheme="https://stoic-yang.github.io/tags/%E6%89%93%E5%8D%A1/" />
+        <updated>2024-11-07T14:20:30.000Z</updated>
+    </entry>
+    <entry>
+        <id>https://stoic-yang.github.io/2024/11/07/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2%E7%BD%91%E7%AB%99%E6%90%AD%E5%BB%BA%E7%9A%84%E7%BB%8F%E9%AA%8C/</id>
+        <title>我的博客网站搭建的经验</title>
+        <link rel="alternate" href="https://stoic-yang.github.io/2024/11/07/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2%E7%BD%91%E7%AB%99%E6%90%AD%E5%BB%BA%E7%9A%84%E7%BB%8F%E9%AA%8C/"/>
+        <content type="html">&lt;h2 id=&#34;我的博客情况&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#我的博客情况&#34;&gt;#&lt;/a&gt; 我的博客情况&lt;/h2&gt;
+&lt;p&gt;我的博客是基于 hexo 和 GitHubpages 搭建的，没有弄域名，&lt;s&gt;因为懒&lt;/s&gt;，&lt;/p&gt;
+</content>
+        <category term="网站" scheme="https://stoic-yang.github.io/categories/%E7%BD%91%E7%AB%99/" />
+        <category term="网站" scheme="https://stoic-yang.github.io/tags/%E7%BD%91%E7%AB%99/" />
+        <updated>2024-11-07T11:11:51.000Z</updated>
+    </entry>
     <entry>
         <id>https://stoic-yang.github.io/2024/11/04/%E6%88%91%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%EF%BC%9F/</id>
         <title>我为什么要搭建个人博客？</title>

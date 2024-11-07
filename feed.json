@@ -7,6 +7,27 @@
     "home_page_url": "https://stoic-yang.github.io",
     "items": [
         {
+            "id": "https://stoic-yang.github.io/2024/11/07/2024-11-7/",
+            "url": "https://stoic-yang.github.io/2024/11/07/2024-11-7/",
+            "title": "2024-11-7",
+            "date_published": "2024-11-07T14:20:30.000Z",
+            "content_html": "<p>今天考完了思道法，接下来是接近一周的假期，最后到晚上的时候失控的预兆就出现了，刷了刷 Q 群，发现自己对计算机就业还有各个领域都认识浅薄，而且发现自己现在真的很幼稚愚蠢，还好，现在有了博客，可以不用把内容放在动态里面了，动态就只是发记录就行了，还有计划。</p>\n<p>世界真的是复杂呀，远比我想象的要复杂，我现在要不要赶紧跑路？计算机的水好深，现在感觉自己像一个白痴，不能再随便发动态了，不然要羞耻退网了，多刷刷 Q 群还是可以长长见识的，多冲浪自己才能成熟。</p>\n",
+            "tags": [
+                "打卡"
+            ]
+        },
+        {
+            "id": "https://stoic-yang.github.io/2024/11/07/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2%E7%BD%91%E7%AB%99%E6%90%AD%E5%BB%BA%E7%9A%84%E7%BB%8F%E9%AA%8C/",
+            "url": "https://stoic-yang.github.io/2024/11/07/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2%E7%BD%91%E7%AB%99%E6%90%AD%E5%BB%BA%E7%9A%84%E7%BB%8F%E9%AA%8C/",
+            "title": "我的博客网站搭建的经验",
+            "date_published": "2024-11-07T11:11:51.000Z",
+            "content_html": "<h2 id=\"我的博客情况\"><a class=\"anchor\" href=\"#我的博客情况\">#</a> 我的博客情况</h2>\n<p>我的博客是基于 hexo 和 GitHubpages 搭建的，没有弄域名，<s>因为懒</s>，</p>\n",
+            "tags": [
+                "网站",
+                "网站"
+            ]
+        },
+        {
             "id": "https://stoic-yang.github.io/2024/11/04/%E6%88%91%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%EF%BC%9F/",
             "url": "https://stoic-yang.github.io/2024/11/04/%E6%88%91%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%EF%BC%9F/",
             "title": "我为什么要搭建个人博客？",
