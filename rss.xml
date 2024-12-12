@@ -34,8 +34,8 @@
 &lt;/ol&gt;
 &lt;h2 id=&#34;不同类型统一化处理&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#不同类型统一化处理&#34;&gt;#&lt;/a&gt; 不同类型统一化处理&lt;/h2&gt;
 &lt;p&gt;以上是处理 &amp;gt;= 的情况&lt;br /&gt;
-&lt;img data-src=&#34;1.png&#34; alt=&#34;示意图&#34; /&gt;&lt;br /&gt;
-&lt;img data-src=&#34;2.png&#34; alt=&#34;示意图&#34; /&gt;&lt;br /&gt;
+&lt;img data-src=&#34;/1.png&#34; alt=&#34;示意图&#34; /&gt;&lt;br /&gt;
+&lt;img data-src=&#34;/2.png&#34; alt=&#34;示意图&#34; /&gt;&lt;br /&gt;
 &lt;em&gt;就是对应这个图里面的 right 和 left 找区间&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;最关键的是区间外是什么范围&lt;/em&gt;&lt;/p&gt;
  ]]></description>
