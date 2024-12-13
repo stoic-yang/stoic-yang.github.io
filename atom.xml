@@ -31,6 +31,22 @@
 &lt;p&gt;&lt;em&gt;最关键的是区间外是什么范围&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img data-src=&#34;/images/1.png&#34; alt=&#34;test&#34; /&gt;&lt;br /&gt;
 &lt;img data-src=&#34;/images/2.png&#34; alt=&#34;test2&#34; /&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;补充&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#补充&#34;&gt;#&lt;/a&gt; 补充&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;Arrays.binarySearch&lt;/code&gt;  的工作方式：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;如果数组中存在目标值：
+&lt;ul&gt;
+&lt;li&gt;返回目标值的索引（ &lt;code&gt;i &amp;gt;= 0&lt;/code&gt; ）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;如果数组中不存在目标值：
+&lt;ul&gt;
+&lt;li&gt;返回插入点的&lt;strong&gt;负数减一&lt;/strong&gt;（即  &lt;code&gt;-(插入点) - 1&lt;/code&gt; ）。&lt;/li&gt;
+&lt;li&gt;这个 “插入点” 是指目标值在数组中保持排序的位置。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
 </content>
         <category term="算法" scheme="https://stoic-yang.github.io/categories/%E7%AE%97%E6%B3%95/" />
         <category term="leetcode" scheme="https://stoic-yang.github.io/categories/%E7%AE%97%E6%B3%95/leetcode/" />
