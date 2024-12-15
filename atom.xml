@@ -54,74 +54,19 @@
         <updated>2024-12-12T05:38:01.000Z</updated>
     </entry>
     <entry>
-        <id>https://stoic-yang.github.io/2024/11/16/%E9%9A%8F%E7%AC%942024-11-15/</id>
-        <title>随笔2024-11-15</title>
-        <link rel="alternate" href="https://stoic-yang.github.io/2024/11/16/%E9%9A%8F%E7%AC%942024-11-15/"/>
-        <content type="html"></content>
-        <updated>2024-11-15T16:26:47.000Z</updated>
-    </entry>
-    <entry>
-        <id>https://stoic-yang.github.io/2024/11/08/2024-11-8/</id>
-        <title>2024-11-8</title>
-        <link rel="alternate" href="https://stoic-yang.github.io/2024/11/08/2024-11-8/"/>
-        <content type="html">&lt;p&gt;今天看了一下华师大的插班生信息，本来抱有很大希望的，现在只当是抽奖机会了，可以用来做支线，不能 all in 华师大软工，打算借这个机会精进一下高数，万一以后打算考研，这个就有很好的基础了，还有就是英语阅读，达到考研的难度，我可以开始准备一下考研和四六级的词汇，总的来说，只要我不报班，我就是稳赢的。&lt;/p&gt;
-&lt;p&gt;今天下午的时候去吃了 KFC，好贵，没有吃饱，把盘子端到面前的时候突然想起了在上小学的时候，我心娇，每次去汝城的时候都要拉着老爸去吃一次肯德基，大概是想让老爸多留在自己身边一会吧，现在一个人吃 KFC，突然就有点酸了，那个时候真好呀，真让人怀念，cry。&lt;/p&gt;
-&lt;p&gt;晚上就比较糟糕了，没有能够持续学习，而且因为下午没吃饱，晚上去吃夜宵了，于是就耽误了两个小时的学习时间。&lt;/p&gt;
-</content>
-        <category term="打卡" scheme="https://stoic-yang.github.io/tags/%E6%89%93%E5%8D%A1/" />
-        <updated>2024-11-08T15:44:42.000Z</updated>
-    </entry>
-    <entry>
-        <id>https://stoic-yang.github.io/2024/11/07/2024-11-7/</id>
-        <title>2024-11-7</title>
-        <link rel="alternate" href="https://stoic-yang.github.io/2024/11/07/2024-11-7/"/>
-        <content type="html">&lt;p&gt;今天考完了思道法，接下来是接近一周的假期，最后到晚上的时候失控的预兆就出现了，刷了刷 Q 群，发现自己对计算机就业还有各个领域都认识浅薄，而且发现自己现在真的很幼稚愚蠢，还好，现在有了博客，可以不用把内容放在动态里面了，动态就只是发记录就行了，还有计划。&lt;/p&gt;
-&lt;p&gt;世界真的是复杂呀，远比我想象的要复杂，我现在要不要赶紧跑路？计算机的水好深，现在感觉自己像一个白痴，不能再随便发动态了，不然要羞耻退网了，多刷刷 Q 群还是可以长长见识的，多冲浪自己才能成熟。&lt;/p&gt;
-</content>
-        <category term="打卡" scheme="https://stoic-yang.github.io/tags/%E6%89%93%E5%8D%A1/" />
-        <updated>2024-11-07T14:20:30.000Z</updated>
-    </entry>
-    <entry>
-        <id>https://stoic-yang.github.io/2024/11/07/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2%E7%BD%91%E7%AB%99%E6%90%AD%E5%BB%BA%E7%9A%84%E7%BB%8F%E9%AA%8C/</id>
-        <title>我的博客网站搭建的经验</title>
-        <link rel="alternate" href="https://stoic-yang.github.io/2024/11/07/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2%E7%BD%91%E7%AB%99%E6%90%AD%E5%BB%BA%E7%9A%84%E7%BB%8F%E9%AA%8C/"/>
-        <content type="html">&lt;h2 id=&#34;我的博客情况&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#我的博客情况&#34;&gt;#&lt;/a&gt; 我的博客情况&lt;/h2&gt;
-&lt;p&gt;我的博客是基于 hexo 和 GitHubpages 搭建的，没有弄域名，&lt;s&gt;因为懒&lt;/s&gt;，&lt;/p&gt;
-</content>
-        <category term="网站" scheme="https://stoic-yang.github.io/categories/%E7%BD%91%E7%AB%99/" />
-        <category term="网站" scheme="https://stoic-yang.github.io/tags/%E7%BD%91%E7%AB%99/" />
-        <updated>2024-11-07T11:11:51.000Z</updated>
-    </entry>
-    <entry>
-        <id>https://stoic-yang.github.io/2024/11/04/%E6%88%91%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%EF%BC%9F/</id>
-        <title>我为什么要搭建个人博客？</title>
-        <link rel="alternate" href="https://stoic-yang.github.io/2024/11/04/%E6%88%91%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%EF%BC%9F/"/>
-        <content type="html">&lt;p&gt;个人博客其实只是为了给我一个极其私密的空间，让我可以自由自在地发表我的想法和记录我的生活，其实我没有想到有一天我更加喜欢互联网，而不是现实世界，进入大学以来孤独已经成为了我的常态，但现实是我的真实的想法，我的愿景与志向无处与朋友亲人诉说，我的苦闷与孤独有时也无法排解，所有我一个没有写日记习惯的人，现在每天晚上都有着强烈的欲望写点东西，话不能憋着，我也不想去现实里面或者我的 QQ 动态里面嗷嗷大叫，这样我觉得不妥，也可能会无意伤害到别人，所以我转移阵地到这里，不在现实我的人际中公开，也许只是写给我一个人看。&lt;/p&gt;
-&lt;p&gt;我也不知道什么时候我变成了一个喜欢捣鼓的人。以前我总是嫌麻烦，很懒，喜欢简单容易做的事情，现在竟然会愿意自己捣鼓一个网站，其实借助平台也是可以做到这样的。玩一玩这些 hexo、hugo 和 git 还挺有趣的，如果你也想搭一个这样的网站，不用担心没有编程基础，网上找一个教程，花个一两天的时间可能就弄出来了，&lt;s&gt;还可以拿去跟朋友吹水&lt;/s&gt;。&lt;/p&gt;
-&lt;p&gt;现实不知道为什么开始在我的眼前变得割裂与破碎了，我每天坐在图书馆情绪低落的时候，已经不会再找到现实的朋友交流，或者说我一直没有这样的习惯，这也不是我的性格，我是一个现代斯多葛主义者，我对情绪的调整能力还是很强的，我也希望自己在朋友面前永远是开朗阳光的，所以我把自己阴暗的一面留在这里。好像说偏了，总之，相较于从现实寻求慰藉，我现在倒是喜欢在网上寻求价值和意义，尽管这在我之前看来非常荒谬。&lt;/p&gt;
-&lt;p&gt;另外，我也有我追求的生活方式，比如数字游民的生活，一间独属于自己的房子，一个安静够大的书桌，我能不受干扰地做自己想做的事情，弹弹钢琴（现在还不会），写写代码，看看书，或者在阳台看着风景，晒着太阳发发呆，有时间跟朋友去到处玩，这就是我想要的生活方式，它很简单，它真的很吸引我。&lt;/p&gt;
-&lt;p&gt;尼采曾经说过：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;一个人知道自己为什么而活，就可以忍受任何一种生活&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;那我现在的生活呢？其实我现在的生活也已经很接近高中渴望的生活了，大学再怎么恶心，也确实给了很多自由的空间，比起高中的硬核时间表和无止息的刷题，我现在有大量的时间去实现我的想法，做我想做的事情。&lt;/p&gt;
-&lt;p&gt;那么回到这个话题上，我为什么要搭一个博客呢，更多还是受前辈的启发吧，我从前辈的博客记录里面学到了很多东西，所以我在想我现在也写点东西，尽管不是技术类的，也许也可以帮助后来的人&lt;strong&gt;总之，我希望我的博客能激励你追求自己的梦想，给你带来启发，尽管在现在我的故事还刚刚开始，无妨，我相信自己会成为自己期待的样子，也希望你也有勇气去成为更好的自己。&lt;/strong&gt;&lt;/p&gt;
-</content>
-        <category term="随笔" scheme="https://stoic-yang.github.io/categories/%E9%9A%8F%E7%AC%94/" />
-        <category term="随笔" scheme="https://stoic-yang.github.io/tags/%E9%9A%8F%E7%AC%94/" />
-        <updated>2024-11-04T11:06:00.000Z</updated>
-    </entry>
-    <entry>
         <id>https://stoic-yang.github.io/2024/11/03/%E5%A4%8D%E6%B4%BB/</id>
         <title>复活</title>
         <link rel="alternate" href="https://stoic-yang.github.io/2024/11/03/%E5%A4%8D%E6%B4%BB/"/>
-        <content type="html">&lt;pre&gt;&lt;code&gt;为什么叫复活呢？因为其实我在9月中旬的时候曾经搭过一次，但是我愚蠢地把网站公开到QQ动态了，我觉得个人博客这种东西还是跟自己现实的社交割裂比较好，不容易被重伤，写的时候能更加自由。
-
-    正经人谁写生活博客啊？写生活博客能叫正经人？
-&lt;/code&gt;&lt;/pre&gt;
+        <content type="html">&lt;p&gt;为什么叫复活呢？因为其实我在 9 月中旬的时候曾经搭过一次，但是我愚蠢地把网站公开到 QQ 动态了，我觉得个人博客这种东西还是跟自己现实的社交割裂比较好，一方面不容易被重伤，另一方面可以保护自己的隐私，写博客的时候能更加自由。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;strong&gt;2024-12-15 更&lt;/strong&gt;&lt;br /&gt;
+我回过头看这个标题，觉得复活在这个点更具有了深刻的意义。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;复活不应该是简单的搭建，而是由内而外的重塑&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;当这里真正变成我生活和学习不可分割的一部分，成为我心灵寓居之所，成为我精进的有力武器，成为与外界沟通的接口时，这才可以被称为博客网站的复活。&lt;/p&gt;
+&lt;p&gt;当我重拾过去的理想信念，不再为虚假的刺激而溃败，不再为过往云烟后悔莫及，不再为现实困境熄灭希望之火时，这才能称为我的复活。&lt;/p&gt;
+&lt;p&gt;既然来了一趟这样的世界，那就努力留下自己的脚印吧......&lt;/p&gt;
 </content>
         <category term="随笔" scheme="https://stoic-yang.github.io/categories/%E9%9A%8F%E7%AC%94/" />
-        <category term="生活" scheme="https://stoic-yang.github.io/categories/%E9%9A%8F%E7%AC%94/%E7%94%9F%E6%B4%BB/" />
         <category term="随笔" scheme="https://stoic-yang.github.io/tags/%E9%9A%8F%E7%AC%94/" />
         <updated>2024-11-02T17:16:37.000Z</updated>
     </entry>
