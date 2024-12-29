@@ -10,8 +10,47 @@
         </author>
         <description></description>
         <language>zh-CN</language>
-        <pubDate>Tue, 17 Dec 2024 23:44:20 +0800</pubDate>
-        <lastBuildDate>Tue, 17 Dec 2024 23:44:20 +0800</lastBuildDate>
+        <pubDate>Sun, 29 Dec 2024 23:15:49 +0800</pubDate>
+        <lastBuildDate>Sun, 29 Dec 2024 23:15:49 +0800</lastBuildDate>
+        <item>
+            <guid isPermalink="true">https://stoic-yang.github.io/2024/12/29/24%E5%B9%B4%E7%9A%84%E6%9C%80%E5%90%8E%E5%91%A8%E7%BB%93/</guid>
+            <title>24年的最后周结</title>
+            <link>https://stoic-yang.github.io/2024/12/29/24%E5%B9%B4%E7%9A%84%E6%9C%80%E5%90%8E%E5%91%A8%E7%BB%93/</link>
+            <category term="总结" scheme="https://stoic-yang.github.io/tags/%E6%80%BB%E7%BB%93/" />
+            <pubDate>Sun, 29 Dec 2024 23:15:49 +0800</pubDate>
+            <description><![CDATA[ &lt;h1 id=&#34;周结&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#周结&#34;&gt;#&lt;/a&gt; 周结&lt;/h1&gt;
+&lt;h2 id=&#34;reflecting&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#reflecting&#34;&gt;#&lt;/a&gt; reflecting&lt;/h2&gt;
+&lt;p&gt;一周总有几次是烂的，比如昨天和前天晚上&lt;/p&gt;
+&lt;p&gt;心力经常是周期性的波动，有时会表现得非常悲观，有时又表现为盲目得乐观&lt;/p&gt;
+&lt;p&gt;三座大山：b 站上瘾、刷屏上瘾、游戏上瘾&lt;/p&gt;
+&lt;p&gt;三座大山卷土重来了，缺少一个合理的有效的休息方法是我体系的一个硬伤&lt;/p&gt;
+&lt;p&gt;这周的摆烂出现的原因：修半天 bug 没修好，长时间学习却缺少正反馈，然后爆炸（其一）&lt;br /&gt;
+吃饭时刷游戏视频，勾起自己打游戏的欲望&lt;/p&gt;
+&lt;p&gt;长时间学习才是人的默认状态，如果一直都有持续的正反馈，我觉得是可以一直保持学习的，问题是如果干了太多 “我认为没有用” 的事情，或者学习的时候卡了，这个时候很可能就会出现摆烂的状况&lt;/p&gt;
+&lt;p&gt;强制休息是有效果的，把每天分成 3 个流，50min + 10min 很适合我，但是休息的时候是坚决不能碰手机的，不然流会被打断&lt;/p&gt;
+&lt;p&gt;严苛的时间规划实践上是不起作用的，更重要的是每一件事情完成后我接着要做什么，比如吃完饭第一件事是干什么，7-8 下课以后我做什么&lt;/p&gt;
+&lt;h2 id=&#34;warning&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#warning&#34;&gt;#&lt;/a&gt; warning&lt;/h2&gt;
+&lt;p&gt;为了学 Javaweb，我这周学业完全停摆，这很严重，完全 all in 自学风险是大到我不能接受的，必须强制自己每天分一个流去处理学业的问题&lt;/p&gt;
+&lt;h2 id=&#34;planning放假前-11-号-基本模型&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#planning放假前-11-号-基本模型&#34;&gt;#&lt;/a&gt; planning（放假前 11 号 + 基本模型）&lt;/h2&gt;
+&lt;p&gt;每天的时间要抓紧了，而且得拉高效率，争取每天完成 9 个小时的高效学习&lt;/p&gt;
+&lt;p&gt;任务重，时间紧啊&lt;/p&gt;
+&lt;ul class=&#34;task-list&#34;&gt;
+&lt;li class=&#34;task-list-item&#34;&gt;&lt;input type=&#34;checkbox&#34; id=&#34;cbx_0&#34; disabled=&#34;true&#34; /&gt;&lt;label for=&#34;cbx_0&#34;&gt; 学完 JavaWeb + 完成可以交差的模型&lt;/label&gt;&lt;/li&gt;
+&lt;li class=&#34;task-list-item&#34;&gt;&lt;input type=&#34;checkbox&#34; id=&#34;cbx_1&#34; disabled=&#34;true&#34; /&gt;&lt;label for=&#34;cbx_1&#34;&gt; 线代 + 微积分 + 大物（学完基础知识，达到可以刷真题的程度）&lt;/label&gt;
+&lt;ul class=&#34;task-list&#34;&gt;
+&lt;li class=&#34;task-list-item&#34;&gt;&lt;input type=&#34;checkbox&#34; id=&#34;cbx_2&#34; disabled=&#34;true&#34; /&gt;&lt;label for=&#34;cbx_2&#34;&gt; 线代&lt;/label&gt;&lt;/li&gt;
+&lt;li class=&#34;task-list-item&#34;&gt;&lt;input type=&#34;checkbox&#34; id=&#34;cbx_3&#34; disabled=&#34;true&#34; /&gt;&lt;label for=&#34;cbx_3&#34;&gt; 微积分&lt;/label&gt;&lt;/li&gt;
+&lt;li class=&#34;task-list-item&#34;&gt;&lt;input type=&#34;checkbox&#34; id=&#34;cbx_4&#34; disabled=&#34;true&#34; /&gt;&lt;label for=&#34;cbx_4&#34;&gt; 大物&lt;/label&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;仍然是接着爽翘课的两周，但是你翘了一定得出效果啊😭&lt;/p&gt;
+&lt;h2 id=&#34;harvesting&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#harvesting&#34;&gt;#&lt;/a&gt; harvesting&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;JavaWeb&lt;/strong&gt;&lt;br /&gt;
+ 进度 8/20&lt;br /&gt;
+springBoot 基础 + mybatis 基础 + maven 基础 + MySQL 基础&lt;/p&gt;
+ ]]></description>
+        </item>
         <item>
             <guid isPermalink="true">https://stoic-yang.github.io/2024/12/17/%E3%80%8A%E8%AF%B7%E5%81%9C%E6%AD%A2%E6%97%A0%E6%95%88%E7%A4%BE%E4%BA%A4%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</guid>
             <title>《请停止无效社交》读书笔记</title>

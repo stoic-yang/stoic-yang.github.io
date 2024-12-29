@@ -7,6 +7,16 @@
     "home_page_url": "https://stoic-yang.github.io",
     "items": [
         {
+            "id": "https://stoic-yang.github.io/2024/12/29/24%E5%B9%B4%E7%9A%84%E6%9C%80%E5%90%8E%E5%91%A8%E7%BB%93/",
+            "url": "https://stoic-yang.github.io/2024/12/29/24%E5%B9%B4%E7%9A%84%E6%9C%80%E5%90%8E%E5%91%A8%E7%BB%93/",
+            "title": "24年的最后周结",
+            "date_published": "2024-12-29T15:15:49.000Z",
+            "content_html": "<h1 id=\"周结\"><a class=\"anchor\" href=\"#周结\">#</a> 周结</h1>\n<h2 id=\"reflecting\"><a class=\"anchor\" href=\"#reflecting\">#</a> reflecting</h2>\n<p>一周总有几次是烂的，比如昨天和前天晚上</p>\n<p>心力经常是周期性的波动，有时会表现得非常悲观，有时又表现为盲目得乐观</p>\n<p>三座大山：b 站上瘾、刷屏上瘾、游戏上瘾</p>\n<p>三座大山卷土重来了，缺少一个合理的有效的休息方法是我体系的一个硬伤</p>\n<p>这周的摆烂出现的原因：修半天 bug 没修好，长时间学习却缺少正反馈，然后爆炸（其一）<br />\n吃饭时刷游戏视频，勾起自己打游戏的欲望</p>\n<p>长时间学习才是人的默认状态，如果一直都有持续的正反馈，我觉得是可以一直保持学习的，问题是如果干了太多 “我认为没有用” 的事情，或者学习的时候卡了，这个时候很可能就会出现摆烂的状况</p>\n<p>强制休息是有效果的，把每天分成 3 个流，50min + 10min 很适合我，但是休息的时候是坚决不能碰手机的，不然流会被打断</p>\n<p>严苛的时间规划实践上是不起作用的，更重要的是每一件事情完成后我接着要做什么，比如吃完饭第一件事是干什么，7-8 下课以后我做什么</p>\n<h2 id=\"warning\"><a class=\"anchor\" href=\"#warning\">#</a> warning</h2>\n<p>为了学 Javaweb，我这周学业完全停摆，这很严重，完全 all in 自学风险是大到我不能接受的，必须强制自己每天分一个流去处理学业的问题</p>\n<h2 id=\"planning放假前-11-号-基本模型\"><a class=\"anchor\" href=\"#planning放假前-11-号-基本模型\">#</a> planning（放假前 11 号 + 基本模型）</h2>\n<p>每天的时间要抓紧了，而且得拉高效率，争取每天完成 9 个小时的高效学习</p>\n<p>任务重，时间紧啊</p>\n<ul class=\"task-list\">\n<li class=\"task-list-item\"><input type=\"checkbox\" id=\"cbx_0\" disabled=\"true\" /><label for=\"cbx_0\"> 学完 JavaWeb + 完成可以交差的模型</label></li>\n<li class=\"task-list-item\"><input type=\"checkbox\" id=\"cbx_1\" disabled=\"true\" /><label for=\"cbx_1\"> 线代 + 微积分 + 大物（学完基础知识，达到可以刷真题的程度）</label>\n<ul class=\"task-list\">\n<li class=\"task-list-item\"><input type=\"checkbox\" id=\"cbx_2\" disabled=\"true\" /><label for=\"cbx_2\"> 线代</label></li>\n<li class=\"task-list-item\"><input type=\"checkbox\" id=\"cbx_3\" disabled=\"true\" /><label for=\"cbx_3\"> 微积分</label></li>\n<li class=\"task-list-item\"><input type=\"checkbox\" id=\"cbx_4\" disabled=\"true\" /><label for=\"cbx_4\"> 大物</label></li>\n</ul>\n</li>\n</ul>\n<p>仍然是接着爽翘课的两周，但是你翘了一定得出效果啊😭</p>\n<h2 id=\"harvesting\"><a class=\"anchor\" href=\"#harvesting\">#</a> harvesting</h2>\n<p><strong>JavaWeb</strong><br />\n 进度 8/20<br />\nspringBoot 基础 + mybatis 基础 + maven 基础 + MySQL 基础</p>\n",
+            "tags": [
+                "总结"
+            ]
+        },
+        {
             "id": "https://stoic-yang.github.io/2024/12/17/%E3%80%8A%E8%AF%B7%E5%81%9C%E6%AD%A2%E6%97%A0%E6%95%88%E7%A4%BE%E4%BA%A4%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/",
             "url": "https://stoic-yang.github.io/2024/12/17/%E3%80%8A%E8%AF%B7%E5%81%9C%E6%AD%A2%E6%97%A0%E6%95%88%E7%A4%BE%E4%BA%A4%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/",
             "title": "《请停止无效社交》读书笔记",
