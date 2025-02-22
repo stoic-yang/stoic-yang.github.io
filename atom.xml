@@ -8,7 +8,17 @@
     <author>
       <name>Zarathu</name>
     </author>
-    <updated>2025-02-21T13:15:35.802Z</updated>
+    <updated>2025-02-22T03:26:54.709Z</updated>
+    <entry>
+        <id>https://stoic-yang.github.io/2025/02/22/test/</id>
+        <title>test</title>
+        <link rel="alternate" href="https://stoic-yang.github.io/2025/02/22/test/"/>
+        <content type="html">&lt;p&gt;这个是 text&lt;/p&gt;
+</content>
+        <category term="随笔" scheme="https://stoic-yang.github.io/categories/%E9%9A%8F%E7%AC%94/" />
+        <category term="总结" scheme="https://stoic-yang.github.io/tags/%E6%80%BB%E7%BB%93/" />
+        <updated>2025-02-22T03:26:54.709Z</updated>
+    </entry>
     <entry>
         <id>https://stoic-yang.github.io/2025/02/21/%E4%B9%94%E5%B8%83%E6%96%AF%E4%BC%A0/</id>
         <title>乔布斯传</title>
