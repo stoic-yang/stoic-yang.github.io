@@ -10,25 +10,17 @@
         </author>
         <description>stay hungray, stay foolish</description>
         <language>zh-CN</language>
-        <pubDate>Sat, 22 Feb 2025 12:01:51 +0800</pubDate>
-        <lastBuildDate>Sat, 22 Feb 2025 12:01:51 +0800</lastBuildDate>
+        <pubDate>Sat, 22 Feb 2025 00:00:00 +0800</pubDate>
+        <lastBuildDate>Sat, 22 Feb 2025 00:00:00 +0800</lastBuildDate>
         <item>
-            <guid isPermalink="true">https://stoic-yang.github.io/2025/02/22/%E4%B8%8D%E6%98%AF%E5%93%A5%E4%BB%AC/</guid>
-            <title>[object Object]</title>
-            <link>https://stoic-yang.github.io/2025/02/22/%E4%B8%8D%E6%98%AF%E5%93%A5%E4%BB%AC/</link>
-            <pubDate>Sat, 22 Feb 2025 12:01:51 +0800</pubDate>
-            <description><![CDATA[ &lt;p&gt;我现在再测试一下&lt;/p&gt;
- ]]></description>
-        </item>
-        <item>
-            <guid isPermalink="true">https://stoic-yang.github.io/2025/02/22/test/</guid>
-            <title>test</title>
-            <link>https://stoic-yang.github.io/2025/02/22/test/</link>
-            <category term="随笔" scheme="https://stoic-yang.github.io/categories/%E9%9A%8F%E7%AC%94/" />
-            <category term="总结" scheme="https://stoic-yang.github.io/tags/%E6%80%BB%E7%BB%93/" />
-            <pubDate>Sat, 22 Feb 2025 11:26:54 +0800</pubDate>
-            <description><![CDATA[ &lt;p&gt;这个是 text&lt;/p&gt;
-&lt;p&gt;&lt;img data-src=&#34;test-20250222115611333.png&#34; alt&gt;&lt;/p&gt;
+            <guid isPermalink="true">https://stoic-yang.github.io/2025/02/22/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/</guid>
+            <title>新的开始</title>
+            <link>https://stoic-yang.github.io/2025/02/22/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/</link>
+            <category term="网站" scheme="https://stoic-yang.github.io/categories/%E7%BD%91%E7%AB%99/" />
+            <category term="随笔" scheme="https://stoic-yang.github.io/tags/%E9%9A%8F%E7%AC%94/" />
+            <pubDate>Sat, 22 Feb 2025 00:00:00 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;高度的自动化是很有价值的，这让生活更简单和轻松，这套博客体系肯定是比垃圾知乎对 markdown 的支持要好太多了，知乎导入 markdown 文件也没有办法顺便导入我的文章上附带的图片，所有我应该是会把主战场搬移到博客，毕竟这个博客现在只是我的一个 obsidian 的库，编辑内容也是超级方便，可以实时渲染啊，比 VScode 可是要强太多了😅，可以开心写 blog 了，学习笔记什么的也都可以慢慢搬上来。下面是我在 obsidian 写作的图片&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B-20250222124330248.png&#34; alt&gt;&lt;/p&gt;
  ]]></description>
         </item>
         <item>
@@ -449,11 +441,14 @@ springBoot 基础 + mybatis 基础 + maven 基础 + MySQL 基础&lt;/p&gt;
             <description><![CDATA[ &lt;p&gt;为什么叫复活呢？因为其实我在 9 月中旬的时候曾经搭过一次，但是我愚蠢地把网站公开到 QQ 动态了，我觉得个人博客这种东西还是跟自己现实的社交割裂比较好，一方面不容易被重伤，另一方面可以保护自己的隐私，写博客的时候能更加自由。&lt;/p&gt;
 &lt;hr&gt;
 &lt;p&gt;&lt;strong&gt;2024-12-15 更&lt;/strong&gt;&lt;br&gt;
-我回过头看这个标题，觉得复活在这个点更具有了深刻的意义。&lt;/p&gt;
+回过头看这个标题，觉得复活在这个点更具有了深刻的意义。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;复活不应该是简单的搭建，而是由内而外的重塑&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;当这里真正变成我生活和学习不可分割的一部分，成为我心灵寓居之所，成为我精进的有力武器，成为与外界沟通的接口时，这才可以被称为博客网站的复活。&lt;/p&gt;
 &lt;p&gt;当我重拾过去的理想信念，不再为虚假的刺激而溃败，不再为过往云烟后悔莫及，不再为现实困境熄灭希望之火时，这才能称为我的复活。&lt;/p&gt;
 &lt;p&gt;既然来了一趟这样的世界，那就努力留下自己的脚印吧......&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;2025-02-22 更&lt;br&gt;
+这段时间都没有去管理这个网站，最致命的问题是图片，我不知道怎么去把复制的图片直接弄到 hexo 而且可以直接渲染出来，刚刚找到办法解决这个问题了，只能是 obsidian 是永远的神，之前我还需要把 md 文件复制到 hexo 文件夹下面，现在我是直接在 hexo 下新建了一个 obsidian 仓库，用模板代替  &lt;code&gt;hexo new&lt;/code&gt; ，用  &lt;code&gt;shell commands&lt;/code&gt;  插件实现一键上传功能  &lt;code&gt;hexo clean,hexo generate, hexo deploy&lt;/code&gt; ，所有的麻烦的事情都解决好了，现在要写东西只需要，打开 ob，新建模板，写完一个快捷键就完成了文章的上传，因为现在管理这个网站很方便了，所以以后应该就会变地很活跃了・&lt;/p&gt;
  ]]></description>
         </item>
         <item>
