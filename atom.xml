@@ -38,7 +38,6 @@
 &lt;p&gt;直接在 hexo 源文件夹上新建一个仓库不就行了？&lt;/p&gt;
 &lt;p&gt;先新建一个仓库，把仓库建在 hexo 的根目录里&lt;/p&gt;
 &lt;p&gt;打开仓库后，我们会发现有很多我们不需要的文件夹，我们可以在设置里选择忽视它们，避免它们对我们的搜索功能造成影响。&lt;/p&gt;
-&lt;p&gt;&lt;img data-src=&#34;obsidian+hexo%E7%AC%94%E8%AE%B0%E6%B5%81-20250223221556672.png&#34; alt&gt;&lt;/p&gt;
 </content>
         <category term="体系" scheme="https://stoic-yang.github.io/categories/%E4%BD%93%E7%B3%BB/" />
         <category term="hexo" scheme="https://stoic-yang.github.io/tags/hexo/" />
@@ -63,8 +62,7 @@
         <id>https://stoic-yang.github.io/2025/02/22/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/</id>
         <title>新的开始</title>
         <link rel="alternate" href="https://stoic-yang.github.io/2025/02/22/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/"/>
-        <content type="html">&lt;p&gt;高度的自动化是很有价值的，这让生活更简单和轻松，这套博客体系肯定是比垃圾知乎对 markdown 的支持要好太多了，知乎导入 markdown 文件也没有办法顺便导入我的文章上附带的图片，所有我应该是会把主战场搬移到博客，毕竟这个博客现在只是我的一个 obsidian 的库，编辑内容也是超级方便，可以实时渲染啊，比 VScode 可是要强太多了😅，可以开心写 blog 了，学习笔记什么的也都可以慢慢搬上来。下面是我在 obsidian 写作的图片&lt;/p&gt;
-&lt;p&gt;&lt;img data-src=&#34;./%E9%99%84%E4%BB%B6/image-1.png&#34; alt&gt;&lt;/p&gt;
+        <content type="html">&lt;p&gt;高度的自动化是很有价值的，这让生活更简单和轻松，这套博客体系肯定是比垃圾知乎对 markdown 的支持要好太多了，知乎导入 markdown 文件也没有办法顺便导入我的文章上附带的图片，所有我应该是会把主战场搬移到博客，毕竟这个博客现在只是我的一个 obsidian 的库，编辑内容也是超级方便，可以实时渲染啊，比 VScode 可是要强太多了😅，可以开心写 blog 了，学习笔记什么的也都可以慢慢搬上来。&lt;/p&gt;
 </content>
         <category term="网站" scheme="https://stoic-yang.github.io/categories/%E7%BD%91%E7%AB%99/" />
         <category term="随笔" scheme="https://stoic-yang.github.io/tags/%E9%9A%8F%E7%AC%94/" />
