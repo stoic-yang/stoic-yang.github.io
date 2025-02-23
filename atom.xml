@@ -8,13 +8,25 @@
     <author>
       <name>Zarathu</name>
     </author>
-    <updated>2025-02-21T16:00:00.000Z</updated>
+    <updated>2025-02-22T16:00:00.000Z</updated>
+    <entry>
+        <id>https://stoic-yang.github.io/2025/02/23/%E4%B8%80%E7%82%B9%E9%9A%8F%E6%83%B3%E2%80%94%E2%80%94%E6%96%B0%E9%98%B6%E6%AE%B5%E7%9A%84%E5%B1%95%E5%BC%80/</id>
+        <title>一点随想</title>
+        <link rel="alternate" href="https://stoic-yang.github.io/2025/02/23/%E4%B8%80%E7%82%B9%E9%9A%8F%E6%83%B3%E2%80%94%E2%80%94%E6%96%B0%E9%98%B6%E6%AE%B5%E7%9A%84%E5%B1%95%E5%BC%80/"/>
+        <content type="html">&lt;p&gt;我之前实在是过于悲观了，没有一个宏大的规划，各种的换方向，导致自己一直在失败，摆烂带来的负面情绪很容易让人沉沦迷失自我。现在看来，我遇到的问题没有很复杂，只不过是相信自己可以达到自己的目标，一步一步去设计实现这个目标的步骤，坚定不移地贯彻自己的行动罢了，现在的我也已经基本确定了自己的目标。&lt;/p&gt;
+&lt;p&gt;不必感到自卑，不必感到伤感，只顾着往前走，脱去身上的冷气，实现你所宣称的未来&lt;/p&gt;
+</content>
+        <category term="随笔" scheme="https://stoic-yang.github.io/categories/%E9%9A%8F%E7%AC%94/" />
+        <category term="生活" scheme="https://stoic-yang.github.io/tags/%E7%94%9F%E6%B4%BB/" />
+        <category term="反思" scheme="https://stoic-yang.github.io/tags/%E5%8F%8D%E6%80%9D/" />
+        <updated>2025-02-22T16:00:00.000Z</updated>
+    </entry>
     <entry>
         <id>https://stoic-yang.github.io/2025/02/22/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/</id>
         <title>新的开始</title>
         <link rel="alternate" href="https://stoic-yang.github.io/2025/02/22/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/"/>
-        <content type="html">&lt;p&gt;高度的自动化是很有价值的，这让生活更简单和轻松，这套博客体系肯定是比垃圾知乎对 markdown 的支持要好太多了，知乎导入 markdown 文件也没有办法顺便导入我的文章上附带的图片，所有我应该是会把主战场搬移到博客，毕竟这个博客现在只是我的一个 obsidian 的库，编辑内容也是超级方便，可以实时渲染啊，比 VScode 可是要强太多了😅，可以开心写 blog 了，学习笔记什么的也都可以慢慢搬上来。下面是我在 obsidian 写作的图片&lt;/p&gt;
-&lt;p&gt;&lt;img data-src=&#34;%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B-20250222124330248.png&#34; alt&gt;&lt;/p&gt;
+        <content type="html">&lt;p&gt;高度的自动化是很有价值的，这让生活更简单和轻松，这套博客体系肯定是比垃圾知乎对 markdown 的支持要好太多了，知乎导入 markdown 文件也没有办法顺便导入我的文章上附带的图片，所有我应该是会把主战场搬移到博客，毕竟这个博客现在只是我的一个 obsidian 的库，编辑内容也是超级方便，可以实时渲染啊，比 VScode 可是要强太多了😅，可以开心写 blog 了，学习笔记什么的也都可以慢慢搬上来。下面是我在 obsidian 写作的图片&lt;br&gt;
+&lt;img data-src=&#34;%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B-20250222124330248.png&#34; alt&gt;&lt;/p&gt;
 </content>
         <category term="网站" scheme="https://stoic-yang.github.io/categories/%E7%BD%91%E7%AB%99/" />
         <category term="随笔" scheme="https://stoic-yang.github.io/tags/%E9%9A%8F%E7%AC%94/" />
