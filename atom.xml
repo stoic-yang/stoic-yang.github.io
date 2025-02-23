@@ -10,9 +10,9 @@
     </author>
     <updated>2025-02-22T16:00:00.000Z</updated>
     <entry>
-        <id>https://stoic-yang.github.io/2025/02/23/obsidian+hexo%E5%8D%9A%E5%AE%A2%E6%B5%81/</id>
-        <title>obsidian+hexo博客流</title>
-        <link rel="alternate" href="https://stoic-yang.github.io/2025/02/23/obsidian+hexo%E5%8D%9A%E5%AE%A2%E6%B5%81/"/>
+        <id>https://stoic-yang.github.io/2025/02/23/obsidian+hexo%E7%AC%94%E8%AE%B0%E6%B5%81/</id>
+        <title>obsidian+hexo笔记流</title>
+        <link rel="alternate" href="https://stoic-yang.github.io/2025/02/23/obsidian+hexo%E7%AC%94%E8%AE%B0%E6%B5%81/"/>
         <content type="html">&lt;h2 id=&#34;前言&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#前言&#34;&gt;#&lt;/a&gt; 前言&lt;/h2&gt;
 &lt;p&gt;作为一个 obsidian 的重度使用者，如何把 hexo 和 obsidian 结合起来写笔记一直是我在思考的点，在过去我要写一篇笔记到 hexo 上，我需要下面几个步骤：&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;在hexo创建md文件——hexo new ...&lt;/code&gt;  -&amp;gt;  &lt;code&gt;在obsidian写好笔记&lt;/code&gt;  -&amp;gt;  &lt;code&gt;复制笔记到md文件上&lt;/code&gt;  -&amp;gt;  &lt;code&gt;hexo clean，hexo generate，hexo deploy&lt;/code&gt;&lt;/p&gt;
@@ -29,11 +29,23 @@
 &lt;h4 id=&#34;回合二曲线救国&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#回合二曲线救国&#34;&gt;#&lt;/a&gt; 回合二（“曲线救国”）&lt;/h4&gt;
 &lt;p&gt;要是这么麻烦，我为什么不直接用现成的带有 markdown 编辑支持功能的平台，于是我直接弃用了 hexo，直接换用了知乎来写笔记，但是问题依旧存在，我在 obsidian 的笔记上的图片还是很难迁移到知乎上，只是知乎的话，我可以直接导入 markdown 文件，但是知乎对 md 文件的支持，懂的都懂，经常导入进去后直接就乱位了，而且渲染出来也不好看，有一些格式还渲染不出来，只能算是勉强能用，知乎的好处也很明显，比起 hexo 有流量，手机也可以发布文章，等等。但是关键问题还是没有解决，图片怎么办？&lt;/p&gt;
 &lt;p&gt;这对于其他的平台也是合理的，比如 halo，mkdocs，其实我觉得 mkdocs 还挺不错的，但是实在没有找到喜欢的主题，由奢入简难啊。&lt;/p&gt;
-&lt;p&gt;TODO&lt;/p&gt;
+&lt;p&gt;那有没有办法把这些都实现自动化的办法呢？&lt;/p&gt;
+&lt;p&gt;有的兄弟，有的☝️🤓✌️&lt;/p&gt;
+&lt;h3 id=&#34;解决方案&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#解决方案&#34;&gt;#&lt;/a&gt; 解决方案&lt;/h3&gt;
+&lt;p&gt;要解决这个问题，就是解决图片上传和渲染到 hexo （GitHub）的问题&lt;/p&gt;
+&lt;h4 id=&#34;在-hexo-源文件根目录新建-obsidian-仓库&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#在-hexo-源文件根目录新建-obsidian-仓库&#34;&gt;#&lt;/a&gt; 在 hexo 源文件根目录新建 obsidian 仓库&lt;/h4&gt;
+&lt;p&gt;首先，我为什么要把 obsidian 和 hexo 源文件夹分开呢？&lt;/p&gt;
+&lt;p&gt;直接在 hexo 源文件夹上新建一个仓库不就行了？&lt;/p&gt;
+&lt;p&gt;先新建一个仓库，把仓库建在 hexo 的根目录里 a&lt;/p&gt;
+&lt;p&gt;打开仓库后，我们会发现有很多我们不需要的文件夹，我们可以在设置里选择忽视它们，避免它们对我们的搜索功能造成影响。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;./%E9%99%84%E4%BB%B6/image-2.png&#34; alt&gt;&lt;/p&gt;
+&lt;p&gt;A&lt;/p&gt;
 </content>
-        <category term="工作流" scheme="https://stoic-yang.github.io/categories/%E5%B7%A5%E4%BD%9C%E6%B5%81/" />
+        <category term="体系" scheme="https://stoic-yang.github.io/categories/%E4%BD%93%E7%B3%BB/" />
         <category term="hexo" scheme="https://stoic-yang.github.io/tags/hexo/" />
         <category term="obsidian" scheme="https://stoic-yang.github.io/tags/obsidian/" />
+        <category term="学习流" scheme="https://stoic-yang.github.io/tags/%E5%AD%A6%E4%B9%A0%E6%B5%81/" />
+        <category term="工作流" scheme="https://stoic-yang.github.io/tags/%E5%B7%A5%E4%BD%9C%E6%B5%81/" />
         <updated>2025-02-22T16:00:00.000Z</updated>
     </entry>
     <entry>
@@ -52,8 +64,8 @@
         <id>https://stoic-yang.github.io/2025/02/22/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/</id>
         <title>新的开始</title>
         <link rel="alternate" href="https://stoic-yang.github.io/2025/02/22/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/"/>
-        <content type="html">&lt;p&gt;高度的自动化是很有价值的，这让生活更简单和轻松，这套博客体系肯定是比垃圾知乎对 markdown 的支持要好太多了，知乎导入 markdown 文件也没有办法顺便导入我的文章上附带的图片，所有我应该是会把主战场搬移到博客，毕竟这个博客现在只是我的一个 obsidian 的库，编辑内容也是超级方便，可以实时渲染啊，比 VScode 可是要强太多了😅，可以开心写 blog 了，学习笔记什么的也都可以慢慢搬上来。下面是我在 obsidian 写作的图片&lt;br&gt;
-&lt;img data-src=&#34;%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B-20250222124330248.png&#34; alt&gt;&lt;/p&gt;
+        <content type="html">&lt;p&gt;高度的自动化是很有价值的，这让生活更简单和轻松，这套博客体系肯定是比垃圾知乎对 markdown 的支持要好太多了，知乎导入 markdown 文件也没有办法顺便导入我的文章上附带的图片，所有我应该是会把主战场搬移到博客，毕竟这个博客现在只是我的一个 obsidian 的库，编辑内容也是超级方便，可以实时渲染啊，比 VScode 可是要强太多了😅，可以开心写 blog 了，学习笔记什么的也都可以慢慢搬上来。下面是我在 obsidian 写作的图片&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;./%E9%99%84%E4%BB%B6/image-1.png&#34; alt&gt;&lt;/p&gt;
 </content>
         <category term="网站" scheme="https://stoic-yang.github.io/categories/%E7%BD%91%E7%AB%99/" />
         <category term="随笔" scheme="https://stoic-yang.github.io/tags/%E9%9A%8F%E7%AC%94/" />
