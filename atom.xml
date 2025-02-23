@@ -36,9 +36,9 @@
 &lt;h4 id=&#34;在-hexo-源文件根目录新建-obsidian-仓库&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#在-hexo-源文件根目录新建-obsidian-仓库&#34;&gt;#&lt;/a&gt; 在 hexo 源文件根目录新建 obsidian 仓库&lt;/h4&gt;
 &lt;p&gt;首先，我为什么要把 obsidian 和 hexo 源文件夹分开呢？&lt;/p&gt;
 &lt;p&gt;直接在 hexo 源文件夹上新建一个仓库不就行了？&lt;/p&gt;
-&lt;p&gt;先新建一个仓库，把仓库建在 hexo 的根目录里 a&lt;/p&gt;
+&lt;p&gt;先新建一个仓库，把仓库建在 hexo 的根目录里&lt;/p&gt;
 &lt;p&gt;打开仓库后，我们会发现有很多我们不需要的文件夹，我们可以在设置里选择忽视它们，避免它们对我们的搜索功能造成影响。&lt;/p&gt;
-&lt;p&gt;&lt;img data-src=&#34;./obsidian+hexo%E7%AC%94%E8%AE%B0%E6%B5%81/image.png&#34; alt&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;obsidian+hexo%E7%AC%94%E8%AE%B0%E6%B5%81-20250223221556672.png&#34; alt&gt;&lt;/p&gt;
 </content>
         <category term="体系" scheme="https://stoic-yang.github.io/categories/%E4%BD%93%E7%B3%BB/" />
         <category term="hexo" scheme="https://stoic-yang.github.io/tags/hexo/" />
