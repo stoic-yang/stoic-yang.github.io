@@ -22,7 +22,10 @@
             <category term="学习流" scheme="https://stoic-yang.github.io/tags/%E5%AD%A6%E4%B9%A0%E6%B5%81/" />
             <category term="工作流" scheme="https://stoic-yang.github.io/tags/%E5%B7%A5%E4%BD%9C%E6%B5%81/" />
             <pubDate>Sun, 23 Feb 2025 00:00:00 +0800</pubDate>
-            <description><![CDATA[ &lt;h2 id=&#34;前言&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#前言&#34;&gt;#&lt;/a&gt; 前言&lt;/h2&gt;
+            <description><![CDATA[ &lt;h2 id=&#34;最终效果&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#最终效果&#34;&gt;#&lt;/a&gt; 最终效果&lt;/h2&gt;
+&lt;p&gt;用 obsidian 写笔记并在 obsidian 内进行 hexo 文件的上传，上传后的网页可以渲染复制粘贴到 obsidian 的图片（比如刷网课时上的截图等等），不需要自己调整图片的格式。&lt;/p&gt;
+&lt;p&gt;附：本人自用的主题：shoka，理论上，这套方法兼容所有 hexo 主题且可以迁移应用于 hugo&lt;/p&gt;
+&lt;h2 id=&#34;前言&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#前言&#34;&gt;#&lt;/a&gt; 前言&lt;/h2&gt;
 &lt;p&gt;作为一个 obsidian 的重度使用者，如何把 hexo 和 obsidian 结合起来写笔记一直是我在思考的点，在过去我要写一篇笔记到 hexo 上，我需要下面几个步骤：&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;在hexo创建md文件——hexo new ...&lt;/code&gt;  -&amp;gt;  &lt;code&gt;在obsidian写好笔记&lt;/code&gt;  -&amp;gt;  &lt;code&gt;复制笔记到md文件上&lt;/code&gt;  -&amp;gt;  &lt;code&gt;hexo clean，hexo generate，hexo deploy&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;这太不自然了，我还要复制 obsidian 里面的 md 文件的内容过去，还要手动加上标签和分类那几个 matedate（如果你写过 hexo 文章，就知道这个是什么），很麻烦。&lt;/p&gt;
@@ -47,7 +50,8 @@
 &lt;p&gt;直接在 hexo 源文件夹上新建一个仓库不就行了？&lt;/p&gt;
 &lt;p&gt;先新建一个仓库，把仓库建在 hexo 的根目录里&lt;/p&gt;
 &lt;p&gt;打开仓库后，我们会发现有很多我们不需要的文件夹，我们可以在设置里选择忽视它们，避免它们对我们的搜索功能造成影响。&lt;/p&gt;
-&lt;p&gt;未完待续&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&#34;obsidian+hexo%E7%AC%94%E8%AE%B0%E6%B5%81-20250227201347079.png&#34; alt&gt;&lt;br&gt;
+在忽略文件下面的管理就可以添加自己需要忽略的文件了&lt;/p&gt;
  ]]></description>
         </item>
         <item>
