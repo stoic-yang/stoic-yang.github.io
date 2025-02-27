@@ -481,7 +481,7 @@ springBoot 基础 + mybatis 基础 + maven 基础 + MySQL 基础&lt;/p&gt;
         <id>https://stoic-yang.github.io/2024/11/03/%E5%A4%8D%E6%B4%BB/</id>
         <title>复活</title>
         <link rel="alternate" href="https://stoic-yang.github.io/2024/11/03/%E5%A4%8D%E6%B4%BB/"/>
-        <content type="html">&lt;p&gt;为什么叫复活呢？因为其实我在 9 月中旬的时候曾经搭过一次，但是我愚蠢地把网站公开到 QQ 动态了，我觉得个人博客这种东西还是跟自己现实的社交割裂比较好，一方面不容易被重伤，另一方面可以保护自己的隐私，写博客的时候能更加自由。&lt;/p&gt;
+        <content type="html">&lt;p&gt;?&lt;/p&gt;
 &lt;hr&gt;
 &lt;p&gt;&lt;strong&gt;2024-12-15 更&lt;/strong&gt;&lt;br&gt;
 回过头看这个标题，觉得复活在这个点更具有了深刻的意义。&lt;/p&gt;
@@ -491,7 +491,7 @@ springBoot 基础 + mybatis 基础 + maven 基础 + MySQL 基础&lt;/p&gt;
 &lt;p&gt;既然来了一趟这样的世界，那就努力留下自己的脚印吧......&lt;/p&gt;
 &lt;hr&gt;
 &lt;p&gt;2025-02-22 更&lt;br&gt;
-这段时间都没有去管理这个网站，最致命的问题是图片，我不知道怎么去把复制的图片直接弄到 hexo 而且可以直接渲染出来，刚刚找到办法解决这个问题了，只能是 obsidian 是永远的神，之前我还需要把 md 文件复制到 hexo 文件夹下面，现在我是直接在 hexo 下新建了一个 obsidian 仓库，用模板代替  &lt;code&gt;hexo new&lt;/code&gt; ，用  &lt;code&gt;shell commands&lt;/code&gt;  插件实现一键上传功能  &lt;code&gt;hexo clean,hexo generate, hexo deploy&lt;/code&gt; ，所有的麻烦的事情都解决好了，现在要写东西只需要，打开 ob，新建模板，写完一个快捷键就完成了文章的上传，因为现在管理这个网站很方便了，所以以后应该就会变地很活跃了・&lt;/p&gt;
+这段时间都没有去管理这个网站，最致命的问题是图片，我不知道怎么去把复制的图片直接弄到 hexo 而且可以直接渲染出来，刚刚找到办法解决这个问题了，只能是 obsidian 是永远的神，之前我还需要把 md 文件复制到 hexo 文件夹下面，现在我是直接在 hexo 下新建了一个 obsidian 仓库，用模板代替  &lt;code&gt;hexo new&lt;/code&gt; ，用  &lt;code&gt;shell commands&lt;/code&gt;  插件实现一键上传功能  &lt;code&gt;hexo clean,hexo generate, hexo deploy&lt;/code&gt; ，所有的麻烦的事情都解决好了，现在要写东西只需要，打开 ob，新建模板，写完一个快捷键就完成了文章的上传，因为现在管理这个网站很方便了，所以以后应该就会变地很活跃。&lt;/p&gt;
 </content>
         <category term="随笔" scheme="https://stoic-yang.github.io/categories/%E9%9A%8F%E7%AC%94/" />
         <category term="随笔" scheme="https://stoic-yang.github.io/tags/%E9%9A%8F%E7%AC%94/" />
