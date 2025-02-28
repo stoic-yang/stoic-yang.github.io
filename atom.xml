@@ -10,19 +10,6 @@
     </author>
     <updated>2025-02-27T16:00:00.000Z</updated>
     <entry>
-        <id>https://stoic-yang.github.io/2025/02/28/%E5%A4%A7%E5%AD%A6%E7%89%A9%E7%90%86/</id>
-        <title>大学物理</title>
-        <link rel="alternate" href="https://stoic-yang.github.io/2025/02/28/%E5%A4%A7%E5%AD%A6%E7%89%A9%E7%90%86/"/>
-        <content type="html">&lt;h2 id=&#34;t1-刚体角动量综合题&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#t1-刚体角动量综合题&#34;&gt;#&lt;/a&gt; T1 刚体角动量综合题&lt;/h2&gt;
-&lt;p&gt;&lt;img data-src=&#34;bee493e2a4e0ff1a9e159489e435098.jpg&#34; alt&gt;&lt;br&gt;
-&lt;strong&gt;解答&lt;/strong&gt;&lt;br&gt;
-&lt;img data-src=&#34;f40dc1e1a164b240b23e7cdc15411dc.jpg&#34; alt&gt;&lt;/p&gt;
-</content>
-        <category term="学业" scheme="https://stoic-yang.github.io/categories/%E5%AD%A6%E4%B8%9A/" />
-        <category term="大学物理" scheme="https://stoic-yang.github.io/tags/%E5%A4%A7%E5%AD%A6%E7%89%A9%E7%90%86/" />
-        <updated>2025-02-27T16:00:00.000Z</updated>
-    </entry>
-    <entry>
         <id>https://stoic-yang.github.io/2025/02/28/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/</id>
         <title>数据分析复习笔记</title>
         <link rel="alternate" href="https://stoic-yang.github.io/2025/02/28/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
@@ -55,9 +42,28 @@
 &lt;p&gt;当数据集中没有分类标签信息时，只能根据数据内在性质及规律将其划分为若千个不相交的子集，每个子集称为一个＂簇 &amp;quot; (Cluster) ，这就是聚类方法 (Clustering) 。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!PDF|] &lt;a href=&#34;%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%BA%94%E7%94%A8(%E7%AC%AC2%E7%89%88)ocr%E5%B8%A6%E4%B9%A6%E7%AD%BE.pdf#page=113&amp;amp;selection=106,14,106,33&#34;&gt;数据科学技术与应用 (第 2 版) ocr 带书签，p.113&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;聚类分析使用的算法不同会得到不同的结果&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
 </content>
         <category term="学业" scheme="https://stoic-yang.github.io/categories/%E5%AD%A6%E4%B8%9A/" />
         <category term="数据分析" scheme="https://stoic-yang.github.io/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" />
+        <updated>2025-02-27T16:00:00.000Z</updated>
+    </entry>
+    <entry>
+        <id>https://stoic-yang.github.io/2025/02/28/%E5%A4%A7%E5%AD%A6%E7%89%A9%E7%90%86/</id>
+        <title>大学物理</title>
+        <link rel="alternate" href="https://stoic-yang.github.io/2025/02/28/%E5%A4%A7%E5%AD%A6%E7%89%A9%E7%90%86/"/>
+        <content type="html">&lt;h2 id=&#34;t1-刚体角动量综合题&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#t1-刚体角动量综合题&#34;&gt;#&lt;/a&gt; T1 刚体角动量综合题&lt;/h2&gt;
+&lt;p&gt;&lt;img data-src=&#34;bee493e2a4e0ff1a9e159489e435098.jpg&#34; alt&gt;&lt;br&gt;
+&lt;strong&gt;解答&lt;/strong&gt;&lt;br&gt;
+&lt;img data-src=&#34;f40dc1e1a164b240b23e7cdc15411dc.jpg&#34; alt&gt;&lt;/p&gt;
+</content>
+        <category term="学业" scheme="https://stoic-yang.github.io/categories/%E5%AD%A6%E4%B8%9A/" />
+        <category term="大学物理" scheme="https://stoic-yang.github.io/tags/%E5%A4%A7%E5%AD%A6%E7%89%A9%E7%90%86/" />
         <updated>2025-02-27T16:00:00.000Z</updated>
     </entry>
     <entry>
@@ -113,6 +119,17 @@
 &lt;p&gt;二、通过秩来判断&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;katex-display&#34;&gt;&lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math xmlns=&#34;http://www.w3.org/1998/Math/MathML&#34; display=&#34;block&#34;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;r&lt;/mi&gt;&lt;mo stretchy=&#34;false&#34;&gt;(&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;α&lt;/mi&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/msub&gt;&lt;msub&gt;&lt;mi&gt;α&lt;/mi&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/msub&gt;&lt;msub&gt;&lt;mi&gt;α&lt;/mi&gt;&lt;mn&gt;3&lt;/mn&gt;&lt;/msub&gt;&lt;mo&gt;⋅&lt;/mo&gt;&lt;mo&gt;⋅&lt;/mo&gt;&lt;mo&gt;⋅&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;α&lt;/mi&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;/msub&gt;&lt;mo stretchy=&#34;false&#34;&gt;)&lt;/mo&gt;&lt;mo&gt;&amp;lt;&lt;/mo&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;r(\alpha_{1}\alpha_{2}\alpha_{3}\cdot \cdot \cdot \alpha_{m})&amp;lt;m
 &lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:1em;vertical-align:-0.25em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathnormal&#34; style=&#34;margin-right:0.02778em;&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;mopen&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathnormal&#34; style=&#34;margin-right:0.0037em;&#34;&gt;α&lt;/span&gt;&lt;span class=&#34;msupsub&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.30110799999999993em;&#34;&gt;&lt;span style=&#34;top:-2.5500000000000003em;margin-left:-0.0037em;margin-right:0.05em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:2.7em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sizing reset-size6 size3 mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.15em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathnormal&#34; style=&#34;margin-right:0.0037em;&#34;&gt;α&lt;/span&gt;&lt;span class=&#34;msupsub&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.30110799999999993em;&#34;&gt;&lt;span style=&#34;top:-2.5500000000000003em;margin-left:-0.0037em;margin-right:0.05em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:2.7em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sizing reset-size6 size3 mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;2&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.15em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathnormal&#34; style=&#34;margin-right:0.0037em;&#34;&gt;α&lt;/span&gt;&lt;span class=&#34;msupsub&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.30110799999999993em;&#34;&gt;&lt;span style=&#34;top:-2.5500000000000003em;margin-left:-0.0037em;margin-right:0.05em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:2.7em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sizing reset-size6 size3 mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;3&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.15em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222222222222222em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mbin&#34;&gt;⋅&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222222222222222em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.44445em;vertical-align:0em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;⋅&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222222222222222em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mbin&#34;&gt;⋅&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222222222222222em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:1em;vertical-align:-0.25em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathnormal&#34; style=&#34;margin-right:0.0037em;&#34;&gt;α&lt;/span&gt;&lt;span class=&#34;msupsub&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.151392em;&#34;&gt;&lt;span style=&#34;top:-2.5500000000000003em;margin-left:-0.0037em;margin-right:0.05em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:2.7em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sizing reset-size6 size3 mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;&lt;span class=&#34;mord mathnormal mtight&#34;&gt;m&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.15em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mclose&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mrel&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.43056em;vertical-align:0em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathnormal&#34;&gt;m&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;h4 id=&#34;抽象向量组的线性相关性&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#抽象向量组的线性相关性&#34;&gt;#&lt;/a&gt; 抽象向量组的线性相关性&lt;/h4&gt;
+&lt;p&gt;思路&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;先把向量组转化为一个线性无关组乘以一个矩阵&lt;/li&gt;
+&lt;li&gt;再判断矩阵是否是可逆阵&lt;/li&gt;
+&lt;li&gt;向量组与可逆 / 不可逆阵乘积判断整个向量组是否是线性相关&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img data-src=&#34;%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0-20250228174050415.png&#34; alt&gt;&lt;/p&gt;
+&lt;h4 id=&#34;极大无关组&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#极大无关组&#34;&gt;#&lt;/a&gt; 极大无关组&lt;/h4&gt;
+&lt;p&gt;&lt;img data-src=&#34;%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0-20250228180906275.png&#34; alt&gt;&lt;/p&gt;
+&lt;p&gt;有几个秩最大无关组就有几个向量&lt;/p&gt;
 </content>
         <category term="学业" scheme="https://stoic-yang.github.io/categories/%E5%AD%A6%E4%B8%9A/" />
         <category term="线性代数" scheme="https://stoic-yang.github.io/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" />
