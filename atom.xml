@@ -8,10 +8,23 @@
     <author>
       <name>Zarathu</name>
     </author>
-    <updated>2025-02-28T03:56:18.346Z</updated>
+    <updated>2025-02-27T16:00:00.000Z</updated>
+    <entry>
+        <id>https://stoic-yang.github.io/2025/02/28/%E5%A4%A7%E5%AD%A6%E7%89%A9%E7%90%86/</id>
+        <title>大学物理</title>
+        <link rel="alternate" href="https://stoic-yang.github.io/2025/02/28/%E5%A4%A7%E5%AD%A6%E7%89%A9%E7%90%86/"/>
+        <content type="html">&lt;h2 id=&#34;t1-刚体角动量综合题&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#t1-刚体角动量综合题&#34;&gt;#&lt;/a&gt; T1 刚体角动量综合题&lt;/h2&gt;
+&lt;p&gt;&lt;img data-src=&#34;bee493e2a4e0ff1a9e159489e435098.jpg&#34; alt&gt;&lt;br&gt;
+&lt;strong&gt;解答&lt;/strong&gt;&lt;br&gt;
+&lt;img data-src=&#34;f40dc1e1a164b240b23e7cdc15411dc.jpg&#34; alt&gt;&lt;/p&gt;
+</content>
+        <category term="学业" scheme="https://stoic-yang.github.io/categories/%E5%AD%A6%E4%B8%9A/" />
+        <category term="大学物理" scheme="https://stoic-yang.github.io/tags/%E5%A4%A7%E5%AD%A6%E7%89%A9%E7%90%86/" />
+        <updated>2025-02-27T16:00:00.000Z</updated>
+    </entry>
     <entry>
         <id>https://stoic-yang.github.io/2025/02/28/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/</id>
-        <title></title>
+        <title>线性代数复习笔记</title>
         <link rel="alternate" href="https://stoic-yang.github.io/2025/02/28/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
         <content type="html">&lt;h2 id=&#34;逆矩阵&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#逆矩阵&#34;&gt;#&lt;/a&gt; 逆矩阵&lt;/h2&gt;
 &lt;h4 id=&#34;二阶矩阵的逆矩阵求法&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#二阶矩阵的逆矩阵求法&#34;&gt;#&lt;/a&gt; 二阶矩阵的逆矩阵求法&lt;/h4&gt;
@@ -40,21 +53,22 @@
 &lt;p&gt;[!note] 笔记&lt;br&gt;
 &lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math xmlns=&#34;http://www.w3.org/1998/Math/MathML&#34;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mo stretchy=&#34;false&#34;&gt;(&lt;/mo&gt;&lt;mi&gt;λ&lt;/mi&gt;&lt;mi&gt;E&lt;/mi&gt;&lt;mo&gt;−&lt;/mo&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;mo stretchy=&#34;false&#34;&gt;)&lt;/mo&gt;&lt;mi&gt;X&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mn&gt;0&lt;/mn&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;(\lambda E-A)X=0&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:1em;vertical-align:-0.25em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mopen&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mord mathnormal&#34;&gt;λ&lt;/span&gt;&lt;span class=&#34;mord mathnormal&#34; style=&#34;margin-right:0.05764em;&#34;&gt;E&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222222222222222em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mbin&#34;&gt;−&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222222222222222em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:1em;vertical-align:-0.25em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathnormal&#34;&gt;A&lt;/span&gt;&lt;span class=&#34;mclose&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;mord mathnormal&#34; style=&#34;margin-right:0.07847em;&#34;&gt;X&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mrel&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.64444em;vertical-align:0em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;0&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
+&lt;p&gt;&lt;span class=&#34;katex-display&#34;&gt;&lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math xmlns=&#34;http://www.w3.org/1998/Math/MathML&#34; display=&#34;block&#34;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;
+&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
 </content>
-        <updated>2025-02-28T03:56:18.346Z</updated>
+        <updated>2025-02-27T16:00:00.000Z</updated>
     </entry>
     <entry>
-        <id>https://stoic-yang.github.io/2025/02/28/%E5%A4%A7%E5%AD%A6%E7%89%A9%E7%90%86/</id>
-        <title>大学物理</title>
-        <link rel="alternate" href="https://stoic-yang.github.io/2025/02/28/%E5%A4%A7%E5%AD%A6%E7%89%A9%E7%90%86/"/>
-        <content type="html">&lt;h2 id=&#34;t1-刚体角动量综合题&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#t1-刚体角动量综合题&#34;&gt;#&lt;/a&gt; T1 刚体角动量综合题&lt;/h2&gt;
-&lt;p&gt;&lt;img data-src=&#34;bee493e2a4e0ff1a9e159489e435098.jpg&#34; alt&gt;&lt;br&gt;
-&lt;strong&gt;解答&lt;/strong&gt;&lt;br&gt;
-&lt;img data-src=&#34;f40dc1e1a164b240b23e7cdc15411dc.jpg&#34; alt&gt;&lt;/p&gt;
+        <id>https://stoic-yang.github.io/2025/02/23/%E4%B8%80%E7%82%B9%E9%9A%8F%E6%83%B3%E2%80%94%E2%80%94%E6%96%B0%E9%98%B6%E6%AE%B5%E7%9A%84%E5%B1%95%E5%BC%80/</id>
+        <title>一点随想</title>
+        <link rel="alternate" href="https://stoic-yang.github.io/2025/02/23/%E4%B8%80%E7%82%B9%E9%9A%8F%E6%83%B3%E2%80%94%E2%80%94%E6%96%B0%E9%98%B6%E6%AE%B5%E7%9A%84%E5%B1%95%E5%BC%80/"/>
+        <content type="html">&lt;p&gt;我之前实在是过于悲观了，没有一个宏大的规划，各种的换方向，导致自己一直在失败，摆烂带来的负面情绪很容易让人沉沦迷失自我。现在看来，我遇到的问题没有很复杂，只不过是相信自己可以达到自己的目标，一步一步去设计实现这个目标的步骤，坚定不移地贯彻自己的行动罢了，现在的我也已经基本确定了自己的目标。&lt;/p&gt;
+&lt;p&gt;不必感到自卑，不必感到伤感，只顾着往前走，脱去身上的冷气，实现你所宣称的未来&lt;/p&gt;
 </content>
-        <category term="学业" scheme="https://stoic-yang.github.io/categories/%E5%AD%A6%E4%B8%9A/" />
-        <category term="大学物理" scheme="https://stoic-yang.github.io/tags/%E5%A4%A7%E5%AD%A6%E7%89%A9%E7%90%86/" />
-        <updated>2025-02-27T16:00:00.000Z</updated>
+        <category term="随笔" scheme="https://stoic-yang.github.io/categories/%E9%9A%8F%E7%AC%94/" />
+        <category term="生活" scheme="https://stoic-yang.github.io/tags/%E7%94%9F%E6%B4%BB/" />
+        <category term="反思" scheme="https://stoic-yang.github.io/tags/%E5%8F%8D%E6%80%9D/" />
+        <updated>2025-02-22T16:00:00.000Z</updated>
     </entry>
     <entry>
         <id>https://stoic-yang.github.io/2025/02/23/obsidian+hexo%E7%AC%94%E8%AE%B0%E6%B5%81/</id>
@@ -97,18 +111,6 @@
         <category term="obsidian" scheme="https://stoic-yang.github.io/tags/obsidian/" />
         <category term="学习流" scheme="https://stoic-yang.github.io/tags/%E5%AD%A6%E4%B9%A0%E6%B5%81/" />
         <category term="工作流" scheme="https://stoic-yang.github.io/tags/%E5%B7%A5%E4%BD%9C%E6%B5%81/" />
-        <updated>2025-02-22T16:00:00.000Z</updated>
-    </entry>
-    <entry>
-        <id>https://stoic-yang.github.io/2025/02/23/%E4%B8%80%E7%82%B9%E9%9A%8F%E6%83%B3%E2%80%94%E2%80%94%E6%96%B0%E9%98%B6%E6%AE%B5%E7%9A%84%E5%B1%95%E5%BC%80/</id>
-        <title>一点随想</title>
-        <link rel="alternate" href="https://stoic-yang.github.io/2025/02/23/%E4%B8%80%E7%82%B9%E9%9A%8F%E6%83%B3%E2%80%94%E2%80%94%E6%96%B0%E9%98%B6%E6%AE%B5%E7%9A%84%E5%B1%95%E5%BC%80/"/>
-        <content type="html">&lt;p&gt;我之前实在是过于悲观了，没有一个宏大的规划，各种的换方向，导致自己一直在失败，摆烂带来的负面情绪很容易让人沉沦迷失自我。现在看来，我遇到的问题没有很复杂，只不过是相信自己可以达到自己的目标，一步一步去设计实现这个目标的步骤，坚定不移地贯彻自己的行动罢了，现在的我也已经基本确定了自己的目标。&lt;/p&gt;
-&lt;p&gt;不必感到自卑，不必感到伤感，只顾着往前走，脱去身上的冷气，实现你所宣称的未来&lt;/p&gt;
-</content>
-        <category term="随笔" scheme="https://stoic-yang.github.io/categories/%E9%9A%8F%E7%AC%94/" />
-        <category term="生活" scheme="https://stoic-yang.github.io/tags/%E7%94%9F%E6%B4%BB/" />
-        <category term="反思" scheme="https://stoic-yang.github.io/tags/%E5%8F%8D%E6%80%9D/" />
         <updated>2025-02-22T16:00:00.000Z</updated>
     </entry>
     <entry>
