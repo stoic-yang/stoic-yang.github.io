@@ -10,8 +10,55 @@
         </author>
         <description>stay hungray, stay foolish</description>
         <language>zh-CN</language>
-        <pubDate>Sun, 23 Feb 2025 00:00:00 +0800</pubDate>
-        <lastBuildDate>Sun, 23 Feb 2025 00:00:00 +0800</lastBuildDate>
+        <pubDate>Fri, 28 Feb 2025 11:56:18 +0800</pubDate>
+        <lastBuildDate>Fri, 28 Feb 2025 11:56:18 +0800</lastBuildDate>
+        <item>
+            <guid isPermalink="true">https://stoic-yang.github.io/2025/02/28/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
+            <title></title>
+            <link>https://stoic-yang.github.io/2025/02/28/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+            <pubDate>Fri, 28 Feb 2025 11:56:18 +0800</pubDate>
+            <description><![CDATA[ &lt;h2 id=&#34;逆矩阵&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#逆矩阵&#34;&gt;#&lt;/a&gt; 逆矩阵&lt;/h2&gt;
+&lt;h4 id=&#34;二阶矩阵的逆矩阵求法&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#二阶矩阵的逆矩阵求法&#34;&gt;#&lt;/a&gt; 二阶矩阵的逆矩阵求法&lt;/h4&gt;
+&lt;h5 id=&#34;标准二阶&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#标准二阶&#34;&gt;#&lt;/a&gt; 标准二阶&lt;/h5&gt;
+&lt;p&gt;&lt;img data-src=&#34;%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0-20250228120108200.png&#34; alt&gt;&lt;/p&gt;
+&lt;p&gt;规律：&lt;br&gt;
+&lt;img data-src=&#34;%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0-20250228120219621.png&#34; alt&gt;&lt;/p&gt;
+&lt;h5 id=&#34;二阶对角矩阵&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#二阶对角矩阵&#34;&gt;#&lt;/a&gt; 二阶对角矩阵&lt;/h5&gt;
+&lt;p&gt;&lt;img data-src=&#34;%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0-20250228120256113.png&#34; alt&gt;&lt;/p&gt;
+&lt;p&gt;对角线取倒数即可&lt;/p&gt;
+&lt;h2 id=&#34;特征值&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#特征值&#34;&gt;#&lt;/a&gt; 特征值&lt;/h2&gt;
+&lt;h4 id=&#34;基础知识&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#基础知识&#34;&gt;#&lt;/a&gt; 基础知识&lt;/h4&gt;
+&lt;p&gt;&lt;span class=&#34;katex-display&#34;&gt;&lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math xmlns=&#34;http://www.w3.org/1998/Math/MathML&#34; display=&#34;block&#34;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;mi&gt;α&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mi&gt;λ&lt;/mi&gt;&lt;mi&gt;α&lt;/mi&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;A\alpha=\lambda\alpha
+&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.68333em;vertical-align:0em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathnormal&#34;&gt;A&lt;/span&gt;&lt;span class=&#34;mord mathnormal&#34; style=&#34;margin-right:0.0037em;&#34;&gt;α&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mrel&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.69444em;vertical-align:0em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathnormal&#34;&gt;λ&lt;/span&gt;&lt;span class=&#34;mord mathnormal&#34; style=&#34;margin-right:0.0037em;&#34;&gt;α&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中 &lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math xmlns=&#34;http://www.w3.org/1998/Math/MathML&#34;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;λ&lt;/mi&gt;&lt;mtext&gt;可能为&lt;/mtext&gt;&lt;mn&gt;0&lt;/mn&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;\lambda 可能为0&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.69444em;vertical-align:0em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathnormal&#34;&gt;λ&lt;/span&gt;&lt;span class=&#34;mord cjk_fallback&#34;&gt;可&lt;/span&gt;&lt;span class=&#34;mord cjk_fallback&#34;&gt;能&lt;/span&gt;&lt;span class=&#34;mord cjk_fallback&#34;&gt;为&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;0&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;特征向量只能属于一个特征值&lt;/p&gt;
+&lt;h4 id=&#34;抽象矩阵求解特征值-凑形式&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#抽象矩阵求解特征值-凑形式&#34;&gt;#&lt;/a&gt; 抽象矩阵求解特征值 —— 凑形式&lt;/h4&gt;
+&lt;p&gt;&lt;img data-src=&#34;%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0-20250228123057912.png&#34; alt&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;katex-display&#34;&gt;&lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math xmlns=&#34;http://www.w3.org/1998/Math/MathML&#34; display=&#34;block&#34;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;msub&gt;&lt;mi&gt;α&lt;/mi&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/msub&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mn&gt;0&lt;/mn&gt;&lt;mo&gt;×&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;α&lt;/mi&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/msub&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;A\alpha_{1}=0\times\alpha_{1}
+&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.83333em;vertical-align:-0.15em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathnormal&#34;&gt;A&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathnormal&#34; style=&#34;margin-right:0.0037em;&#34;&gt;α&lt;/span&gt;&lt;span class=&#34;msupsub&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.30110799999999993em;&#34;&gt;&lt;span style=&#34;top:-2.5500000000000003em;margin-left:-0.0037em;margin-right:0.05em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:2.7em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sizing reset-size6 size3 mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.15em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mrel&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.72777em;vertical-align:-0.08333em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222222222222222em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mbin&#34;&gt;×&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222222222222222em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.58056em;vertical-align:-0.15em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;&lt;span class=&#34;mord mathnormal&#34; style=&#34;margin-right:0.0037em;&#34;&gt;α&lt;/span&gt;&lt;span class=&#34;msupsub&#34;&gt;&lt;span class=&#34;vlist-t vlist-t2&#34;&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.30110799999999993em;&#34;&gt;&lt;span style=&#34;top:-2.5500000000000003em;margin-left:-0.0037em;margin-right:0.05em;&#34;&gt;&lt;span class=&#34;pstrut&#34; style=&#34;height:2.7em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;sizing reset-size6 size3 mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;&lt;span class=&#34;mord mtight&#34;&gt;1&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-s&#34;&gt;​&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;vlist-r&#34;&gt;&lt;span class=&#34;vlist&#34; style=&#34;height:0.15em;&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;于是可以直接得到 0 是一个特征值&lt;br&gt;
+&lt;img data-src=&#34;%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0-20250228123537291.png&#34; alt&gt;&lt;/p&gt;
+&lt;p&gt;同理凑出第二个特征值 1&lt;/p&gt;
+&lt;h4 id=&#34;特殊值的求法&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#特殊值的求法&#34;&gt;#&lt;/a&gt; 特殊值的求法&lt;/h4&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!note] 笔记&lt;br&gt;
+&lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math xmlns=&#34;http://www.w3.org/1998/Math/MathML&#34;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mo stretchy=&#34;false&#34;&gt;(&lt;/mo&gt;&lt;mi&gt;λ&lt;/mi&gt;&lt;mi&gt;E&lt;/mi&gt;&lt;mo&gt;−&lt;/mo&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;mo stretchy=&#34;false&#34;&gt;)&lt;/mo&gt;&lt;mi&gt;X&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mn&gt;0&lt;/mn&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;(\lambda E-A)X=0&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:1em;vertical-align:-0.25em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mopen&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mord mathnormal&#34;&gt;λ&lt;/span&gt;&lt;span class=&#34;mord mathnormal&#34; style=&#34;margin-right:0.05764em;&#34;&gt;E&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222222222222222em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mbin&#34;&gt;−&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2222222222222222em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:1em;vertical-align:-0.25em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathnormal&#34;&gt;A&lt;/span&gt;&lt;span class=&#34;mclose&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;mord mathnormal&#34; style=&#34;margin-right:0.07847em;&#34;&gt;X&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mrel&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mspace&#34; style=&#34;margin-right:0.2777777777777778em;&#34;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.64444em;vertical-align:0em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;0&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+ ]]></description>
+        </item>
+        <item>
+            <guid isPermalink="true">https://stoic-yang.github.io/2025/02/28/%E5%A4%A7%E5%AD%A6%E7%89%A9%E7%90%86/</guid>
+            <title>大学物理</title>
+            <link>https://stoic-yang.github.io/2025/02/28/%E5%A4%A7%E5%AD%A6%E7%89%A9%E7%90%86/</link>
+            <category term="学业" scheme="https://stoic-yang.github.io/categories/%E5%AD%A6%E4%B8%9A/" />
+            <category term="大学物理" scheme="https://stoic-yang.github.io/tags/%E5%A4%A7%E5%AD%A6%E7%89%A9%E7%90%86/" />
+            <pubDate>Fri, 28 Feb 2025 00:00:00 +0800</pubDate>
+            <description><![CDATA[ &lt;h2 id=&#34;t1-刚体角动量综合题&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#t1-刚体角动量综合题&#34;&gt;#&lt;/a&gt; T1 刚体角动量综合题&lt;/h2&gt;
+&lt;p&gt;&lt;img data-src=&#34;bee493e2a4e0ff1a9e159489e435098.jpg&#34; alt&gt;&lt;br&gt;
+&lt;strong&gt;解答&lt;/strong&gt;&lt;br&gt;
+&lt;img data-src=&#34;f40dc1e1a164b240b23e7cdc15411dc.jpg&#34; alt&gt;&lt;/p&gt;
+ ]]></description>
+        </item>
         <item>
             <guid isPermalink="true">https://stoic-yang.github.io/2025/02/23/obsidian+hexo%E7%AC%94%E8%AE%B0%E6%B5%81/</guid>
             <title>obsidian+hexo笔记流</title>
@@ -52,6 +99,7 @@
 &lt;p&gt;打开仓库后，我们会发现有很多我们不需要的文件夹，我们可以在设置里选择忽视它们，避免它们对我们的搜索功能造成影响。&lt;/p&gt;
 &lt;p&gt;&lt;img data-src=&#34;obsidian+hexo%E7%AC%94%E8%AE%B0%E6%B5%81-20250227201347079.png&#34; alt&gt;&lt;br&gt;
 在忽略文件下面的管理就可以添加自己需要忽略的文件了&lt;/p&gt;
+&lt;h4 id=&#34;实现在-obsidian-软件一键上传笔记&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#实现在-obsidian-软件一键上传笔记&#34;&gt;#&lt;/a&gt; 实现在 obsidian 软件一键上传笔记&lt;/h4&gt;
  ]]></description>
         </item>
         <item>
