@@ -84,12 +84,12 @@
 &lt;/ul&gt;
 &lt;p&gt;hexo 是支持 latex 渲染的，你可以通过安装插件和添加元属性来渲染（注意我的主题 shoka 是支持的，其他主题我不太清楚）&lt;/p&gt;
 &lt;p&gt;&lt;figure class=&#34;highlight plaintext&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;math: true&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;这一点你可以直接看 [主题作者的教程](&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9zaG9rYS5sb3N0eXUubWUvY29tcHV0ZXItc2NpZW5jZS9ub3RlL3RoZW1lLXNob2thLWRvYy9zcGVjaWFsLw==&#34;&gt;Step.4 主题特殊功能 - Theme Shoka Documentation - 二进制杂谈 - 计算机科学 | Yume Shoka = 有夢書架 = 吾乃天，壶中之天&lt;/span&gt;)&lt;/p&gt;
+&lt;p&gt;这一点你可以直接看主题作者的教程 &lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9zaG9rYS5sb3N0eXUubWUvY29tcHV0ZXItc2NpZW5jZS9ub3RlL3RoZW1lLXNob2thLWRvYy9zcGVjaWFsLw==&#34;&gt;Step.4 主题特殊功能 - Theme Shoka Documentation - 二进制杂谈 - 计算机科学 | Yume Shoka = 有夢書架 = 吾乃天，壶中之天&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;说实话，这个主题的配置需要很强的动手能力，文档有一些细节是缺失的，不推荐第一次接触 hexo/hugo 的朋友去配置这个主题。&lt;/p&gt;
 &lt;h4 id=&#34;参考链接&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#参考链接&#34;&gt;#&lt;/a&gt; 参考链接&lt;/h4&gt;
-&lt;p&gt;[关于我使用 obsidian 加 hexo 部署个人博客的过程](&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9zYWdpLXJhc3Rhci5naXRodWIuaW8vMjAyMy8xMS8xMC8lRTUlODUlQjMlRTQlQkElOEUlRTYlODglOTElRTQlQkQlQkYlRTclOTQlQThvYnNpZGlhbiVFNSU4QSVBMGhleG8lRTklODMlQTglRTclQkQlQjIlRTQlQjglQUElRTQlQkElQkElRTUlOEQlOUElRTUlQUUlQTIlRTclOUElODQlRTglQkYlODclRTclQTglOEIv&#34;&gt;关于我使用 obsidian 加 hexo 部署个人博客的过程 - SagiRastar&#39;s Blog&lt;/span&gt;)&lt;/p&gt;
-&lt;p&gt;[Hexo + Obsidian + Git 完美的博客部署与编辑方案](&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9zZWdtZW50ZmF1bHQuY29tL2EvMTE5MDAwMDA0MjExMTU2Ng==&#34;&gt;Hexo + Obsidian + Git 完美的博客部署与编辑方案 - 个人文章 - SegmentFault 思否&lt;/span&gt;)&lt;/p&gt;
-&lt;p&gt;[shoka 主题文档](&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9zaG9rYS5sb3N0eXUubWUvY29tcHV0ZXItc2NpZW5jZS9ub3RlL3RoZW1lLXNob2thLWRvYy9zcGVjaWFsLw==&#34;&gt;Step.4 主题特殊功能 - Theme Shoka Documentation - 二进制杂谈 - 计算机科学 | Yume Shoka = 有夢書架 = 吾乃天，壶中之天&lt;/span&gt;)&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9zYWdpLXJhc3Rhci5naXRodWIuaW8vMjAyMy8xMS8xMC8lRTUlODUlQjMlRTQlQkElOEUlRTYlODglOTElRTQlQkQlQkYlRTclOTQlQThvYnNpZGlhbiVFNSU4QSVBMGhleG8lRTklODMlQTglRTclQkQlQjIlRTQlQjglQUElRTQlQkElQkElRTUlOEQlOUElRTUlQUUlQTIlRTclOUElODQlRTglQkYlODclRTclQTglOEIv&#34;&gt;关于我使用 obsidian 加 hexo 部署个人博客的过程 - SagiRastar&#39;s Blog&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9zZWdtZW50ZmF1bHQuY29tL2EvMTE5MDAwMDA0MjExMTU2Ng==&#34;&gt;Hexo + Obsidian + Git 完美的博客部署与编辑方案 - 个人文章 - SegmentFault 思否&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9zaG9rYS5sb3N0eXUubWUvY29tcHV0ZXItc2NpZW5jZS9ub3RlL3RoZW1lLXNob2thLWRvYy9zcGVjaWFsLw==&#34;&gt;Step.4 主题特殊功能 - Theme Shoka Documentation - 二进制杂谈 - 计算机科学 | Yume Shoka = 有夢書架 = 吾乃天，壶中之天&lt;/span&gt;&lt;/p&gt;
 &lt;h4 id=&#34;结语&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#结语&#34;&gt;#&lt;/a&gt; 结语&lt;/h4&gt;
 &lt;p&gt;教程写得很简陋，更多在于记录自己捣鼓 hexo 和 obsidian 的过程，因为这个教程是断断续续写的，如果教程有错误的地方，请联系我。&lt;/p&gt;
 &lt;p&gt;其实可以不那么折腾的，有更简单便捷的办法去解决图片的问题，但是折腾本身还是很有乐趣的，我也知道还有其他解决方案，也许用 VScode 更好等等。&lt;/p&gt;
@@ -150,8 +150,8 @@
 &lt;p&gt;前半年的打卡简直就是灾难，几乎很少去思考如何改进自己的各个事情，很多事情明明有很多改进空间的，但是一直被自己搁置了，现在的一个想法随手记录一下自己的想法，然后在打卡的时刻确定一个主题，去激活自己的思考，让自己的打卡效能发挥出来，我的每一天都应该去建立在昨天的经验基础上，实现自己的不断进步。&lt;/p&gt;
 </content>
         <category term="随笔" scheme="https://stoic-yang.github.io/categories/%E9%9A%8F%E7%AC%94/" />
-        <category term="学习流" scheme="https://stoic-yang.github.io/tags/%E5%AD%A6%E4%B9%A0%E6%B5%81/" />
         <category term="反思" scheme="https://stoic-yang.github.io/tags/%E5%8F%8D%E6%80%9D/" />
+        <category term="学习流" scheme="https://stoic-yang.github.io/tags/%E5%AD%A6%E4%B9%A0%E6%B5%81/" />
         <updated>2025-02-28T16:00:00.000Z</updated>
     </entry>
     <entry>
