@@ -33,15 +33,6 @@
         <updated>2025-03-03T16:00:00.000Z</updated>
     </entry>
     <entry>
-        <id>https://stoic-yang.github.io/2025/03/03/%E8%80%83%E8%AF%95%E5%91%A8%E4%B8%AD%E7%9A%84%E5%8F%8D%E6%80%9D/</id>
-        <title>考试周中的反思</title>
-        <link rel="alternate" href="https://stoic-yang.github.io/2025/03/03/%E8%80%83%E8%AF%95%E5%91%A8%E4%B8%AD%E7%9A%84%E5%8F%8D%E6%80%9D/"/>
-        <content type="html"></content>
-        <category term="学业" scheme="https://stoic-yang.github.io/categories/%E5%AD%A6%E4%B8%9A/" />
-        <category term="反思" scheme="https://stoic-yang.github.io/tags/%E5%8F%8D%E6%80%9D/" />
-        <updated>2025-03-02T16:00:00.000Z</updated>
-    </entry>
-    <entry>
         <id>https://stoic-yang.github.io/2025/03/01/%E5%AF%B9%E4%BA%8E%E8%BF%91%E6%9D%A5%E7%8A%B6%E5%86%B5%E7%9A%84%E5%8F%8D%E6%80%9D/</id>
         <title>对于近来状况的反思</title>
         <link rel="alternate" href="https://stoic-yang.github.io/2025/03/01/%E5%AF%B9%E4%BA%8E%E8%BF%91%E6%9D%A5%E7%8A%B6%E5%86%B5%E7%9A%84%E5%8F%8D%E6%80%9D/"/>
@@ -51,21 +42,9 @@
 &lt;p&gt;前半年的打卡简直就是灾难，几乎很少去思考如何改进自己的各个事情，很多事情明明有很多改进空间的，但是一直被自己搁置了，现在的一个想法随手记录一下自己的想法，然后在打卡的时刻确定一个主题，去激活自己的思考，让自己的打卡效能发挥出来，我的每一天都应该去建立在昨天的经验基础上，实现自己的不断进步。&lt;/p&gt;
 </content>
         <category term="随笔" scheme="https://stoic-yang.github.io/categories/%E9%9A%8F%E7%AC%94/" />
-        <category term="反思" scheme="https://stoic-yang.github.io/tags/%E5%8F%8D%E6%80%9D/" />
         <category term="学习流" scheme="https://stoic-yang.github.io/tags/%E5%AD%A6%E4%B9%A0%E6%B5%81/" />
-        <updated>2025-02-28T16:00:00.000Z</updated>
-    </entry>
-    <entry>
-        <id>https://stoic-yang.github.io/2025/02/23/%E4%B8%80%E7%82%B9%E9%9A%8F%E6%83%B3%E2%80%94%E2%80%94%E6%96%B0%E9%98%B6%E6%AE%B5%E7%9A%84%E5%B1%95%E5%BC%80/</id>
-        <title>一点随想</title>
-        <link rel="alternate" href="https://stoic-yang.github.io/2025/02/23/%E4%B8%80%E7%82%B9%E9%9A%8F%E6%83%B3%E2%80%94%E2%80%94%E6%96%B0%E9%98%B6%E6%AE%B5%E7%9A%84%E5%B1%95%E5%BC%80/"/>
-        <content type="html">&lt;p&gt;我之前实在是过于悲观了，没有一个宏大的规划，各种的换方向，导致自己一直在失败，摆烂带来的负面情绪很容易让人沉沦迷失自我。现在看来，我遇到的问题没有很复杂，只不过是相信自己可以达到自己的目标，一步一步去设计实现这个目标的步骤，坚定不移地贯彻自己的行动罢了，现在的我也已经基本确定了自己的目标。&lt;/p&gt;
-&lt;p&gt;不必感到自卑，不必感到伤感，只顾着往前走，脱去身上的冷气，实现你所宣称的未来&lt;/p&gt;
-</content>
-        <category term="随笔" scheme="https://stoic-yang.github.io/categories/%E9%9A%8F%E7%AC%94/" />
-        <category term="生活" scheme="https://stoic-yang.github.io/tags/%E7%94%9F%E6%B4%BB/" />
         <category term="反思" scheme="https://stoic-yang.github.io/tags/%E5%8F%8D%E6%80%9D/" />
-        <updated>2025-02-22T16:00:00.000Z</updated>
+        <updated>2025-02-28T16:00:00.000Z</updated>
     </entry>
     <entry>
         <id>https://stoic-yang.github.io/2025/02/23/obsidian+hexo%E7%AC%94%E8%AE%B0%E6%B5%81/</id>
@@ -108,6 +87,18 @@
         <category term="obsidian" scheme="https://stoic-yang.github.io/tags/obsidian/" />
         <category term="学习流" scheme="https://stoic-yang.github.io/tags/%E5%AD%A6%E4%B9%A0%E6%B5%81/" />
         <category term="工作流" scheme="https://stoic-yang.github.io/tags/%E5%B7%A5%E4%BD%9C%E6%B5%81/" />
+        <updated>2025-02-22T16:00:00.000Z</updated>
+    </entry>
+    <entry>
+        <id>https://stoic-yang.github.io/2025/02/23/%E4%B8%80%E7%82%B9%E9%9A%8F%E6%83%B3%E2%80%94%E2%80%94%E6%96%B0%E9%98%B6%E6%AE%B5%E7%9A%84%E5%B1%95%E5%BC%80/</id>
+        <title>一点随想</title>
+        <link rel="alternate" href="https://stoic-yang.github.io/2025/02/23/%E4%B8%80%E7%82%B9%E9%9A%8F%E6%83%B3%E2%80%94%E2%80%94%E6%96%B0%E9%98%B6%E6%AE%B5%E7%9A%84%E5%B1%95%E5%BC%80/"/>
+        <content type="html">&lt;p&gt;我之前实在是过于悲观了，没有一个宏大的规划，各种的换方向，导致自己一直在失败，摆烂带来的负面情绪很容易让人沉沦迷失自我。现在看来，我遇到的问题没有很复杂，只不过是相信自己可以达到自己的目标，一步一步去设计实现这个目标的步骤，坚定不移地贯彻自己的行动罢了，现在的我也已经基本确定了自己的目标。&lt;/p&gt;
+&lt;p&gt;不必感到自卑，不必感到伤感，只顾着往前走，脱去身上的冷气，实现你所宣称的未来&lt;/p&gt;
+</content>
+        <category term="随笔" scheme="https://stoic-yang.github.io/categories/%E9%9A%8F%E7%AC%94/" />
+        <category term="生活" scheme="https://stoic-yang.github.io/tags/%E7%94%9F%E6%B4%BB/" />
+        <category term="反思" scheme="https://stoic-yang.github.io/tags/%E5%8F%8D%E6%80%9D/" />
         <updated>2025-02-22T16:00:00.000Z</updated>
     </entry>
     <entry>
