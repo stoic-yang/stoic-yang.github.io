@@ -24,7 +24,7 @@
             <pubDate>Mon, 10 Mar 2025 00:00:00 +0800</pubDate>
             <description><![CDATA[ &lt;h2 id=&#34;最终效果&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#最终效果&#34;&gt;#&lt;/a&gt; 最终效果&lt;/h2&gt;
 &lt;p&gt;用 obsidian 写笔记并在 obsidian 内进行 hexo 文件的上传，上传后的网页可以渲染复制粘贴到 obsidian 的图片（比如刷网课时上的截图等等），不需要自己调整图片的格式。&lt;/p&gt;
-&lt;p&gt;附：本人自用的主题：shoka，理论上，这套方法兼容所有 hexo 主题且可以迁移应用于 hugo&lt;/p&gt;
+&lt;p&gt;附：笔者主题：shoka，GitHubpages 部署，理论上，这套方法兼容所有 hexo 主题且可以迁移应用于 hugo&lt;/p&gt;
 &lt;h2 id=&#34;前言&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#前言&#34;&gt;#&lt;/a&gt; 前言&lt;/h2&gt;
 &lt;p&gt;作为一个 obsidian 的重度使用者，如何把 hexo 和 obsidian 结合起来写笔记一直是我在思考的点，在过去我要写一篇笔记到 hexo 上，我需要下面几个步骤：&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;在hexo创建md文件——hexo new ...&lt;/code&gt;  -&amp;gt;  &lt;code&gt;在obsidian写好笔记&lt;/code&gt;  -&amp;gt;  &lt;code&gt;复制笔记到md文件上&lt;/code&gt;  -&amp;gt;  &lt;code&gt;hexo clean，hexo generate，hexo deploy&lt;/code&gt;&lt;/p&gt;
@@ -148,8 +148,8 @@
             <title>对于近来状况的反思</title>
             <link>https://stoic-yang.github.io/2025/03/01/%E5%AF%B9%E4%BA%8E%E8%BF%91%E6%9D%A5%E7%8A%B6%E5%86%B5%E7%9A%84%E5%8F%8D%E6%80%9D/</link>
             <category term="随笔" scheme="https://stoic-yang.github.io/categories/%E9%9A%8F%E7%AC%94/" />
-            <category term="反思" scheme="https://stoic-yang.github.io/tags/%E5%8F%8D%E6%80%9D/" />
             <category term="学习流" scheme="https://stoic-yang.github.io/tags/%E5%AD%A6%E4%B9%A0%E6%B5%81/" />
+            <category term="反思" scheme="https://stoic-yang.github.io/tags/%E5%8F%8D%E6%80%9D/" />
             <pubDate>Sat, 01 Mar 2025 00:00:00 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;缺乏目标的时间会很容易被浪费和损耗掉。只有清晰地知道自己下一个小时应该做什么，才有办法去把时间高效地利用起来，这对于保护自己的专注力也极其重要。&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8yNzI3NTQzNDg2NQ==&#34;&gt;向下聊天的一些感想&lt;/span&gt;&lt;/p&gt;

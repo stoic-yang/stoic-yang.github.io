@@ -15,7 +15,7 @@
         <link rel="alternate" href="https://stoic-yang.github.io/2025/03/10/obsidian+hexo%E7%AC%94%E8%AE%B0%E6%B5%81/"/>
         <content type="html">&lt;h2 id=&#34;最终效果&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#最终效果&#34;&gt;#&lt;/a&gt; 最终效果&lt;/h2&gt;
 &lt;p&gt;用 obsidian 写笔记并在 obsidian 内进行 hexo 文件的上传，上传后的网页可以渲染复制粘贴到 obsidian 的图片（比如刷网课时上的截图等等），不需要自己调整图片的格式。&lt;/p&gt;
-&lt;p&gt;附：本人自用的主题：shoka，理论上，这套方法兼容所有 hexo 主题且可以迁移应用于 hugo&lt;/p&gt;
+&lt;p&gt;附：笔者主题：shoka，GitHubpages 部署，理论上，这套方法兼容所有 hexo 主题且可以迁移应用于 hugo&lt;/p&gt;
 &lt;h2 id=&#34;前言&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#前言&#34;&gt;#&lt;/a&gt; 前言&lt;/h2&gt;
 &lt;p&gt;作为一个 obsidian 的重度使用者，如何把 hexo 和 obsidian 结合起来写笔记一直是我在思考的点，在过去我要写一篇笔记到 hexo 上，我需要下面几个步骤：&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;在hexo创建md文件——hexo new ...&lt;/code&gt;  -&amp;gt;  &lt;code&gt;在obsidian写好笔记&lt;/code&gt;  -&amp;gt;  &lt;code&gt;复制笔记到md文件上&lt;/code&gt;  -&amp;gt;  &lt;code&gt;hexo clean，hexo generate，hexo deploy&lt;/code&gt;&lt;/p&gt;
@@ -150,8 +150,8 @@
 &lt;p&gt;前半年的打卡简直就是灾难，几乎很少去思考如何改进自己的各个事情，很多事情明明有很多改进空间的，但是一直被自己搁置了，现在的一个想法随手记录一下自己的想法，然后在打卡的时刻确定一个主题，去激活自己的思考，让自己的打卡效能发挥出来，我的每一天都应该去建立在昨天的经验基础上，实现自己的不断进步。&lt;/p&gt;
 </content>
         <category term="随笔" scheme="https://stoic-yang.github.io/categories/%E9%9A%8F%E7%AC%94/" />
-        <category term="反思" scheme="https://stoic-yang.github.io/tags/%E5%8F%8D%E6%80%9D/" />
         <category term="学习流" scheme="https://stoic-yang.github.io/tags/%E5%AD%A6%E4%B9%A0%E6%B5%81/" />
+        <category term="反思" scheme="https://stoic-yang.github.io/tags/%E5%8F%8D%E6%80%9D/" />
         <updated>2025-02-28T16:00:00.000Z</updated>
     </entry>
     <entry>
