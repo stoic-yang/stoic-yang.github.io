@@ -18,6 +18,17 @@
             ]
         },
         {
+            "id": "https://stoic-yang.github.io/2025/03/02/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E8%80%83%E8%AF%95%E5%90%8E%E7%9A%84%E5%8F%8D%E6%80%9D/",
+            "url": "https://stoic-yang.github.io/2025/03/02/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E8%80%83%E8%AF%95%E5%90%8E%E7%9A%84%E5%8F%8D%E6%80%9D/",
+            "title": "数据分析考试后的反思",
+            "date_published": "2025-03-01T16:00:00.000Z",
+            "content_html": "<p>信心满满然后炸了，想着我昨天晚上还在刷视频，以为有库函数就随便过了，结果这个库函数就是一坨，不够详细，翻车了，哎。</p>\n<p>考试中遇到的问题，我之前也遇到过了，但是没有仔细地去记录下来，没有引起足够的重视，比如 dataframe 怎么创建。</p>\n<p>知识点必须全过一遍才行，一直以来的傲慢会毁灭我。微积分还没有解决的问题马上解决掉，设想明天的考试就考这个，我能不能做出来，一直以来我学习和复习的方法论都存在巨大的缺陷，慢慢来优化吧，这个是我冬季课程完全摆烂的后果，我必须为此付出代价。冬季才是真正的打醒我，期末考试不是你随便复习个两周就能上的，你这两周的复习的效率还相当的低。</p>\n<p>必须引起重视，想拿高分，还是得要平时课认真听 + 作业认真写。</p>\n<p>既然你想要赢得这场游戏，你就必须去遵守这场游戏的规则，即使游戏的规则让你感到荒诞。虽然现在很糟糕很黑暗，但是还有翻盘的机会，放手一搏吧。</p>\n<p>这一次的期末考确实略显失败，不过也可以给我一次很宝贵的期末周如何冲刺复习的经验，再说，现在还没有输，还有救，md，冲</p>\n",
+            "tags": [
+                "学业",
+                "反思"
+            ]
+        },
+        {
             "id": "https://stoic-yang.github.io/2025/03/01/%E5%AF%B9%E4%BA%8E%E8%BF%91%E6%9D%A5%E7%8A%B6%E5%86%B5%E7%9A%84%E5%8F%8D%E6%80%9D/",
             "url": "https://stoic-yang.github.io/2025/03/01/%E5%AF%B9%E4%BA%8E%E8%BF%91%E6%9D%A5%E7%8A%B6%E5%86%B5%E7%9A%84%E5%8F%8D%E6%80%9D/",
             "title": "对于近来状况的反思",
@@ -83,7 +94,9 @@
             "title": "Hello World",
             "date_published": "2025-01-25T13:49:44.115Z",
             "content_html": "<p>Welcome to <span class=\"exturl\" data-url=\"aHR0cHM6Ly9oZXhvLmlvLw==\">Hexo</span>! This is your very first post. Check <span class=\"exturl\" data-url=\"aHR0cHM6Ly9oZXhvLmlvL2RvY3Mv\">documentation</span> for more info. If you get any problems when using Hexo, you can find the answer in <span class=\"exturl\" data-url=\"aHR0cHM6Ly9oZXhvLmlvL2RvY3MvdHJvdWJsZXNob290aW5nLmh0bWw=\">troubleshooting</span> or you can ask me on <span class=\"exturl\" data-url=\"aHR0cHM6Ly9naXRodWIuY29tL2hleG9qcy9oZXhvL2lzc3Vlcw==\">GitHub</span>.</p>\n<h2 id=\"quick-start\"><a class=\"anchor\" href=\"#quick-start\">#</a> Quick Start</h2>\n<h3 id=\"create-a-new-post\"><a class=\"anchor\" href=\"#create-a-new-post\">#</a> Create a new post</h3>\n<p><figure class=\"highlight bash\"><table><tr><td class=\"gutter\"><pre><span class=\"line\">1</span><br></pre></td><td class=\"code\"><pre><span class=\"line\">$ hexo new <span class=\"string\">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure></p>\n<p>More info: <span class=\"exturl\" data-url=\"aHR0cHM6Ly9oZXhvLmlvL2RvY3Mvd3JpdGluZy5odG1s\">Writing</span></p>\n<h3 id=\"run-server\"><a class=\"anchor\" href=\"#run-server\">#</a> Run server</h3>\n<p><figure class=\"highlight bash\"><table><tr><td class=\"gutter\"><pre><span class=\"line\">1</span><br></pre></td><td class=\"code\"><pre><span class=\"line\">$ hexo server</span><br></pre></td></tr></table></figure></p>\n<p>More info: <span class=\"exturl\" data-url=\"aHR0cHM6Ly9oZXhvLmlvL2RvY3Mvc2VydmVyLmh0bWw=\">Server</span></p>\n<h3 id=\"generate-static-files\"><a class=\"anchor\" href=\"#generate-static-files\">#</a> Generate static files</h3>\n<p><figure class=\"highlight bash\"><table><tr><td class=\"gutter\"><pre><span class=\"line\">1</span><br></pre></td><td class=\"code\"><pre><span class=\"line\">$ hexo generate</span><br></pre></td></tr></table></figure></p>\n<p>More info: <span class=\"exturl\" data-url=\"aHR0cHM6Ly9oZXhvLmlvL2RvY3MvZ2VuZXJhdGluZy5odG1s\">Generating</span></p>\n<h3 id=\"deploy-to-remote-sites\"><a class=\"anchor\" href=\"#deploy-to-remote-sites\">#</a> Deploy to remote sites</h3>\n<p><figure class=\"highlight bash\"><table><tr><td class=\"gutter\"><pre><span class=\"line\">1</span><br></pre></td><td class=\"code\"><pre><span class=\"line\">$ hexo deploy</span><br></pre></td></tr></table></figure></p>\n<p>More info: <span class=\"exturl\" data-url=\"aHR0cHM6Ly9oZXhvLmlvL2RvY3Mvb25lLWNvbW1hbmQtZGVwbG95bWVudC5odG1s\">Deployment</span></p>\n",
-            "tags": []
+            "tags": [
+                "hexo"
+            ]
         },
         {
             "id": "https://stoic-yang.github.io/2025/01/09/2024%E5%9B%9E%E9%A1%BE%E4%B8%8E2025%E7%9A%84%E6%9C%BA%E9%81%87%E4%B8%8E%E6%8C%91%E6%88%98/",
