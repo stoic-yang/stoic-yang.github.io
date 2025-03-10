@@ -123,7 +123,7 @@
 &lt;p&gt;对的，这个问题明显还没有被解决，前面只是做到了把操作简化而已。&lt;/p&gt;
 &lt;p&gt;这里我们要搞明白为什么我们复制粘贴到 obsidian 的文件是没法正确渲染到 hexo 的&lt;/p&gt;
 &lt;p&gt;如果你直接上传你复制粘贴的笔记，你应该会看到你的图片变成了下面的文字&lt;br&gt;
- &lt;figure class=&#34;highlight md&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;![12313.png]&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;br&gt;
+ &lt;figure class=&#34;highlight md&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;![[12313.png]]&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;br&gt;
  因为 obsidian 默认的设置不是原生的 md 格式的图片，要恢复原始 md 的格式&lt;br&gt;
  &lt;figure class=&#34;highlight md&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;例如![](&lt;span class=&#34;link&#34;&gt;obsidian+hexo笔记流-20250310103733400.png&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;br&gt;
  你需要调整一下你的设置&lt;br&gt;
