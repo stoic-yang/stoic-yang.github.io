@@ -33,6 +33,36 @@
 &lt;li&gt;数据库连接问题&lt;br&gt;
 你大概率连接不上数据库，因为初始工程的密码跟你的 MySQL 的密码大概率是不一样的，找到你的  &lt;code&gt;application-dev.yml&lt;/code&gt; ，把密码和账号改为自己的就可以连接上了，另外前提肯定是你安装了 MySQL，还有 idea 本身支持导入数据库。&lt;/li&gt;
 &lt;/ul&gt;
+&lt;h2 id=&#34;nginx-反向代理&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#nginx-反向代理&#34;&gt;#&lt;/a&gt; nginx 反向代理&lt;/h2&gt;
+&lt;p&gt;前端请求地址与后端的接口地址不一样，前端动态请求通过 nginx 转发到了后端服务器&lt;/p&gt;
+&lt;p&gt;好处：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;提高访问速度&lt;/li&gt;
+&lt;li&gt;负载均衡 —— 降低单台服务器的压力&lt;/li&gt;
+&lt;li&gt;保证后端服务安全，后端服务不对外开放&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img data-src=&#34;%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-20250313110103496.png&#34; alt&gt;&lt;/p&gt;
+&lt;p&gt;前端的 /api/ 经过 nginx 转化为配置的路径&lt;/p&gt;
+&lt;h2 id=&#34;接口&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#接口&#34;&gt;#&lt;/a&gt; 接口&lt;/h2&gt;
+&lt;p&gt;接口一般是在项目开始写之前就确定好的，跟信息办对接的时候，我可以自己尝试去写写接口文档&lt;/p&gt;
+&lt;h2 id=&#34;swagger&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#swagger&#34;&gt;#&lt;/a&gt; Swagger&lt;/h2&gt;
+&lt;p&gt;Swagger 是一个规范和完整的框架，用于生成、描述、调用和可视化 RESTful 风格的 Web 服务 (&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly9zd2FnZ2VyLmlvLw==&#34;&gt;https://swagger.io/&lt;/span&gt;)。它的主要作用是：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;使得前后端分离开发更加方便，有利于团队协作&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;接口的文档在线自动生成，降低后端开发人员编写接口文档的负担&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;功能测试&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;lombok&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#lombok&#34;&gt;#&lt;/a&gt; Lombok&lt;/h2&gt;
+&lt;p&gt;有的时候，识别不到 get 和 set 函数，这个时候可以把 maven clean 重新编译&lt;/p&gt;
+&lt;h2 id=&#34;新增员工500-错误码&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#新增员工500-错误码&#34;&gt;#&lt;/a&gt; 新增员工 ——500 错误码&lt;/h2&gt;
+&lt;p&gt;遇见错误码，先检查控制台，这种情况下大概率是 sql 语句写错了&lt;/p&gt;
+&lt;p&gt;这里我就是把 id 属性 insert 了，实际上 id 会在数据库上自动填充&lt;/p&gt;
 </content>
         <category term="计算机学习" scheme="https://stoic-yang.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%AD%A6%E4%B9%A0/" />
         <category term="java" scheme="https://stoic-yang.github.io/tags/java/" />
