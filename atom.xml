@@ -10,6 +10,36 @@
     </author>
     <updated>2025-03-12T16:00:00.000Z</updated>
     <entry>
+        <id>https://stoic-yang.github.io/2025/03/13/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96/</id>
+        <title>苍穹外卖</title>
+        <link rel="alternate" href="https://stoic-yang.github.io/2025/03/13/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96/"/>
+        <content type="html">&lt;p&gt;该贴将记录笔者在学习该项目时遇到的问题及解决方法、笔记、想法和工作日志&lt;/p&gt;
+&lt;h1 id=&#34;day-1&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#day-1&#34;&gt;#&lt;/a&gt; Day 1&lt;/h1&gt;
+&lt;h2 id=&#34;初始环境的问题以及解决方案&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#初始环境的问题以及解决方案&#34;&gt;#&lt;/a&gt; 初始环境的问题以及解决方案&lt;/h2&gt;
+&lt;p&gt;第一次运行这个项目的人，基本上会遇到初始环境启动问题。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;前端，注意你的 80 端口是否被占用以及 nginx 文件是否放在了全英文文件夹下面&lt;br&gt;
+如果你的 80 端口被占用，可以去修改 nginx. conf 下的端口，比如我就该为了 81，在启动服务器的时候进入的网站也要跟着你的端口号去修改&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img data-src=&#34;%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-20250313102731024.png&#34; alt&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;后端环境与数据库&lt;br&gt;
+后端环境问题有两个，你需要先看自己的 maven 能不能编译出来，如果编译不出来，大概率是因为 Lombok 工具包没有打上，这里你要去找最新的版本号，去每一个 pom. xml 文件的依赖部分添加。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;另一个可能出现的问题是，Java 版本号不对  &lt;code&gt;java: 错误: 不支持发行版本 5&lt;/code&gt; &lt;br&gt;
+&lt;img data-src=&#34;%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-20250313103412758.png&#34; alt&gt;&lt;/p&gt;
+&lt;p&gt;解决这个问题的关键在于调整你的版本号，上面图片紫色图标右边点击数字可以切换版本，全部改为 1.8 应该就可以跑起来了&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;数据库连接问题&lt;br&gt;
+你大概率连接不上数据库，因为初始工程的密码跟你的 MySQL 的密码大概率是不一样的，找到你的  &lt;code&gt;application-dev.yml&lt;/code&gt; ，把密码和账号改为自己的就可以连接上了，另外前提肯定是你安装了 MySQL，还有 idea 本身支持导入数据库。&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+        <category term="计算机学习" scheme="https://stoic-yang.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%AD%A6%E4%B9%A0/" />
+        <category term="java" scheme="https://stoic-yang.github.io/tags/java/" />
+        <category term="后端" scheme="https://stoic-yang.github.io/tags/%E5%90%8E%E7%AB%AF/" />
+        <updated>2025-03-12T16:00:00.000Z</updated>
+    </entry>
+    <entry>
         <id>https://stoic-yang.github.io/2025/03/13/%E9%80%BB%E8%BE%91%E5%93%B2%E5%AD%A6%E8%AE%BA/</id>
         <title>逻辑哲学论</title>
         <link rel="alternate" href="https://stoic-yang.github.io/2025/03/13/%E9%80%BB%E8%BE%91%E5%93%B2%E5%AD%A6%E8%AE%BA/"/>
