@@ -67,9 +67,21 @@
 &lt;/ol&gt;
 &lt;h2 id=&#34;lombok&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#lombok&#34;&gt;#&lt;/a&gt; Lombok&lt;/h2&gt;
 &lt;p&gt;有的时候，识别不到 get 和 set 函数，这个时候可以把 maven clean 重新编译&lt;/p&gt;
+&lt;h1 id=&#34;day-2&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#day-2&#34;&gt;#&lt;/a&gt; Day 2&lt;/h1&gt;
 &lt;h2 id=&#34;新增员工500-错误码&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#新增员工500-错误码&#34;&gt;#&lt;/a&gt; 新增员工 ——500 错误码&lt;/h2&gt;
 &lt;p&gt;遇见错误码，先检查控制台，这种情况下大概率是 sql 语句写错了&lt;/p&gt;
 &lt;p&gt;这里我就是把 id 属性 insert 了，实际上 id 会在数据库上自动填充&lt;/p&gt;
+&lt;h2 id=&#34;代码完善&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#代码完善&#34;&gt;#&lt;/a&gt; 代码完善&lt;/h2&gt;
+&lt;p&gt;录入重复的值，数据库唯一约束重新出现的处理 —— 全局异常处理器&lt;/p&gt;
+&lt;h2 id=&#34;threadlocal&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#threadlocal&#34;&gt;#&lt;/a&gt; ThreadLocal&lt;/h2&gt;
+&lt;p&gt;Q：如何获取当前登录账号的 id？&lt;br&gt;
+A：从 jwt 令牌上解析出来&lt;/p&gt;
+&lt;h2 id=&#34;员工编辑&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#员工编辑&#34;&gt;#&lt;/a&gt; 员工编辑&lt;/h2&gt;
+&lt;p&gt;没有在 controler 层传入 @RequetBody 这类注解，导致 200 但是没有修改成功&lt;/p&gt;
+&lt;h2 id=&#34;mapper-xml-文件配置错误&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#mapper-xml-文件配置错误&#34;&gt;#&lt;/a&gt; Mapper xml 文件配置错误&lt;/h2&gt;
+&lt;p&gt;在写新增分类的时候，我只留了一个空的 xml 配置文件，于是报错了。&lt;/p&gt;
+&lt;p&gt;修正的办法就是把 xml 需要的基本信息填上&lt;br&gt;
+ &lt;figure class=&#34;highlight xml&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;&amp;lt;?xml version=&lt;span class=&#34;string&#34;&gt;&amp;quot;1.0&amp;quot;&lt;/span&gt; encoding=&lt;span class=&#34;string&#34;&gt;&amp;quot;UTF-8&amp;quot;&lt;/span&gt; ?&amp;gt;&lt;/span&gt;  &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;&amp;lt;!DOCTYPE &lt;span class=&#34;keyword&#34;&gt;mapper&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;PUBLIC&lt;/span&gt; &lt;span class=&#34;string&#34;&gt;&amp;quot;-//mybatis.org//DTD Mapper 3.0//EN&amp;quot;&lt;/span&gt; &lt;span class=&#34;string&#34;&gt;&amp;quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&amp;quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;  &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;tag&#34;&gt;&amp;lt;&lt;span class=&#34;name&#34;&gt;mapper&lt;/span&gt; &lt;span class=&#34;attr&#34;&gt;namespace&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;com.sky.mapper.CategoryMapper&amp;quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;  &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;comment&#34;&gt;&amp;lt;!-- Your mapping statements here --&amp;gt;&lt;/span&gt;  &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;tag&#34;&gt;&amp;lt;/&lt;span class=&#34;name&#34;&gt;mapper&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
  ]]></description>
         </item>
         <item>
@@ -204,6 +216,32 @@
 &lt;p&gt;最个人的也最普遍&lt;/p&gt;
 &lt;h2 id=&#34;第二讲&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#第二讲&#34;&gt;#&lt;/a&gt; 第二讲&lt;/h2&gt;
 &lt;p&gt;问题创造现实&lt;/p&gt;
+&lt;h2 id=&#34;第七讲逆境还是机遇&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#第七讲逆境还是机遇&#34;&gt;#&lt;/a&gt; 第七讲 —— 逆境还是机遇&lt;/h2&gt;
+&lt;p&gt;不从失败中吸取经验，你永远都不会有所长进&lt;/p&gt;
+&lt;p&gt;我们如何才能变得更乐观呢？&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;付诸行动&lt;/li&gt;
+&lt;li&gt;想象&lt;/li&gt;
+&lt;li&gt;认知疗法&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;失败后的挫败感比起失败带给人的痛苦比失败本身更糟糕&lt;/p&gt;
+&lt;p&gt;也许失败没有想象中那么严重，但是挫败感是可能毁灭一个人的&lt;/p&gt;
+&lt;p&gt;付诸行动，就是要用微小的成功和进步去摆脱挫败感和无力感&lt;/p&gt;
+&lt;p&gt;要看到自己重新步入正轨，失败时重新振作起来&lt;/p&gt;
+&lt;p&gt;不仅要想象结果，还要想象这个过程&lt;/p&gt;
+&lt;p&gt;必须通过情感去激发行动&lt;/p&gt;
+&lt;p&gt;我们需要重建理性和真实&lt;/p&gt;
+&lt;p&gt;问问自己&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;我在什么地方扭曲了现实呢？&lt;/li&gt;
+&lt;li&gt;我在哪里扭曲了自己的评价，从而导致了不必要的负面情绪呢？&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;把失败灾难化，如果你不把它看成一次机遇，一块踮脚石，而把它看成世界的终结，那是阻止我们挑战自我的重要因素&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;我们对过去的解读往往会成为自证的预言&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这句话说的太好了，我之前泛滥使用消极想象，结果成为了自证的预言，不能再消极想象下去了&lt;/p&gt;
+&lt;p&gt;学会去质疑不理想的想法&lt;/p&gt;
  ]]></description>
         </item>
         <item>
@@ -226,8 +264,8 @@
             <title>对于近来状况的反思</title>
             <link>https://stoic-yang.github.io/2025/03/01/%E5%AF%B9%E4%BA%8E%E8%BF%91%E6%9D%A5%E7%8A%B6%E5%86%B5%E7%9A%84%E5%8F%8D%E6%80%9D/</link>
             <category term="随笔" scheme="https://stoic-yang.github.io/categories/%E9%9A%8F%E7%AC%94/" />
-            <category term="学习流" scheme="https://stoic-yang.github.io/tags/%E5%AD%A6%E4%B9%A0%E6%B5%81/" />
             <category term="反思" scheme="https://stoic-yang.github.io/tags/%E5%8F%8D%E6%80%9D/" />
+            <category term="学习流" scheme="https://stoic-yang.github.io/tags/%E5%AD%A6%E4%B9%A0%E6%B5%81/" />
             <pubDate>Sat, 01 Mar 2025 00:00:00 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;缺乏目标的时间会很容易被浪费和损耗掉。只有清晰地知道自己下一个小时应该做什么，才有办法去把时间高效地利用起来，这对于保护自己的专注力也极其重要。&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;exturl&#34; data-url=&#34;aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8yNzI3NTQzNDg2NQ==&#34;&gt;向下聊天的一些感想&lt;/span&gt;&lt;/p&gt;
