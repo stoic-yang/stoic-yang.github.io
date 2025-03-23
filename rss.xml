@@ -10,35 +10,16 @@
         </author>
         <description>stay hungray, stay foolish</description>
         <language>zh-CN</language>
-        <pubDate>Tue, 18 Mar 2025 00:00:00 +0800</pubDate>
-        <lastBuildDate>Tue, 18 Mar 2025 00:00:00 +0800</lastBuildDate>
+        <pubDate>Sun, 23 Mar 2025 00:00:00 +0800</pubDate>
+        <lastBuildDate>Sun, 23 Mar 2025 00:00:00 +0800</lastBuildDate>
         <item>
-            <guid isPermalink="true">https://stoic-yang.github.io/2025/03/18/%E4%BA%BA%E6%9C%88%E7%A5%9E%E8%AF%9D/</guid>
-            <title>人月神话</title>
-            <link>https://stoic-yang.github.io/2025/03/18/%E4%BA%BA%E6%9C%88%E7%A5%9E%E8%AF%9D/</link>
-            <category term="计算机学习" scheme="https://stoic-yang.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%AD%A6%E4%B9%A0/" />
-            <category term="读书" scheme="https://stoic-yang.github.io/tags/%E8%AF%BB%E4%B9%A6/" />
-            <category term="管理" scheme="https://stoic-yang.github.io/tags/%E7%AE%A1%E7%90%86/" />
-            <category term="思维" scheme="https://stoic-yang.github.io/tags/%E6%80%9D%E7%BB%B4/" />
-            <pubDate>Tue, 18 Mar 2025 00:00:00 +0800</pubDate>
-            <description><![CDATA[ &lt;p&gt;缺乏合理的进度安排是造成项目滞后的最主要原因，造成这种灾难的普遍原因是什么？&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;对技术缺乏有效的研究&lt;/li&gt;
-&lt;li&gt;错误把进度和工作量相互混淆&lt;/li&gt;
-&lt;li&gt;对自己的估算缺乏信心&lt;/li&gt;
-&lt;li&gt;对项目缺少跟踪和监督&lt;/li&gt;
-&lt;li&gt;意思到进度的偏移后，下意识是添加人力&lt;/li&gt;
-&lt;/ol&gt;
- ]]></description>
-        </item>
-        <item>
-            <guid isPermalink="true">https://stoic-yang.github.io/2025/03/13/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96/</guid>
+            <guid isPermalink="true">https://stoic-yang.github.io/2025/03/23/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96/</guid>
             <title>苍穹外卖</title>
-            <link>https://stoic-yang.github.io/2025/03/13/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96/</link>
+            <link>https://stoic-yang.github.io/2025/03/23/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96/</link>
             <category term="计算机学习" scheme="https://stoic-yang.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%AD%A6%E4%B9%A0/" />
             <category term="java" scheme="https://stoic-yang.github.io/tags/java/" />
             <category term="后端" scheme="https://stoic-yang.github.io/tags/%E5%90%8E%E7%AB%AF/" />
-            <pubDate>Thu, 13 Mar 2025 00:00:00 +0800</pubDate>
+            <pubDate>Sun, 23 Mar 2025 00:00:00 +0800</pubDate>
             <description><![CDATA[ &lt;p&gt;该贴将记录笔者在学习该项目时遇到的问题及解决方法、笔记、想法和工作日志&lt;/p&gt;
 &lt;h1 id=&#34;day-1&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#day-1&#34;&gt;#&lt;/a&gt; Day 1&lt;/h1&gt;
 &lt;h2 id=&#34;初始环境的问题以及解决方案&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#初始环境的问题以及解决方案&#34;&gt;#&lt;/a&gt; 初始环境的问题以及解决方案&lt;/h2&gt;
@@ -148,6 +129,25 @@ A：从 jwt 令牌上解析出来&lt;/p&gt;
 &lt;p&gt;&lt;figure class=&#34;highlight java&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;20&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;//新增套餐  &lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;@Transactional&lt;/span&gt;  &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;@Override&lt;/span&gt;  &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;title function_&#34;&gt;addSetmeal&lt;/span&gt;&lt;span class=&#34;params&#34;&gt;(SetmealDTO setmealDTO)&lt;/span&gt; &amp;#123;  &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;type&#34;&gt;Setmeal&lt;/span&gt; &lt;span class=&#34;variable&#34;&gt;setmeal&lt;/span&gt; &lt;span class=&#34;operator&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;title class_&#34;&gt;Setmeal&lt;/span&gt;();  &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    BeanUtils.copyProperties(setmealDTO,setmeal);  &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    setmeal.setStatus(StatusConstant.DISABLE);  &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    setmealMapper.addSetmeal(setmeal);  &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    List&amp;lt;SetmealDish&amp;gt; setmealDishes= setmealDTO.getSetmealDishes();  &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;comment&#34;&gt;//获取生成的套餐id  &lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;type&#34;&gt;Long&lt;/span&gt; &lt;span class=&#34;variable&#34;&gt;setmealId&lt;/span&gt; &lt;span class=&#34;operator&#34;&gt;=&lt;/span&gt; setmeal.getId();  &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    setmealDishes.forEach(setmealDish -&amp;gt; &amp;#123;  &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        setmealDish.setSetmealId(setmealId);  &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125;);  &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    setmealDishMapper.save(setmealDishes);  &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;还需要注意对表操作的先后顺序&lt;/p&gt;
 &lt;p&gt;例如在这段业务代码上， &lt;code&gt;setmealDish&lt;/code&gt;  需要套餐的 id，因此先对套餐表进行插入操作，再从套餐表获取 id 值，通过 forEach 和 set 函数将 id 放入 setmealDish&lt;/p&gt;
+ ]]></description>
+        </item>
+        <item>
+            <guid isPermalink="true">https://stoic-yang.github.io/2025/03/18/%E4%BA%BA%E6%9C%88%E7%A5%9E%E8%AF%9D/</guid>
+            <title>人月神话</title>
+            <link>https://stoic-yang.github.io/2025/03/18/%E4%BA%BA%E6%9C%88%E7%A5%9E%E8%AF%9D/</link>
+            <category term="计算机学习" scheme="https://stoic-yang.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%AD%A6%E4%B9%A0/" />
+            <category term="读书" scheme="https://stoic-yang.github.io/tags/%E8%AF%BB%E4%B9%A6/" />
+            <category term="管理" scheme="https://stoic-yang.github.io/tags/%E7%AE%A1%E7%90%86/" />
+            <category term="思维" scheme="https://stoic-yang.github.io/tags/%E6%80%9D%E7%BB%B4/" />
+            <pubDate>Tue, 18 Mar 2025 00:00:00 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;缺乏合理的进度安排是造成项目滞后的最主要原因，造成这种灾难的普遍原因是什么？&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;对技术缺乏有效的研究&lt;/li&gt;
+&lt;li&gt;错误把进度和工作量相互混淆&lt;/li&gt;
+&lt;li&gt;对自己的估算缺乏信心&lt;/li&gt;
+&lt;li&gt;对项目缺少跟踪和监督&lt;/li&gt;
+&lt;li&gt;意思到进度的偏移后，下意识是添加人力&lt;/li&gt;
+&lt;/ol&gt;
  ]]></description>
         </item>
         <item>

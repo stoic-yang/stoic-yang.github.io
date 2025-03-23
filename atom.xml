@@ -8,30 +8,11 @@
     <author>
       <name>Zarathu</name>
     </author>
-    <updated>2025-03-17T16:00:00.000Z</updated>
+    <updated>2025-03-22T16:00:00.000Z</updated>
     <entry>
-        <id>https://stoic-yang.github.io/2025/03/18/%E4%BA%BA%E6%9C%88%E7%A5%9E%E8%AF%9D/</id>
-        <title>人月神话</title>
-        <link rel="alternate" href="https://stoic-yang.github.io/2025/03/18/%E4%BA%BA%E6%9C%88%E7%A5%9E%E8%AF%9D/"/>
-        <content type="html">&lt;p&gt;缺乏合理的进度安排是造成项目滞后的最主要原因，造成这种灾难的普遍原因是什么？&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;对技术缺乏有效的研究&lt;/li&gt;
-&lt;li&gt;错误把进度和工作量相互混淆&lt;/li&gt;
-&lt;li&gt;对自己的估算缺乏信心&lt;/li&gt;
-&lt;li&gt;对项目缺少跟踪和监督&lt;/li&gt;
-&lt;li&gt;意思到进度的偏移后，下意识是添加人力&lt;/li&gt;
-&lt;/ol&gt;
-</content>
-        <category term="计算机学习" scheme="https://stoic-yang.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%AD%A6%E4%B9%A0/" />
-        <category term="读书" scheme="https://stoic-yang.github.io/tags/%E8%AF%BB%E4%B9%A6/" />
-        <category term="管理" scheme="https://stoic-yang.github.io/tags/%E7%AE%A1%E7%90%86/" />
-        <category term="思维" scheme="https://stoic-yang.github.io/tags/%E6%80%9D%E7%BB%B4/" />
-        <updated>2025-03-17T16:00:00.000Z</updated>
-    </entry>
-    <entry>
-        <id>https://stoic-yang.github.io/2025/03/13/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96/</id>
+        <id>https://stoic-yang.github.io/2025/03/23/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96/</id>
         <title>苍穹外卖</title>
-        <link rel="alternate" href="https://stoic-yang.github.io/2025/03/13/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96/"/>
+        <link rel="alternate" href="https://stoic-yang.github.io/2025/03/23/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96/"/>
         <content type="html">&lt;p&gt;该贴将记录笔者在学习该项目时遇到的问题及解决方法、笔记、想法和工作日志&lt;/p&gt;
 &lt;h1 id=&#34;day-1&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#day-1&#34;&gt;#&lt;/a&gt; Day 1&lt;/h1&gt;
 &lt;h2 id=&#34;初始环境的问题以及解决方案&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#初始环境的问题以及解决方案&#34;&gt;#&lt;/a&gt; 初始环境的问题以及解决方案&lt;/h2&gt;
@@ -145,7 +126,26 @@ A：从 jwt 令牌上解析出来&lt;/p&gt;
         <category term="计算机学习" scheme="https://stoic-yang.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%AD%A6%E4%B9%A0/" />
         <category term="java" scheme="https://stoic-yang.github.io/tags/java/" />
         <category term="后端" scheme="https://stoic-yang.github.io/tags/%E5%90%8E%E7%AB%AF/" />
-        <updated>2025-03-12T16:00:00.000Z</updated>
+        <updated>2025-03-22T16:00:00.000Z</updated>
+    </entry>
+    <entry>
+        <id>https://stoic-yang.github.io/2025/03/18/%E4%BA%BA%E6%9C%88%E7%A5%9E%E8%AF%9D/</id>
+        <title>人月神话</title>
+        <link rel="alternate" href="https://stoic-yang.github.io/2025/03/18/%E4%BA%BA%E6%9C%88%E7%A5%9E%E8%AF%9D/"/>
+        <content type="html">&lt;p&gt;缺乏合理的进度安排是造成项目滞后的最主要原因，造成这种灾难的普遍原因是什么？&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;对技术缺乏有效的研究&lt;/li&gt;
+&lt;li&gt;错误把进度和工作量相互混淆&lt;/li&gt;
+&lt;li&gt;对自己的估算缺乏信心&lt;/li&gt;
+&lt;li&gt;对项目缺少跟踪和监督&lt;/li&gt;
+&lt;li&gt;意思到进度的偏移后，下意识是添加人力&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+        <category term="计算机学习" scheme="https://stoic-yang.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%AD%A6%E4%B9%A0/" />
+        <category term="读书" scheme="https://stoic-yang.github.io/tags/%E8%AF%BB%E4%B9%A6/" />
+        <category term="管理" scheme="https://stoic-yang.github.io/tags/%E7%AE%A1%E7%90%86/" />
+        <category term="思维" scheme="https://stoic-yang.github.io/tags/%E6%80%9D%E7%BB%B4/" />
+        <updated>2025-03-17T16:00:00.000Z</updated>
     </entry>
     <entry>
         <id>https://stoic-yang.github.io/2025/03/13/%E9%80%BB%E8%BE%91%E5%93%B2%E5%AD%A6%E8%AE%BA/</id>
