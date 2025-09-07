@@ -7,6 +7,17 @@
     "home_page_url": "https://stoic-yang.github.io",
     "items": [
         {
+            "id": "https://stoic-yang.github.io/2025/04/29/%E7%BB%8F%E6%B5%8E%E5%AD%A6%E5%8E%9F%E7%90%86/",
+            "url": "https://stoic-yang.github.io/2025/04/29/%E7%BB%8F%E6%B5%8E%E5%AD%A6%E5%8E%9F%E7%90%86/",
+            "title": "经济学原理",
+            "date_published": "2025-04-28T16:00:00.000Z",
+            "content_html": "<h2 id=\"第一章-经济学的十大原理\"><a class=\"anchor\" href=\"#第一章-经济学的十大原理\">#</a> 第一章  经济学的十大原理</h2>\n<ul>\n<li>人们面临交替关系</li>\n<li>某件事情的成本是为了得到它而放弃的东西</li>\n</ul>\n",
+            "tags": [
+                "经济学",
+                "读书"
+            ]
+        },
+        {
             "id": "https://stoic-yang.github.io/2025/03/23/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96/",
             "url": "https://stoic-yang.github.io/2025/03/23/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96/",
             "title": "苍穹外卖",
@@ -219,17 +230,6 @@
             "tags": [
                 "随笔",
                 "读书"
-            ]
-        },
-        {
-            "id": "https://stoic-yang.github.io/2024/11/03/%E5%A4%8D%E6%B4%BB/",
-            "url": "https://stoic-yang.github.io/2024/11/03/%E5%A4%8D%E6%B4%BB/",
-            "title": "复活",
-            "date_published": "2024-11-02T17:16:37.000Z",
-            "content_html": "<p>?</p>\n<hr>\n<p><strong>2024-12-15 更</strong><br>\n回过头看这个标题，觉得复活在这个点更具有了深刻的意义。</p>\n<p><strong>复活不应该是简单的搭建，而是由内而外的重塑</strong></p>\n<p>当这里真正变成我生活和学习不可分割的一部分，成为我心灵寓居之所，成为我精进的有力武器，成为与外界沟通的接口时，这才可以被称为博客网站的复活。</p>\n<p>当我重拾过去的理想信念，不再为虚假的刺激而溃败，不再为过往云烟后悔莫及，不再为现实困境熄灭希望之火时，这才能称为我的复活。</p>\n<p>既然来了一趟这样的世界，那就努力留下自己的脚印吧......</p>\n<hr>\n<p>2025-02-22 更<br>\n这段时间都没有去管理这个网站，最致命的问题是图片，我不知道怎么去把复制的图片直接弄到 hexo 而且可以直接渲染出来，刚刚找到办法解决这个问题了，只能是 obsidian 是永远的神，之前我还需要把 md 文件复制到 hexo 文件夹下面，现在我是直接在 hexo 下新建了一个 obsidian 仓库，用模板代替  <code>hexo new</code> ，用  <code>shell commands</code>  插件实现一键上传功能  <code>hexo clean,hexo generate, hexo deploy</code> ，所有的麻烦的事情都解决好了，现在要写东西只需要，打开 ob，新建模板，写完一个快捷键就完成了文章的上传，因为现在管理这个网站很方便了，所以以后应该就会变地很活跃。</p>\n",
-            "tags": [
-                "随笔",
-                "随笔"
             ]
         }
     ]

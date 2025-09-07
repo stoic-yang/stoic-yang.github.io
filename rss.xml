@@ -10,8 +10,22 @@
         </author>
         <description>stay hungray, stay foolish</description>
         <language>zh-CN</language>
-        <pubDate>Sun, 23 Mar 2025 00:00:00 +0800</pubDate>
-        <lastBuildDate>Sun, 23 Mar 2025 00:00:00 +0800</lastBuildDate>
+        <pubDate>Tue, 29 Apr 2025 00:00:00 +0800</pubDate>
+        <lastBuildDate>Tue, 29 Apr 2025 00:00:00 +0800</lastBuildDate>
+        <item>
+            <guid isPermalink="true">https://stoic-yang.github.io/2025/04/29/%E7%BB%8F%E6%B5%8E%E5%AD%A6%E5%8E%9F%E7%90%86/</guid>
+            <title>经济学原理</title>
+            <link>https://stoic-yang.github.io/2025/04/29/%E7%BB%8F%E6%B5%8E%E5%AD%A6%E5%8E%9F%E7%90%86/</link>
+            <category term="经济学" scheme="https://stoic-yang.github.io/categories/%E7%BB%8F%E6%B5%8E%E5%AD%A6/" />
+            <category term="读书" scheme="https://stoic-yang.github.io/tags/%E8%AF%BB%E4%B9%A6/" />
+            <pubDate>Tue, 29 Apr 2025 00:00:00 +0800</pubDate>
+            <description><![CDATA[ &lt;h2 id=&#34;第一章-经济学的十大原理&#34;&gt;&lt;a class=&#34;anchor&#34; href=&#34;#第一章-经济学的十大原理&#34;&gt;#&lt;/a&gt; 第一章  经济学的十大原理&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;人们面临交替关系&lt;/li&gt;
+&lt;li&gt;某件事情的成本是为了得到它而放弃的东西&lt;/li&gt;
+&lt;/ul&gt;
+ ]]></description>
+        </item>
         <item>
             <guid isPermalink="true">https://stoic-yang.github.io/2025/03/23/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96/</guid>
             <title>苍穹外卖</title>
@@ -801,26 +815,6 @@ springBoot 基础 + mybatis 基础 + maven 基础 + MySQL 基础&lt;/p&gt;
 &lt;p&gt;你的地图是一张白纸，所以即使想决定目的地，也不知道路在哪里…… 换个角度来看，正因为是一张白纸，才可以随心所欲地描绘地图。一切全在你自己。我衷心祈祷你可以相信自己，无悔地燃烧自己的人生。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;好温情的一本书，虽然有几个情节有点刀，但是确实也很治愈&lt;/p&gt;
- ]]></description>
-        </item>
-        <item>
-            <guid isPermalink="true">https://stoic-yang.github.io/2024/11/03/%E5%A4%8D%E6%B4%BB/</guid>
-            <title>复活</title>
-            <link>https://stoic-yang.github.io/2024/11/03/%E5%A4%8D%E6%B4%BB/</link>
-            <category term="随笔" scheme="https://stoic-yang.github.io/categories/%E9%9A%8F%E7%AC%94/" />
-            <category term="随笔" scheme="https://stoic-yang.github.io/tags/%E9%9A%8F%E7%AC%94/" />
-            <pubDate>Sun, 03 Nov 2024 01:16:37 +0800</pubDate>
-            <description><![CDATA[ &lt;p&gt;?&lt;/p&gt;
-&lt;hr&gt;
-&lt;p&gt;&lt;strong&gt;2024-12-15 更&lt;/strong&gt;&lt;br&gt;
-回过头看这个标题，觉得复活在这个点更具有了深刻的意义。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;复活不应该是简单的搭建，而是由内而外的重塑&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;当这里真正变成我生活和学习不可分割的一部分，成为我心灵寓居之所，成为我精进的有力武器，成为与外界沟通的接口时，这才可以被称为博客网站的复活。&lt;/p&gt;
-&lt;p&gt;当我重拾过去的理想信念，不再为虚假的刺激而溃败，不再为过往云烟后悔莫及，不再为现实困境熄灭希望之火时，这才能称为我的复活。&lt;/p&gt;
-&lt;p&gt;既然来了一趟这样的世界，那就努力留下自己的脚印吧......&lt;/p&gt;
-&lt;hr&gt;
-&lt;p&gt;2025-02-22 更&lt;br&gt;
-这段时间都没有去管理这个网站，最致命的问题是图片，我不知道怎么去把复制的图片直接弄到 hexo 而且可以直接渲染出来，刚刚找到办法解决这个问题了，只能是 obsidian 是永远的神，之前我还需要把 md 文件复制到 hexo 文件夹下面，现在我是直接在 hexo 下新建了一个 obsidian 仓库，用模板代替  &lt;code&gt;hexo new&lt;/code&gt; ，用  &lt;code&gt;shell commands&lt;/code&gt;  插件实现一键上传功能  &lt;code&gt;hexo clean,hexo generate, hexo deploy&lt;/code&gt; ，所有的麻烦的事情都解决好了，现在要写东西只需要，打开 ob，新建模板，写完一个快捷键就完成了文章的上传，因为现在管理这个网站很方便了，所以以后应该就会变地很活跃。&lt;/p&gt;
  ]]></description>
         </item>
     </channel>
