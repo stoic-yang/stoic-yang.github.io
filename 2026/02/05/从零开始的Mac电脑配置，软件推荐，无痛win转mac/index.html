@@ -1,0 +1,123 @@
+
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>从零开始的Mac电脑配置，软件推荐，无痛win转mac · keynary</title>
+  <meta name="description" content="stay hungry, stay foolish">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#f6f5f2">
+  <link rel="icon" href="/images/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&amp;display=swap" rel="stylesheet">
+  
+    <link rel="alternate" type="application/atom+xml" title="keynary" href="/atom.xml">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body class="site-shell">
+  <div class="ambient-background" aria-hidden="true">
+    <span class="ambient-glow ambient-glow--pointer"></span>
+    <span class="ambient-glow ambient-glow--blue"></span>
+    <span class="ambient-glow ambient-glow--warm"></span>
+  </div>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="site-title" href="/">keynary</a>
+      <nav class="site-nav" aria-label="主导航">
+        
+          <a href="/">首页</a>
+        
+          <a href="/archives/">归档</a>
+        
+          <a href="/about/">关于</a>
+        
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <article class="post">
+  <header class="post-header">
+    <time datetime="2026-02-05T14:12:17.000Z">2026-02-05</time>
+    <h1>从零开始的Mac电脑配置，软件推荐，无痛win转mac</h1>
+  </header>
+
+  <div class="post-content">
+    <p>这两天我把旧笔记本出了，换了一台新的 macbook air 13 寸，下面记录一下自己从零开始的配置过程以及一些对 macbook 的感受</p>
+<p>这是我的第一台 macbook，但不是我的第一台 mac，我在四月份的时候就开始把 mac mini 作为自己的主力机在用，所以不算是 mac 新手。</p>
+<p>终端我用的是 kitty，shell 用的是 fish，编程用 neovim，VScode</p>
+<p>用 kitty 单纯就是因为 kitty 可以做到 neovide 的光标光滑移动的效果，虽然对实际编程没有太多作用吧，但光标晃来晃去的就会给我一种我写代码很快的感觉（）</p>
+<p>我的 kitty 配置：<a target="_blank" rel="noopener" href="https://github.com/stoic-yang/kitty">https://github.com/stoic-yang/kitty</a></p>
+<p>fish 的话，我觉得 fish 自带的补全和颜色要比 zsh 好很多，但我对 fish 的理解还比较浅显，觉得比 zsh 好用所以就用了，配置插件也非常简单</p>
+<p>我的 fish 配置：<a target="_blank" rel="noopener" href="https://github.com/stoic-yang/fish">https://github.com/stoic-yang/fish</a></p>
+<p><img src="/2026/02/05/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84Mac%E7%94%B5%E8%84%91%E9%85%8D%E7%BD%AE%EF%BC%8C%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90%EF%BC%8C%E6%97%A0%E7%97%9Bwin%E8%BD%ACmac/2002864664279786218-01.png" loading="lazy"></p>
+<p>重头戏来了：neovim，我这段时间都是在 neovim 上写代码，有人要说了，VScode 不香吗，插件生态极大丰富，为什么要用一个残废的编辑器，学习成本高，最后配完插件一更新，突然某些功能就发生了冲突，一堆报错都怼脸上了，图啥？</p>
+<p>我的想法是这样的，我一直都没有打算过把 neovim 配置成 VScode 或者什么其他的 IDE，单纯就是想拥有一个能够高度自定义化的编辑器，做一个 PDE（personal），VScode 确实也可以通过快捷键和插件实现高度的自定义化，但你只有在脱离 VScode ，只有一个残疾编辑器的情况下才会去思考：一个编辑器应该有什么功能，怎么去利用这些功能</p>
+<p>比如说查找，以及全局的 session 切换，这样的操作，很多用 VScode 的人，他们是不知道 VScode 是有对应的快捷键的，每次用查找的时候，还要去翻各种地方通过鼠标去开启这个查找，每次查找完事以后，哦是这个快捷键，下一次使用的时候又会重复上面的过程，还是记不住这些快捷键，一方面是这个快捷键是别人定义的，另一方面很多的快捷键拥挤在 ctrl 和 alt 的组合键下，另外这些快捷键在其他的 IDE 上可能还是不一样的，比如 jetbrains 和 VScode 的快捷键就不是一整套的，导致记忆这些快捷键的难度巨大</p>
+<p>但如果是在 neovim（vim）上呢？所有的快捷键都可以自定义，只需要一行 lua 代码就可以把快捷键设置为任何你喜欢的键位，最绝还是 <code>&lt;leader&gt;</code> 键的思想，直接你摆脱 ctrl 和 alt 的限制。因为快捷键都是你通过配置文件修改的，所以你记的非常清楚，如果你还安装了一些辅助你记忆的插件（which-key），在按下 <code>&lt;leader&gt;</code> 键的同时，你就可以查看到你所有的接下来的快捷键如何触发，你可以把这些快捷键分成区块来记忆，比如 <code>&lt;leader&gt;f</code> 就是文件相关。</p>
+<p><img src="/2026/02/05/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84Mac%E7%94%B5%E8%84%91%E9%85%8D%E7%BD%AE%EF%BC%8C%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90%EF%BC%8C%E6%97%A0%E7%97%9Bwin%E8%BD%ACmac/2002864664279786218-02.png" loading="lazy"></p>
+<p>听我说，如果所有的快捷键都尽在你的掌控之下，而不是要去查别人的文档，你一定会感觉到很爽的</p>
+<p>neovim 有很丰富的插件生态，即便是你是 acmer，你甚至可以在 neovim 上找到 cph 的平替，我平时写算法题都是在 neovim 上用这个插件做的</p>
+<p><img src="/2026/02/05/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84Mac%E7%94%B5%E8%84%91%E9%85%8D%E7%BD%AE%EF%BC%8C%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90%EF%BC%8C%E6%97%A0%E7%97%9Bwin%E8%BD%ACmac/2002864664279786218-03.png" loading="lazy"></p>
+<p>neovim 还能直接实践你的一些想法，比如：</p>
+<p>我之前一直在想自己应该怎么去积累板子，怎么去快捷地把题解的内容变成板子，然后我就想到，如果我能够在 vim 可视状态下选中一段代码给个名字直接放到我的板子库里面（快捷键触发），然后还可以随时的可视化调用就好了，然后我花了一点点的时间就让 AI 把这个功能实现出来了</p>
+<p>选中当前的 cpp 文件的状态下，一个 enter 就可以把我的板子插入到当前光标下了</p>
+<p><img src="/2026/02/05/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84Mac%E7%94%B5%E8%84%91%E9%85%8D%E7%BD%AE%EF%BC%8C%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90%EF%BC%8C%E6%97%A0%E7%97%9Bwin%E8%BD%ACmac/2002864664279786218-04.png" loading="lazy"></p>
+<p>我是真的喜欢这一套只用快捷键做任何事情的哲学，可能不会比鼠标快太多，写代码的效率可能更大程度上取决于一个人其他的能力，但这套哲学可以让你减少不少重复性的工作，让你在写代码的过程中变得更加轻松，更容易享受于纯粹的 coding</p>
+<p>我的neovim配置（在 lazyvim 上魔改的）：<a target="_blank" rel="noopener" href="https://github.com/stoic-yang/nvim">https://github.com/stoic-yang/nvim</a></p>
+<p>下面是一些其他开发以外的，我觉得好用的软件：</p>
+<ul>
+<li>AltTab 可以让你拥有接近Windows桌面应用切换的体验</li>
+</ul>
+<p><img src="/2026/02/05/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84Mac%E7%94%B5%E8%84%91%E9%85%8D%E7%BD%AE%EF%BC%8C%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90%EF%BC%8C%E6%97%A0%E7%97%9Bwin%E8%BD%ACmac/2002864664279786218-05.png" loading="lazy"></p>
+<ul>
+<li>better display 外界显示器，开HDPI用</li>
+<li>Mos 鼠标体验优化</li>
+<li>Karibinar 自定义改键，我非常喜欢把 cap 键改为 esc 键，配合我的 vim 使用</li>
+<li>Better and Better 自定义触控板，我真的有被这个软件惊讶到，而且是不收费的，crazy</li>
+</ul>
+<p><img src="/2026/02/05/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84Mac%E7%94%B5%E8%84%91%E9%85%8D%E7%BD%AE%EF%BC%8C%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90%EF%BC%8C%E6%97%A0%E7%97%9Bwin%E8%BD%ACmac/2002864664279786218-06.png" loading="lazy"></p>
+<ul>
+<li>Bob 全局划词翻译，不过是收费的，当初是拿来作为沙拉查词+quicker 的平替的</li>
+<li>Rectangle 窗口管理，把窗口拖到边缘实现类似 Windows 的窗口管理体验，但是还是不如 Windows</li>
+<li>obsidian 本地 Markdown 笔记软件，可玩性更是不必多言，搭配 latex suit 写数学公式，让我可以做到完全脱离手写笔记（goodnotes）</li>
+</ul>
+
+  </div>
+
+  
+</article>
+
+<nav class="post-navigation" aria-label="文章导航">
+  
+    <a href="/2026/02/22/%E5%A4%A7%E4%BA%8C%E8%A2%AB%E9%A2%84%E5%88%B6%E8%BF%9B%E5%AD%A6%E6%A0%A1%E8%AF%BE%E9%A2%98%E7%BB%84%E6%89%93%E5%B7%A5%E6%98%AF%E4%BB%80%E4%B9%88%E4%BD%93%E9%AA%8C(1)/">
+      <span>上一篇</span>
+      <strong>大二被预制进学校课题组打工是什么体验(1)</strong>
+    </a>
+  
+  
+    <a href="/2025/12/31/2025.12.31/">
+      <span>下一篇</span>
+      <strong>2025.12.31</strong>
+    </a>
+  
+</nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© 2026 keynary</span>
+    </div>
+  </footer>
+  
+<script src="/js/ambient.js"></script>
+
+</body>
+</html>

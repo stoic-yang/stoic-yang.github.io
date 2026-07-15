@@ -1,0 +1,193 @@
+
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>data100 lecture6 正则表达式 · keynary</title>
+  <meta name="description" content="stay hungry, stay foolish">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#f6f5f2">
+  <link rel="icon" href="/images/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&amp;display=swap" rel="stylesheet">
+  
+    <link rel="alternate" type="application/atom+xml" title="keynary" href="/atom.xml">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body class="site-shell">
+  <div class="ambient-background" aria-hidden="true">
+    <span class="ambient-glow ambient-glow--pointer"></span>
+    <span class="ambient-glow ambient-glow--blue"></span>
+    <span class="ambient-glow ambient-glow--warm"></span>
+  </div>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="site-title" href="/">keynary</a>
+      <nav class="site-nav" aria-label="主导航">
+        
+          <a href="/">首页</a>
+        
+          <a href="/archives/">归档</a>
+        
+          <a href="/about/">关于</a>
+        
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <article class="post">
+  <header class="post-header">
+    <time datetime="2025-02-04T03:27:46.000Z">2025-02-04</time>
+    <h1>data100 lecture6 正则表达式</h1>
+  </header>
+
+  <div class="post-content">
+    <p>lab01</p>
+<p><a>q2</a> py的基础知识：指数计算用**</p>
+
+
+<p>$total = x^2 + x^3$</p>
+<p>用np的数组相加，对应序号的数相加，然后输出一个新的数组 q3a $$</p>
+<p>$$f’(x) = 2x $$f’(x)|_{x=0}=0 $$</p>
+<h3 id="latex"><a href="#latex" class="headerlink" title="latex"></a>latex</h3><p>$\sigma(-x)=1-\sigma(x)$ $\frac{d}{dx}\sigma(x)=\sigma(x)(1-\sigma(x))$</p>
+<h3 id="lecture6-Regex（正则表达式）"><a href="#lecture6-Regex（正则表达式）" class="headerlink" title="lecture6 Regex（正则表达式）"></a>lecture6 Regex（正则表达式）</h3><p>正则表达式是由解决复杂的切割字符串的需求引出的</p>
+<p>用py基本的语法切割，这个看起来也确实是吓人</p>
+
+
+<h3 id="引入正则表达式的库"><a href="#引入正则表达式的库" class="headerlink" title="引入正则表达式的库"></a>引入正则表达式的库</h3>
+
+<p>![[Pasted image 20250203170624.webp]]</p>
+<p>closure: 以 * 后面的在结尾处出现零次或多次 group: 括号内的组出现零次或多次</p>
+<p><code>点" . "</code>: 任意字符（0 次|多次） ![[Pasted image 20250204102000.webp]]</p>
+<p><code>字符范围[A-Za-z]</code>: 任意一个大小写字符 ![[Pasted image 20250204102852.webp]]</p>
+<p><code>重复&#123; n &#125;</code>: 前面的部分重复n次, 可以有多个数，用逗号分隔，{ n , m }表示重复 n 或者 m 次</p>
+<p><code>+</code>：至少一次</p>
+<p><code>?</code>：0 次或者 1 次</p>
+<p>![[Pasted image 20250204103546.webp]]</p>
+<blockquote>
+<p>[!note] question? Give a regular expression for any lowercase string that has are repeated vowel (noon, peel, festoon, looop, etc).</p>
+</blockquote>
+
+
+<p><code>[a-z]</code> 本身带有重复的属性，不需要再加上*</p>
+<h3 id="aa-ee-ii-oo-uu-与-aoeui-2"><a href="#aa-ee-ii-oo-uu-与-aoeui-2" class="headerlink" title="(aa|ee|ii|oo|uu) 与 [aoeui]{2}"></a><code>(aa|ee|ii|oo|uu)</code> 与 <code>[aoeui]&#123;2&#125;</code></h3><ol>
+<li><code>[aoeui]&#123;2&#125;</code>：</li>
+</ol>
+<ul>
+<li><p><code>[aoeui]</code> 表示匹配其中任意一个字符（a、o、e、u、i）</p>
+</li>
+<li><p><code>&#123;2&#125;</code> 表示重复两次</p>
+</li>
+<li><p>这意味着它可以匹配：</p>
+</li>
+<li><p>“aa”, “ao”, “ae”, “au”, “ai”</p>
+</li>
+<li><p>“oa”, “oo”, “oe”, “ou”, “oi”</p>
+</li>
+<li><p>“ea”, “eo”, “ee”, “eu”, “ei”</p>
+</li>
+<li><p>“ua”, “uo”, “ue”, “uu”, “ui”</p>
+</li>
+<li><p>“ia”, “io”, “ie”, “iu”, “ii”</p>
+</li>
+<li><p>总共可以匹配 5 × 5 = 25 种不同的组合</p>
+</li>
+<li><p><code>(aa|ee|ii|oo|uu)</code>：</p>
+</li>
+<li><p>这个表达式使用 <code>|</code> 分隔不同的选项</p>
+</li>
+<li><p>只能匹配以下 5 种组合：</p>
+</li>
+<li><p>“aa”</p>
+</li>
+<li><p>“ee”</p>
+</li>
+<li><p>“ii”</p>
+</li>
+<li><p>“oo”</p>
+</li>
+<li><p>“uu”</p>
+</li>
+</ul>
+<p>主要区别：</p>
+<ul>
+<li><code>[aoeui]&#123;2&#125;</code> 允许两个字符可以不同，只要都是列表中的字符即可</li>
+<li><code>(aa|ee|ii|oo|uu)</code> 只匹配相同字符的重复</li>
+<li>前者能匹配 25 种组合，后者只能匹配 5 种组合</li>
+</ul>
+<p>如果要让它们等价，需要修改为：</p>
+<ul>
+<li><code>[aoeui]&#123;2&#125;</code> 改为 <code>([aeiou])\1</code></li>
+<li>其中 <code>\1</code> 表示引用第一个捕获组，确保第二个字符和第一个字符相同</li>
+</ul>
+<h3 id="字符-："><a href="#字符-：" class="headerlink" title="字符 ^："></a>字符 <code>^</code>：</h3><p><code>^</code> 符号在正则表达式中表示”行的开始”或”字符串的开始”。它是一个位置标记（anchor），用来匹配文本的起始位置。</p>
+<p>让我通过几个例子来说明：</p>
+<ol>
+<li><code>^abc</code></li>
+</ol>
+<ul>
+<li><p>匹配：以 “abc” 开头的字符串</p>
+</li>
+<li><p>会匹配：”abc”, “abcdef”</p>
+</li>
+<li><p>不会匹配：”xabc”, “123abc”</p>
+</li>
+<li><p><code>^[A-Z]</code></p>
+</li>
+<li><p>匹配：以大写字母开头的字符串</p>
+</li>
+<li><p>会匹配：”Apple”, “Book”</p>
+</li>
+<li><p>不会匹配：”apple”, “1Book”</p>
+</li>
+</ul>
+<p>需要注意的是：</p>
+<ul>
+<li><code>^</code> 只有在位于正则表达式开头时才表示”行首”</li>
+<li>如果 <code>^</code> 出现在 <code>[]</code> 字符集中（例如 <code>[^abc]</code>），则表示”取反”的意思，意思是匹配除了这些字符以外的任何字符</li>
+</ul>
+
+
+<p>在多行模式（multiline mode）下，<code>^</code> 会匹配每一行的开始，而不仅仅是整个字符串的开始。</p>
+<h3 id="的优先级："><a href="#的优先级：" class="headerlink" title="+ 的优先级："></a><code>+</code> 的优先级：</h3><p><code>+</code> 是一个量词（quantifier），它的优先级低于圆括号 <code>()</code>。也就是说，<code>+</code> 会作用于其左侧最近的元素或分组。</p>
+<p><code>$</code> 以什么结尾 ![[Pasted image 20250204111117.webp]]</p>
+
+  </div>
+
+  
+</article>
+
+<nav class="post-navigation" aria-label="文章导航">
+  
+    <a href="/2025/02/06/%E8%87%B4%E9%AB%98%E4%B8%AD%E7%94%9F%E2%80%94%E2%80%94%E5%9C%A8%E8%8D%92%E8%AF%9E%E7%9A%84%E4%B8%96%E7%95%8C%E9%87%8C%E4%BD%A0%E8%A6%81%E6%88%90%E4%B8%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E8%8B%B1%E9%9B%84/">
+      <span>上一篇</span>
+      <strong>致高中生——在荒诞的世界里你要成为自己的英雄</strong>
+    </a>
+  
+  
+    <a href="/2025/01/25/2025-1-24/">
+      <span>下一篇</span>
+      <strong>2025-1-24</strong>
+    </a>
+  
+</nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© 2026 keynary</span>
+    </div>
+  </footer>
+  
+<script src="/js/ambient.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,281 @@
+
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JavaWebDAY3 · keynary</title>
+  <meta name="description" content="stay hungry, stay foolish">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#f6f5f2">
+  <link rel="icon" href="/images/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&amp;display=swap" rel="stylesheet">
+  
+    <link rel="alternate" type="application/atom+xml" title="keynary" href="/atom.xml">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body class="site-shell">
+  <div class="ambient-background" aria-hidden="true">
+    <span class="ambient-glow ambient-glow--pointer"></span>
+    <span class="ambient-glow ambient-glow--blue"></span>
+    <span class="ambient-glow ambient-glow--warm"></span>
+  </div>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="site-title" href="/">keynary</a>
+      <nav class="site-nav" aria-label="主导航">
+        
+          <a href="/">首页</a>
+        
+          <a href="/archives/">归档</a>
+        
+          <a href="/about/">关于</a>
+        
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <article class="post">
+  <header class="post-header">
+    <time datetime="2024-12-22T09:13:20.000Z">2024-12-22</time>
+    <h1>JavaWebDAY3</h1>
+  </header>
+
+  <div class="post-content">
+    <h3 id="Maven"><a href="#Maven" class="headerlink" title="Maven"></a>Maven</h3><h3 id="Maven就是一款管理和构建java项目的工具。"><a href="#Maven就是一款管理和构建java项目的工具。" class="headerlink" title="Maven就是一款管理和构建java项目的工具。"></a>Maven就是一款管理和构建java项目的工具。</h3><p>maven项目的目录结构中，main目录下存放的是项目的源代码，test目录下存放的是项目的测试代码。而无论是在main还是在test下，都有两个目录，一个是java，用来存放源代码文件；另一个是resources，用来存放配置文件。</p>
+<h3 id="Maven的作用-："><a href="#Maven的作用-：" class="headerlink" title="Maven的作用 ："></a>Maven的作用 ：</h3><ol>
+<li>方便的依赖管理</li>
+<li>统一的项目结构</li>
+<li>标准的项目构建流程</li>
+</ol>
+<p>写61b的时候用过，当时不知道啥原理，现在明白了 maven就是拿来管理jar包和规范项目结构的 ![[Pasted image 20241222164101.png]]</p>
+<h3 id="pom文件"><a href="#pom文件" class="headerlink" title="pom文件"></a>pom文件</h3>
+
+<ul>
+<li><p><code>&lt;project&gt;</code> ：pom文件的根标签，表示当前maven项目</p>
+</li>
+<li><p><code>&lt;modelVersion&gt;</code>：声明项目描述遵循哪一个POM模型版本</p>
+</li>
+<li><p>坐标 ：</p>
+</li>
+<li><p><code>&lt;groupId&gt;</code> <code>&lt;artifactId&gt;</code> <code>&lt;version&gt;</code></p>
+</li>
+<li><p>定位项目在本地仓库中的位置，由以上三个标签组成一个坐标</p>
+</li>
+<li><p><code>&lt;maven.compiler.source&gt;</code> ：编译JDK的版本</p>
+</li>
+<li><p><code>&lt;maven.compiler.target&gt;</code> ：运行JDK的版本</p>
+</li>
+<li><p><code>&lt;project.build.sourceEncoding&gt;</code> : 设置项目的字符集</p>
+</li>
+</ul>
+<h3 id="导入maven"><a href="#导入maven" class="headerlink" title="导入maven"></a>导入maven</h3><ul>
+<li>方式一：<code>File</code> -&gt; <code>Project Structure</code> -&gt; <code>Modules</code> -&gt; <code>Import Module</code> -&gt; <code>选择maven项目的pom.xml</code>。 ![[Pasted image 20241222164751.png]]</li>
+<li>方式二：<code>Maven面板</code> -&gt; <code>+（Add Maven Projects）</code> -&gt; <code>选择maven项目的pom.xml</code>。 ![[Pasted image 20241222164813.png]]</li>
+</ul>
+<h3 id="依赖配置"><a href="#依赖配置" class="headerlink" title="依赖配置"></a>依赖配置</h3>
+
+<h3 id="依赖传递"><a href="#依赖传递" class="headerlink" title="依赖传递"></a>依赖传递</h3><p>所谓maven的依赖传递，指的就是如果在maven项目中，A 依赖了B，B依赖了C，C依赖了D，那么在A项目中，也会有C、D依赖，因为依赖会传递。</p>
+<h3 id="排除依赖"><a href="#排除依赖" class="headerlink" title="排除依赖"></a>排除依赖</h3>
+
+<h3 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h3><p>Maven的生命周期就是为了对所有的构建过程进行抽象和统一。描述了一次项目构建，经历哪些阶段。 Maven对项目构建的生命周期划分为3套（相互独立）：</p>
+<p><img src="/2024/12/22/JavaWebDAY3/14017924225-01.png" loading="lazy"></p>
+<p>- clean：清理工作。 - default：核心工作。如：编译、测试、打包、安装、部署等。 - site：生成报告、发布站点等。 三套生命周期又包含哪些具体的阶段呢, 我们来看下面这幅图:</p>
+<p><img src="/2024/12/22/JavaWebDAY3/14017924225-02.jpg" loading="lazy"></p>
+<p>主要关注以下几个： - clean：移除上一次构建生成的文件 - compile：编译项目源代码 - test：使用合适的单元测试框架运行测试(junit) - package：将编译后的文件打包，如：jar、war等 - install：安装项目到本地仓库</p>
+<h3 id="执行"><a href="#执行" class="headerlink" title="执行"></a>执行</h3><p>在日常开发中，当我们要执行指定的生命周期时，有两种执行方式： 1. 在idea工具右侧的maven工具栏中，选择对应的生命周期，双击执行 2. 在DOS命令行中，通过maven命令执行 <strong>方式一：在idea中执行生命周期</strong> - 选择对应的生命周期，双击执行</p>
+<p><img src="/2024/12/22/JavaWebDAY3/14017924225-03.jpg" loading="lazy"></p>
+<p>其他的生命周期都是类似的道理，双击运行即可。 <strong>方式二：在命令行中执行生命周期</strong> 1. 打开maven项目对应的磁盘目录</p>
+<p><img src="/2024/12/22/JavaWebDAY3/14017924225-04.jpg" loading="lazy"></p>
+<p>2. 在当前目录下打开CMD</p>
+<p><img src="/2024/12/22/JavaWebDAY3/14017924225-05.jpg" loading="lazy"></p>
+<p>类似的道理，我们也可以在命令执行： - mvn compile - mvn test - mvn package - mvn install</p>
+<h3 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h3><p>**测试：是一种用来促进鉴定软件的正确性、完整性、安全性和质量的过程。 阶段划分：单元测试、集成测试、系统测试、验收测试。</p>
+<p><img src="/2024/12/22/JavaWebDAY3/14017924225-06.jpg" loading="lazy"></p>
+<p>1). 单元测试 - 介绍：对软件的基本组成单位进行测试，最小测试单位。 - 目的：检验软件基本组成单位的正确性。 - 测试人员：开发人员 2). 集成测试 - 介绍：将已分别通过测试的单元，按设计要求组合成系统或子系统，再进行的测试。 - 目的：检查单元之间的协作是否正确。 - 测试人员：开发人员 3). 系统测试 - 介绍：对已经集成好的软件系统进行彻底的测试。 - 目的：验证软件系统的正确性、性能是否满足指定的要求。 - 测试人员：测试人员 4). 验收测试 - 介绍：交付测试，是针对用户需求、业务流程进行的正式的测试。 - 目的：验证软件系统是否满足验收标准。 - 测试人员：客户/需求方 测试方法：白盒测试、黑盒测试 及 灰盒测试。</p>
+<p><img src="/2024/12/22/JavaWebDAY3/14017924225-07.jpg" loading="lazy"></p>
+<p>1). 白盒测试 清楚软件内部结构、代码逻辑。 用于验证代码、逻辑正确性。 2). 黑盒测试 不清楚软件内部结构、代码逻辑。 用于验证软件的功能、兼容性、验收测试等方面。 3). 灰盒测试 结合了白盒测试和黑盒测试的特点，既关注软件的内部结构又考虑外部表现（功能）。</p>
+<p><img src="/2024/12/22/JavaWebDAY3/14017924225-08.jpg" loading="lazy"></p>
+<h3 id="Junit"><a href="#Junit" class="headerlink" title="Junit"></a>Junit</h3><p>之前在 61b用过，可以补充几个知识点</p>
+<h3 id="断言"><a href="#断言" class="headerlink" title="断言"></a>断言</h3><table>
+<thead>
+<tr>
+<th>断言方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>assertEquals(Object exp, Object act, String msg)</td>
+<td>检查两个值是否相等，不相等就报错。</td>
+</tr>
+<tr>
+<td>assertNotEquals(Object unexp, Object act, String msg)</td>
+<td>检查两个值是否不相等，相等就报错。</td>
+</tr>
+<tr>
+<td>assertNull(Object act, String msg)</td>
+<td>检查对象是否为null，不为null，就报错。</td>
+</tr>
+<tr>
+<td>assertNotNull(Object act, String msg)</td>
+<td>检查对象是否不为null，为null，就报错。</td>
+</tr>
+<tr>
+<td>assertTrue(boolean condition, String msg)</td>
+<td>检查条件是否为true，不为true，就报错。</td>
+</tr>
+<tr>
+<td>assertFalse(boolean condition, String msg)</td>
+<td>检查条件是否为false，不为false，就报错。</td>
+</tr>
+<tr>
+<td>assertSame(Object exp, Object act, String msg)</td>
+<td>检查两个对象引用是否相等，不相等，就报错。</td>
+</tr>
+</tbody></table>
+<p>示例演示：</p>
+
+
+<h3 id="常见注解"><a href="#常见注解" class="headerlink" title="常见注解"></a>常见注解</h3><p>在JUnit中还提供了一些注解，还增强其功能，常见的注解有以下几个：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>注解</td>
+<td>说明</td>
+<td>备注</td>
+</tr>
+<tr>
+<td>@Test</td>
+<td>测试类中的方法用它修饰才能成为测试方法，才能启动执行</td>
+<td>单元测试</td>
+</tr>
+<tr>
+<td>@BeforeEach</td>
+<td>用来修饰一个实例方法，该方法会在每一个测试方法执行之前执行一次。</td>
+<td>初始化资源(准备工作)</td>
+</tr>
+<tr>
+<td>@AfterEach</td>
+<td>用来修饰一个实例方法，该方法会在每一个测试方法执行之后执行一次。</td>
+<td>释放资源(清理工作)</td>
+</tr>
+<tr>
+<td>@BeforeAll</td>
+<td>用来修饰一个静态方法，该方法会在所有测试方法之前只执行一次。</td>
+<td>初始化资源(准备工作)</td>
+</tr>
+<tr>
+<td>@AfterAll</td>
+<td>用来修饰一个静态方法，该方法会在所有测试方法之后只执行一次。</td>
+<td>释放资源(清理工作)</td>
+</tr>
+<tr>
+<td>@ParameterizedTest</td>
+<td>参数化测试的注解 (可以让单个测试运行多次，每次运行时仅参数不同)</td>
+<td>用了该注解，就不需要@Test注解了</td>
+</tr>
+<tr>
+<td>@ValueSource</td>
+<td>参数化测试的参数来源，赋予测试方法参数</td>
+<td>与参数化测试注解配合使用</td>
+</tr>
+<tr>
+<td>@DisplayName</td>
+<td>指定测试类、测试方法显示的名称 （默认为类名、方法名）</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>演示 <code>@BeforeEach</code>，<code>@AfterEach</code>，<code>@BeforeAll</code>，<code>@AfterAll</code> 注解：</p>
+
+
+<p>演示 <code>@ParameterizedTest</code> ，<code>@ValueSource</code> ，<code>@DisplayName</code> 注解：</p>
+
+
+<p>输出结果如下：</p>
+<p><img src="/2024/12/22/JavaWebDAY3/14017924225-09.jpg" loading="lazy"></p>
+<h3 id="依赖范围"><a href="#依赖范围" class="headerlink" title="依赖范围"></a>依赖范围</h3><p>依赖的jar包，默认情况下，可以在任何地方使用，在main目录下，可以使用；在test目录下，也可以使用。 在maven中，如果希望限制依赖的使用范围，可以通过 <code>&lt;scope&gt;…&lt;/scope&gt;</code> 设置其作用范围。 scope的取值常见的如下：</p>
+<table>
+<thead>
+<tr>
+<th>scope值</th>
+<th>主程序</th>
+<th>测试程序</th>
+<th>打包（运行）</th>
+<th>范例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>compile（默认）</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>log4j</td>
+</tr>
+<tr>
+<td>test</td>
+<td>-</td>
+<td>Y</td>
+<td>-</td>
+<td>junit</td>
+</tr>
+<tr>
+<td>provided</td>
+<td>Y</td>
+<td>Y</td>
+<td>-</td>
+<td>servlet-api</td>
+</tr>
+<tr>
+<td>runtime</td>
+<td>-</td>
+<td>Y</td>
+<td>Y</td>
+<td>jdbc驱动</td>
+</tr>
+</tbody></table>
+
+  </div>
+
+  
+</article>
+
+<nav class="post-navigation" aria-label="文章导航">
+  
+    <a href="/2024/12/22/24-12-22/">
+      <span>上一篇</span>
+      <strong>24-12-22</strong>
+    </a>
+  
+  
+    <a href="/2024/12/21/JavaWebDAY2/">
+      <span>下一篇</span>
+      <strong>JavaWebDAY2</strong>
+    </a>
+  
+</nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© 2026 keynary</span>
+    </div>
+  </footer>
+  
+<script src="/js/ambient.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,105 @@
+
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CF1063 · keynary</title>
+  <meta name="description" content="stay hungry, stay foolish">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#f6f5f2">
+  <link rel="icon" href="/images/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&amp;display=swap" rel="stylesheet">
+  
+    <link rel="alternate" type="application/atom+xml" title="keynary" href="/atom.xml">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body class="site-shell">
+  <div class="ambient-background" aria-hidden="true">
+    <span class="ambient-glow ambient-glow--pointer"></span>
+    <span class="ambient-glow ambient-glow--blue"></span>
+    <span class="ambient-glow ambient-glow--warm"></span>
+  </div>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="site-title" href="/">keynary</a>
+      <nav class="site-nav" aria-label="主导航">
+        
+          <a href="/">首页</a>
+        
+          <a href="/archives/">归档</a>
+        
+          <a href="/about/">关于</a>
+        
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <article class="post">
+  <header class="post-header">
+    <time datetime="2025-11-26T07:23:57.000Z">2025-11-26</time>
+    <h1>CF1063</h1>
+  </header>
+
+  <div class="post-content">
+    <h3 id="B"><a href="#B" class="headerlink" title="B"></a>B</h3><p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/2163/problem/B">https://codeforces.com/contest/2163/problem/B</a> #思维题 #分类讨论 #观察 #构造</p>
+<p>首先是题面一定要读仔细，漏读条件就会导致大量时间的浪费，在这道题就是后面才看到 $x_{i}=0$ 的时候，$s_{i}$ 可以是任何值</p>
+<p>其次要注意观察数据范围，题面先是提醒最多五次操作，又强调你不必要用最少次数去做，其实意思已经非常明显了，那题面就是明着告诉你，你现在要构造一个 5 次的操作，让所有的情况下，这个操作都可以符合条件</p>
+<p>要这样其实就是要把 s 几乎全为 1，因为根据规则不难看出，边界不可能为 1，1 和 n 所在的下标也不可能为 1，这些地方如果为 1，就直接输出-1</p>
+<p>那么考虑怎么样才能让一次操作尽可能地多地让 0 变为 1，也就是选择最小值和最大值，所以我们注意到 1 和 n 两个特殊的值</p>
+<p>![[Pasted image 20251126141716.png]]</p>
+<p>这样画就有了，可以做到所有节点以外都为 1</p>
+
+
+<h3 id="C"><a href="#C" class="headerlink" title="C"></a>C</h3><p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/2163/problem/C">https://codeforces.com/contest/2163/problem/C</a> #前缀和 #后缀和 #合并区间 #去重</p>
+<p>这道题主要卡我的点在于如何去重</p>
+<p>不难注意到，我们实际上只有 n 条不同的路，对于每一条路我们都可以得到最小的区间，但这里面存在重合，那么怎么去重呢？</p>
+<p>我们可以先获得每一条路的最小区间，所有满足条件的区间需要至少满足至少包括这些区间的一个</p>
+<p>我们先假定以某一个 l 点出发，只要找到满足题意的最小的 R，再遍历一遍所有的 l 点，把满足条件的数量相加就是答案了</p>
+<p>那么怎么找出满足题意的最小 R 呢？</p>
+<p>这里需要用后缀最小值来实现</p>
+
+
+
+
+
+
+  </div>
+
+  
+</article>
+
+<nav class="post-navigation" aria-label="文章导航">
+  
+    <a href="/2025/11/26/ABC428/">
+      <span>上一篇</span>
+      <strong>ABC428</strong>
+    </a>
+  
+  
+    <a href="/2025/11/24/2025%E5%B9%B411%E6%9C%8824%E6%97%A5%E2%80%94%E2%80%94ICPC%E4%B8%8A%E6%B5%B7%E7%AB%99%E5%BF%97%E6%84%BF%E8%80%85/">
+      <span>下一篇</span>
+      <strong>2025年11月24日——ICPC上海站志愿者</strong>
+    </a>
+  
+</nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© 2026 keynary</span>
+    </div>
+  </footer>
+  
+<script src="/js/ambient.js"></script>
+
+</body>
+</html>

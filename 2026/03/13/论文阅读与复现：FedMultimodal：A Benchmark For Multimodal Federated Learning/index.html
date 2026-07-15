@@ -1,0 +1,148 @@
+
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>论文阅读与复现：FedMultimodal:A Benchmark For Multimodal Federated Learning · keynary</title>
+  <meta name="description" content="stay hungry, stay foolish">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#f6f5f2">
+  <link rel="icon" href="/images/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&amp;display=swap" rel="stylesheet">
+  
+    <link rel="alternate" type="application/atom+xml" title="keynary" href="/atom.xml">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body class="site-shell">
+  <div class="ambient-background" aria-hidden="true">
+    <span class="ambient-glow ambient-glow--pointer"></span>
+    <span class="ambient-glow ambient-glow--blue"></span>
+    <span class="ambient-glow ambient-glow--warm"></span>
+  </div>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="site-title" href="/">keynary</a>
+      <nav class="site-nav" aria-label="主导航">
+        
+          <a href="/">首页</a>
+        
+          <a href="/archives/">归档</a>
+        
+          <a href="/about/">关于</a>
+        
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <article class="post">
+  <header class="post-header">
+    <time datetime="2026-03-13T05:21:25.000Z">2026-03-13</time>
+    <h1>论文阅读与复现：FedMultimodal:A Benchmark For Multimodal Federated Learning</h1>
+  </header>
+
+  <div class="post-content">
+    <p><img src="/2026/03/13/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0%EF%BC%9AFedMultimodal%EF%BC%9AA%20Benchmark%20For%20Multimodal%20Federated%20Learning/2015778758578176664-01.png" loading="lazy"></p>
+<p>提出了一个面向多模态联邦学习的 benchmark（Fedmultimodal），用于系统评测不同数据集、融合方法、联邦优化器以及真实噪声条件下的模型表现</p>
+<p>整体流程</p>
+<ol>
+<li>选定多模态数据集</li>
+<li>按自然划分或 Dirichlet 划分分配到不同 client</li>
+<li>用预训练特征提取器提取各模态特征</li>
+<li>各模态进入对应编码器</li>
+<li>用 concat 或 attention 做模态融合</li>
+<li>在联邦学习框架下用 FedAvg / FedProx / FedOpt 等训练</li>
+<li>评测性能和鲁棒性</li>
+<li>联邦学习的在真实世界下数据的分布是 non-IID，所以划分数据给各个 client 应该避免暴力地划分以模拟真实情境下的联邦学习，一个常见的划分方法是按照 id 去进行数据的划分，一个 client 大部分的数据都只来自于一个客户端 id</li>
+<li>直接读取原数据集进行训练对于边缘设备来说是巨大的性能开销，所以不是从头开始训练模型，而是利用成熟的预训练模型作为骨干网络来提取特征，再训练下游模型（类似 yolo）</li>
+</ol>
+<p>在多模态的融合上，论文提供了两种方法，一种是直接把不同模态的特征进行 concat 拼接，另外一种是 attention 融合，让模型自己学习分配权重</p>
+<p>多模态特征融合应该会是以后研究的一个重点，可以继续去了解最新的多模态融合的工作是怎么做的，也可以深入探究背后的数学公式，多模态信息怎么整合到一块的对我来说是黑盒，具体的数学原理应该会比较有意思</p>
+<p>联邦学习训练算法除开了最经典的 FedAvg 外，还有 FedProx、FedOpt，在这篇论文里，FedOpt 的性能是最好的，我简单了解了一下 FedAvg 和 FedOpt</p>
+<p>FedAvg 实际上就是按照数据量去分配各个 client 的权重，计算公式不难理解</p>
+<p>$$<br>w_{t+1}=\frac{∑<em>{k=1}^Kn</em>{k}w_{t+1}^k}{n}<br>$$</p>
+<p>FedProx 面向数据异质性太强做了一些改进，在本地训练的时候加了一个约束项</p>
+<p>$$<br>F_{k}(w)+\frac{\mu}{2}∥w−w_{t}∥^2<br>$$</p>
+<p>这个我认为来自于最优化理论的启发，应该是罚函数的思想</p>
+<p>FedOpt 的原理我没怎么看懂，但底层原理和以上两种算法思想差异比较大</p>
+<p>多模态联邦学习上这篇论文主要提供了三种常见问题的模拟：模态缺失、标签缺失、错误标签</p>
+<p>论文的第四节对实验细节、实验结果做了一个介绍和总结，我比较在意的点在于多模态虽然比单模态的性能普遍强 5%，但5%的提升太小了，不知道后续的研究有没有办法让多模态比起单模态的性能能有更大的提升</p>
+<p>实验对于三种问题的模拟用到了一些概率论的方法，我目前不太明白具体是怎么实现的，这里可以去看一下底层的代码是怎么实现的</p>
+<hr>
+<p>论文复现</p>
+<p>跑通论文仓库的代码并不难</p>
+<p>最后可以得到FedAvg / FedProx / FedOpt 在 $\alpha=5$ 和 $\alpha=0.1$ 的情况下 F1 的值</p>
+<p>与 baseline 对比差距都在 1%以内</p>
+<hr>
+<p>代码细节分析</p>
+<p>这篇论文的工程性做的挺好的，大部分的调整都可以通过运行 train.py 的时候通过传入不同args来进行调整，包括模态缺失、标签缺失、标签错误是否开启以及对应的比例，所以我这几天主要去看了一下这份代码的工程架构以及数据流动，顺带补齐一些机器学习的基础</p>
+<p>整份代码的架构，主要分三块，Server、Client以及Model</p>
+<p>Server主要辅助管理全局的训练信息以及负责做聚合算法，Client管理本地训练的逻辑，可以在这里调整本地训练epoch等等，Model管理模型结构，里面有不同数据集对应的神经网络的架构，现在在上面做一些简单的魔改应该不成问题了，就比如在某个结构上多加一层pooling，或者 conv 和 norm</p>
+<p>除开架构以外，我还读了论文代码是怎么对dataset、dataloader进行进一步封装的，FedAvg是如何实现的，大致理通了代码层面上（server）是如何把数据分发给各个客户端（client）上，并且客户端进行完自己的本地训练后怎么把数据数据汇总上传到server，最后完成一轮全局参数更新的主线</p>
+<p>先从数据处理开始（dataload_manager） dataload_manager.py 把 torch. data 的 DataLoader 进一步封装了</p>
+
+
+<p>通过传入一个 client_sim_dict 去控制每个样本的模拟配置</p>
+
+
+<p>如果标签缺失就不再参与最后的 dataloader 的构建</p>
+
+
+<p>组装 dataset</p>
+
+
+<p>再来看训练代码（train. py）</p>
+
+
+<p>分发数据给各个客户端，给每个客户端准备好一个 dataloader</p>
+
+
+<p>对于每一个 client，先创建通过全局读取 client 的数据初始化，然后再进行一次训练，训练完后在把训练的结果更新到 server 上保存</p>
+
+
+<p>实际训练的过程中，对于全局模型有一个 epoch，对于本地的模型其实也有一个自己的 epoch，本地模型跑完自己的 epoch 后才会把自己的数据更新上 server 上</p>
+<p>本地训练主循环：</p>
+
+
+<p>FedAvg 参数聚合</p>
+
+
+  </div>
+
+  
+</article>
+
+<nav class="post-navigation" aria-label="文章导航">
+  
+    <a href="/2026/03/13/ActivityWatch%E8%87%AA%E5%8A%A8%E5%8C%96%E6%97%B6%E9%97%B4%E8%AE%B0%E5%BD%95%E4%BD%93%E7%B3%BB/">
+      <span>上一篇</span>
+      <strong>ActivityWatch自动化时间记录体系</strong>
+    </a>
+  
+  
+    <a href="/2026/03/04/oj_dashboard%E2%80%94%E2%80%94%E8%81%9A%E5%90%88Codeforces%E3%80%81atcoder%E3%80%81leetcode%E6%8F%90%E4%BA%A4%E8%AE%B0%E5%BD%95%E5%BD%A2%E6%88%90%E7%83%AD%E5%8A%9B%E5%9B%BE%E7%9A%84%E5%B7%A5%E5%85%B7/">
+      <span>下一篇</span>
+      <strong>oj_dashboard——聚合Codeforces、atcoder、leetcode提交记录形成热力图的工具</strong>
+    </a>
+  
+</nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© 2026 keynary</span>
+    </div>
+  </footer>
+  
+<script src="/js/ambient.js"></script>
+
+</body>
+</html>

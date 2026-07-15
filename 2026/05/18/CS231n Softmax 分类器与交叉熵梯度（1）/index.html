@@ -1,0 +1,249 @@
+
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CS231n Softmax 分类器与交叉熵梯度（1） · keynary</title>
+  <meta name="description" content="stay hungry, stay foolish">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#f6f5f2">
+  <link rel="icon" href="/images/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&amp;display=swap" rel="stylesheet">
+  
+    <link rel="alternate" type="application/atom+xml" title="keynary" href="/atom.xml">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body class="site-shell">
+  <div class="ambient-background" aria-hidden="true">
+    <span class="ambient-glow ambient-glow--pointer"></span>
+    <span class="ambient-glow ambient-glow--blue"></span>
+    <span class="ambient-glow ambient-glow--warm"></span>
+  </div>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="site-title" href="/">keynary</a>
+      <nav class="site-nav" aria-label="主导航">
+        
+          <a href="/">首页</a>
+        
+          <a href="/archives/">归档</a>
+        
+          <a href="/about/">关于</a>
+        
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <article class="post">
+  <header class="post-header">
+    <time datetime="2026-05-18T10:36:36.000Z">2026-05-18</time>
+    <h1>CS231n Softmax 分类器与交叉熵梯度（1）</h1>
+  </header>
+
+  <div class="post-content">
+    <p>Softmax 分类器与交叉熵梯度</p>
+<blockquote>
+<p>[!abstract] 这篇笔记整理 CS231n assignment1 中 Softmax loss 的前向计算、交叉熵含义、梯度推导和 NumPy 实现。相关课程索引见 [[CS231n]]。</p>
+</blockquote>
+<h3 id="变量形状"><a href="#变量形状" class="headerlink" title="变量形状"></a>变量形状</h3><table>
+<thead>
+<tr>
+<th>符号</th>
+<th>形状</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>X</td>
+<td>N \times D</td>
+<td>一个 minibatch 的输入数据</td>
+</tr>
+<tr>
+<td>x_i</td>
+<td>1 \times D</td>
+<td>第 i 个样本</td>
+</tr>
+<tr>
+<td>W</td>
+<td>D \times C</td>
+<td>线性分类器权重</td>
+</tr>
+<tr>
+<td>y_i</td>
+<td>标量</td>
+<td>第 i 个样本的正确类别</td>
+</tr>
+<tr>
+<td>S</td>
+<td>N \times C</td>
+<td>所有样本在所有类别上的 score</td>
+</tr>
+<tr>
+<td>P</td>
+<td>N \times C</td>
+<td>softmax 后的类别概率</td>
+</tr>
+</tbody></table>
+<p>其中 $N$ 是样本数，$D$ 是特征维度，$C$ 是类别数。CIFAR-10 中 $C=10$。</p>
+<h3 id="前向计算"><a href="#前向计算" class="headerlink" title="前向计算"></a>前向计算</h3><p>对单个样本 $x_i$，线性分类器先计算每个类别的分数：</p>
+<p>$$<br>s_i = x_i W<br>$$</p>
+<p>第 $j$ 个类别的分数是：</p>
+<p>$$<br>s_{ij} = x_i W_{:,j}<br>$$</p>
+<p>Softmax 把分数转成概率：</p>
+<p>$$<br>p_{ij} = \frac{\exp(s_{ij})}{\sum_{k=1}^{C}\exp(s_{ik})}<br>$$</p>
+<p>代码里会先做数值稳定处理：</p>
+<p>$$<br>s_i \leftarrow s_i - \max_j s_{ij}<br>$$</p>
+<p>这是合法的，因为对任意常数 $a$：</p>
+<p>$$<br>\frac{\exp(s_{ij} - a)}{\sum_{k=1}^{C}\exp(s_{ik} - a)} = \frac{\exp(s_{ij})}{\sum_{k=1}^{C}\exp(s_{ik})}<br>$$</p>
+<p>也就是说，整体平移 scores 不会改变 softmax 的概率。</p>
+<h3 id="Loss-的含义"><a href="#Loss-的含义" class="headerlink" title="Loss 的含义"></a>Loss 的含义</h3><p>第 $i$ 个样本的 Softmax 交叉熵 loss 是正确类别概率的负对数：</p>
+<p>$$<br>L_i = -\log p_{i,y_i}<br>$$</p>
+<p>展开可得：</p>
+<p>$$<br>L_i = -\log \frac{\exp(s_{i,y_i})}{\sum_{k=1}^{C}\exp(s_{ik})}<br>$$</p>
+<p>进一步化简：</p>
+<p>$$<br>L_i = -s_{i,y_i} + \log \sum_{k=1}^{C}\exp(s_{ik})<br>$$</p>
+<p>这个形式很适合推导梯度。</p>
+<blockquote>
+<p>[!tip] 初始 loss 为什么接近 $-\log(0.1)$ 初始化时 $W$ 很小，各类别 score 接近，softmax 后每类概率大约是 $\frac{1}{10}$。因此 CIFAR-10 的初始单样本 loss 约为：</p>
+<p>$$<br>-\log \frac{1}{10} = \log 10 \approx 2.3026<br>$$</p>
+</blockquote>
+<h3 id="对-score-的梯度"><a href="#对-score-的梯度" class="headerlink" title="对 score 的梯度"></a>对 score 的梯度</h3><p>从化简后的单样本 loss 出发：</p>
+<p>$$<br>L_i = -s_{i,y_i} + \log \sum_{k=1}^{C}\exp(s_{ik})<br>$$</p>
+<p>对某个类别分数 $s_{ij}$ 求导：</p>
+<p>$$<br>\frac{\partial L_i}{\partial s_{ij}} = \frac{\partial}{\partial s_{ij}} \left( -s_{i,y_i} + \log \sum_{k=1}^{C}\exp(s_{ik}) \right)<br>$$</p>
+<p>第一项给出：</p>
+<p>$$<br>\frac{\partial (-s_{i,y_i})}{\partial s_{ij}} = \begin{cases} -1, &amp; j = y_i \ 0, &amp; j \ne y_i \end{cases}<br>$$</p>
+<p>第二项给出：</p>
+<p>$$<br>\frac{\partial}{\partial s_{ij}} \log \sum_{k=1}^{C}\exp(s_{ik}) = \frac{\exp(s_{ij})}{\sum_{k=1}^{C}\exp(s_{ik})} = p_{ij}<br>$$</p>
+<p>所以：</p>
+<p>$$<br>\frac{\partial L_i}{\partial s_{ij}} = p_{ij} - \mathbf{1}(j = y_i)<br>$$</p>
+<p>等价地：</p>
+<p>$$<br>\frac{\partial L_i}{\partial s_{ij}} = \begin{cases} p_{ij} - 1, &amp; j = y_i \ p_{ij}, &amp; j \ne y_i \end{cases}<br>$$</p>
+<h3 id="对权重-W-的梯度"><a href="#对权重-W-的梯度" class="headerlink" title="对权重 $W$ 的梯度"></a>对权重 $W$ 的梯度</h3><p>因为：</p>
+<p>$$<br>s_{ij} = \sum_{d=1}^{D} x_{id} W_{dj}<br>$$</p>
+<p>所以：</p>
+<p>$$<br>\frac{\partial s_{ij}}{\partial W_{dj}} = x_{id}<br>$$</p>
+<p>链式法则得到逐元素梯度：</p>
+<p>$$<br>\frac{\partial L_i}{\partial W_{dj}} = x_{id}\left(p_{ij} - \mathbf{1}(j = y_i)\right)<br>$$</p>
+<p>写成列向量形式：</p>
+<p>$$<br>\nabla_{W_{:,j}} L_i = x_i^\top\left(p_{ij} - \mathbf{1}(j = y_i)\right)<br>$$</p>
+<p>如果令 $Y$ 是 one-hot 标签矩阵：</p>
+<p>$$<br>Y_{ij}=\mathbf{1}(j=y_i)<br>$$</p>
+<p>则整个 batch 的平均 loss 为：</p>
+<p>$$<br>L = -\frac{1}{N}\sum_{i=1}^{N}\log P_{i,y_i} + \lambda \sum_{d=1}^{D}\sum_{j=1}^{C} W_{dj}^{2}<br>$$</p>
+<p>对应梯度是：</p>
+<p>$$<br>\nabla_W L = \frac{1}{N}X^\top(P-Y) + 2\lambda W<br>$$</p>
+<blockquote>
+<p>[!warning] 正则化系数 CS231n 这里的 loss 写成 $\lambda \sum W^2$，所以正则项梯度是 $2\lambda W$。如果 loss 写成 $\frac{1}{2}\lambda \sum W^2$，梯度才是 $\lambda W$。</p>
+</blockquote>
+<h3 id="Naive-实现"><a href="#Naive-实现" class="headerlink" title="Naive 实现"></a>Naive 实现</h3><p>在 <code>softmax_loss_naive</code> 的循环里，已经得到单个样本的概率向量 <code>p</code> 后，可以直接构造：</p>
+
+
+<p>循环结束后做平均并加正则项：</p>
+
+
+<p>这里 <code>np.outer(X[i], dscores)</code> 的形状是：</p>
+<p>$$<br>D \times C<br>$$</p>
+<p>正好和 $W$ 的形状一致。</p>
+<h3 id="向量化实现"><a href="#向量化实现" class="headerlink" title="向量化实现"></a>向量化实现</h3>
+
+<p>向量化代码对应公式：</p>
+<p>$$<br>S = XW<br>$$</p>
+<p>$$<br>P = \operatorname{softmax}(S)<br>$$</p>
+<p>$$<br>\nabla_W L = \frac{1}{N}X^\top(P-Y) + 2\lambda W<br>$$</p>
+<h3 id="LinearClassifier-中的-SGD"><a href="#LinearClassifier-中的-SGD" class="headerlink" title="LinearClassifier 中的 SGD"></a><code>LinearClassifier</code> 中的 SGD</h3><p><code>LinearClassifier</code> 是线性分类器的基类，负责通用训练流程；具体使用 SVM loss 还是 Softmax cross-entropy loss 由子类决定：</p>
+
+
+<p>训练时每一步不是使用全部训练集，而是随机采样一个 minibatch：</p>
+
+
+<p>其中有放回采样允许同一个样本在一个 batch 中出现多次。这样每一步得到的是整体梯度的随机近似，计算更快。</p>
+<p>权重更新是标准梯度下降：</p>
+<p>$$<br>W \leftarrow W - \eta \nabla_W L<br>$$</p>
+<p>代码对应：</p>
+
+
+<p>这里 <code>grad</code> 与 <code>self.W</code> 形状相同。若 $W \in \mathbb{R}^{D \times C}$，则：</p>
+<p>$$<br>grad \in \mathbb{R}^{D \times C}<br>$$</p>
+<p>矩阵写法等价于逐元素更新：</p>
+<p>$$<br>W_{dj} \leftarrow W_{dj} - \eta \frac{\partial L}{\partial W_{dj}}<br>$$</p>
+<blockquote>
+<p>[!warning] 更新公式的常见错误 <code>self.W = learning_rate * grad</code> 会直接用梯度覆盖权重，训练会退化到接近随机猜测。正确写法必须保留旧权重：<br>&gt; self.W -= learning_rate * grad &gt; ``` ## 权重矩阵  的含义 在线性分类器中：  如果 ，，则 。  的每一列对应一个类别的线性模板：  第  类的分数为：  因此预测时取分数最高的类别： ```python scores = X.dot(self.W) y_pred = np.argmax(scores, axis=1)</p>
+</blockquote>
+<p>对于 CIFAR-10，若使用 bias trick，通常有：</p>
+<p>$$<br>D = 32 \times 32 \times 3 + 1 = 3073,\quad C=10<br>$$</p>
+<p>所以：</p>
+<p>$$<br>W \in \mathbb{R}^{3073 \times 10}<br>$$</p>
+<h3 id="正则化如何进入-loss-与梯度"><a href="#正则化如何进入-loss-与梯度" class="headerlink" title="正则化如何进入 loss 与梯度"></a>正则化如何进入 loss 与梯度</h3><p>总 loss 包含数据损失和 L2 正则化项：</p>
+<p>$$<br>L = L_{\text{data}} + \lambda \sum_{d=1}^{D}\sum_{j=1}^{C}W_{dj}^{2}<br>$$</p>
+<p>其中 $L_{\text{data}}$ 是模型在训练样本上的分类损失。对 Softmax 来说：</p>
+<p>$$<br>L_{\text{data}} = -\frac{1}{N}\sum_{i=1}^{N}\log \frac{\exp(s_{i,y_i})}{\sum_{j=1}^{C}\exp(s_{ij})}<br>$$</p>
+<p>正则项的梯度为：</p>
+<p>$$<br>\frac{\partial}{\partial W} \left( \lambda \sum_{d=1}^{D}\sum_{j=1}^{C}W_{dj}^{2} \right) = 2\lambda W<br>$$</p>
+<p>所以代码中正则化同时体现在 loss 和梯度：</p>
+
+
+<h3 id="超参数搜索与验证集"><a href="#超参数搜索与验证集" class="headerlink" title="超参数搜索与验证集"></a>超参数搜索与验证集</h3><p><code>learning_rate</code> 控制每次沿负梯度方向走多大一步，<code>reg</code> 控制权重惩罚强度。CS231n 中通常用验证集选择这两个超参数：</p>
+
+
+<p>选择依据应是验证集准确率 <code>val_accuracy</code>，不是训练集准确率。训练集准确率高但验证集准确率低，通常意味着过拟合或超参数不合适。</p>
+<h3 id="权重可视化"><a href="#权重可视化" class="headerlink" title="权重可视化"></a>权重可视化</h3><p>Softmax 分类器学到的每个类别权重 $w_c$ 可以 reshape 成 $32 \times 32 \times 3$ 的图像。它通常看起来像一个模糊的类别模板，而不是清晰图片。</p>
+<p>这是因为分类分数是点积：</p>
+<p>$$<br>s_c = x^\top w_c<br>$$</p>
+<p>若输入图像与某个类别的权重模板匹配，该类别分数就会更高。权重图可能带有类别常见背景或颜色，例如飞机与船可能出现蓝色区域，动物类别可能出现绿色或棕色区域。</p>
+<p>这些模板模糊的原因是线性分类器每个类别只有一个模板，无法表达同一类别中姿态、位置、背景和外观的复杂变化。</p>
+<h3 id="易错点"><a href="#易错点" class="headerlink" title="易错点"></a>易错点</h3><ul>
+<li><code>scores -= np.max(scores)</code> 只是数值稳定处理，不改变 softmax 结果。</li>
+<li><code>softmax.py</code> 里 “normalized hinge loss” 的注释不准确，这里实际是 Softmax cross-entropy loss。</li>
+<li>正确类别处需要执行 <code>dscores[y[i]] -= 1</code>，因为 $\frac{\partial L_i}{\partial s_{ij}} = p_{ij} - \mathbf{1}(j=y_i)$。</li>
+<li>正则化 loss 使用 <code>reg * np.sum(W * W)</code> 时，梯度必须加 <code>2 * reg * W</code>。</li>
+<li><code>LinearClassifier.train()</code> 中要写 <code>self.W -= learning_rate * grad</code>，不要把 <code>W</code> 覆盖成 <code>learning_rate * grad</code>。</li>
+<li>notebook 修改外部 <code>.py</code> 后若表现仍像旧代码，应重启 kernel 或用 <code>importlib.reload</code> 确认实际加载的文件。</li>
+</ul>
+<h3 id="本地材料"><a href="#本地材料" class="headerlink" title="本地材料"></a>本地材料</h3><ul>
+<li>Notebook：<code>/Users/keynary/Code/course/CS231n/assignment1/softmax_zh.ipynb</code></li>
+<li>Softmax loss：<code>/Users/keynary/Code/course/CS231n/assignment1/cs231n/classifiers/softmax.py</code></li>
+<li>线性分类器训练框架：<code>/Users/keynary/Code/course/CS231n/assignment1/cs231n/classifiers/linear_classifier.py</code></li>
+</ul>
+<h3 id="关联"><a href="#关联" class="headerlink" title="关联"></a>关联</h3><ul>
+<li>[[CS231n]]</li>
+<li>[[交叉熵]]</li>
+<li>[[梯度下降]]</li>
+<li>[[线性分类器]]Softmax 分类器与交叉熵梯度</li>
+</ul>
+
+  </div>
+
+  
+</article>
+
+<nav class="post-navigation" aria-label="文章导航">
+  
+  
+    <a href="/2026/04/13/%E5%A4%A7%E4%BA%8C%E8%A2%AB%E9%A2%84%E5%88%B6%E8%BF%9B%E8%AF%BE%E9%A2%98%E7%BB%84%E6%89%93%E5%B7%A5%E6%98%AF%E4%BB%80%E4%B9%88%E4%BD%93%E9%AA%8C%EF%BC%883%EF%BC%89/">
+      <span>下一篇</span>
+      <strong>大二被预制进课题组打工是什么体验（3）</strong>
+    </a>
+  
+</nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© 2026 keynary</span>
+    </div>
+  </footer>
+  
+<script src="/js/ambient.js"></script>
+
+</body>
+</html>

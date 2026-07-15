@@ -1,0 +1,117 @@
+
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JavaWebDAY2 · keynary</title>
+  <meta name="description" content="stay hungry, stay foolish">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#f6f5f2">
+  <link rel="icon" href="/images/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&amp;display=swap" rel="stylesheet">
+  
+    <link rel="alternate" type="application/atom+xml" title="keynary" href="/atom.xml">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body class="site-shell">
+  <div class="ambient-background" aria-hidden="true">
+    <span class="ambient-glow ambient-glow--pointer"></span>
+    <span class="ambient-glow ambient-glow--blue"></span>
+    <span class="ambient-glow ambient-glow--warm"></span>
+  </div>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="site-title" href="/">keynary</a>
+      <nav class="site-nav" aria-label="主导航">
+        
+          <a href="/">首页</a>
+        
+          <a href="/archives/">归档</a>
+        
+          <a href="/about/">关于</a>
+        
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <article class="post">
+  <header class="post-header">
+    <time datetime="2024-12-21T15:13:26.000Z">2024-12-21</time>
+    <h1>JavaWebDAY2</h1>
+  </header>
+
+  <div class="post-content">
+    <h3 id="JSON字符串与JS对象的相互转化"><a href="#JSON字符串与JS对象的相互转化" class="headerlink" title="JSON字符串与JS对象的相互转化"></a>JSON字符串与JS对象的相互转化</h3>
+
+<h3 id="DOM树（原来整个网页其实一个树！）"><a href="#DOM树（原来整个网页其实一个树！）" class="headerlink" title="DOM树（原来整个网页其实一个树！）"></a>DOM树（原来整个网页其实一个树！）</h3><p>![[Pasted image 20241221192036.png]] - <em>DOM的核心思想：将网页的内容当做对象来处理，标签的所有属性在该对象上都可以找到，并且修改这个对象的属性，就会自动映射到标签身上。</em> - document对象 - 网页中所有内容都封装在document对象中 - 它提供的属性和方法都是用来访问和操作网页内容的，如：document.write(…) - DOM操作步骤: - 获取DOM元素对象 - 操作DOM对象的属性或方法 - 我们可以通过如下两种方式来获取DOM元素。</p>
+
+
+<h3 id="JS事件监听"><a href="#JS事件监听" class="headerlink" title="JS事件监听"></a>JS事件监听</h3><p>什么是事件呢？HTML事件是发生在HTML元素上的 “事情”，例如： - 按钮被点击 - 鼠标移到元素上 - 输入框失去焦点 - 按下键盘按键</p>
+<p>JS事件监听的语法:</p>
+
+
+<p>在上述的语法中包含三个要素:</p>
+<ul>
+<li><p>事件源: 哪个dom元素触发了事件, 要获取dom元素</p>
+</li>
+<li><p>事件类型: 用什么方式触发, 比如: 鼠标单击 click, 鼠标经过 mouseover</p>
+</li>
+<li><p>要执行的函数: 要做什么事</p>
+</li>
+</ul>
+<p>![[Pasted image 20241221194342.png]]</p>
+<h3 id="Vue"><a href="#Vue" class="headerlink" title="Vue"></a>Vue</h3><p>Vue（读音 /vjuː /, 类似于 view），是一款用于<strong>构建用户界面</strong>的<strong>渐进式</strong>的JavaScript<strong>框架</strong></p>
+<blockquote>
+<p>[!note] reflection 像是一种更加简洁快速达到js效果的指令</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://heuqqdmbyk.feishu.cn/wiki/FxTdw2K9mieDgAkhSqucg59Cn8f">黑马文档</a></p>
+<h3 id="Ajax"><a href="#Ajax" class="headerlink" title="Ajax"></a>Ajax</h3><p><strong>Ajax:</strong> 全称Asynchronous JavaScript And XML，异步的JavaScript和XML - 与服务器进行数据交换：通过Ajax可以给服务器发送请求，并获取服务器响应的数据。 - 异步交互：可以在<strong>不重新加载整个页面</strong>的情况下，与服务器交换数据并<strong>更新部分网页</strong>的技术，如：搜索联想、用户名是否可用的校验等等。 XML：（英语：E<strong>x</strong>tensible <strong>M</strong>arkup <strong>L</strong>anguage）可扩展标记语言，本质是一种数据格式，可以用来存储复杂的数据结构。</p>
+<h3 id="Axios"><a href="#Axios" class="headerlink" title="Axios"></a>Axios</h3><p>Axios是对原生的AJAX进行封装，简化书写 引入：</p>
+
+
+<p>不是很理解，这一块，我先往后推再回头想一下</p>
+<p>下面是DAY2HW3的vue与axios部分</p>
+
+
+<p>代码起码还是得自己敲一遍，不然会想不明白，或者以为自己懂了</p>
+
+  </div>
+
+  
+</article>
+
+<nav class="post-navigation" aria-label="文章导航">
+  
+    <a href="/2024/12/22/JavaWebDAY3/">
+      <span>上一篇</span>
+      <strong>JavaWebDAY3</strong>
+    </a>
+  
+  
+    <a href="/2024/12/21/JavaWebDAY1/">
+      <span>下一篇</span>
+      <strong>JavaWebDAY1</strong>
+    </a>
+  
+</nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© 2026 keynary</span>
+    </div>
+  </footer>
+  
+<script src="/js/ambient.js"></script>
+
+</body>
+</html>

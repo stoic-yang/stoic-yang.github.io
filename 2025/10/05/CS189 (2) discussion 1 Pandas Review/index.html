@@ -1,0 +1,129 @@
+
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CS189 (2) discussion 1 Pandas Review · keynary</title>
+  <meta name="description" content="stay hungry, stay foolish">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#f6f5f2">
+  <link rel="icon" href="/images/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&amp;display=swap" rel="stylesheet">
+  
+    <link rel="alternate" type="application/atom+xml" title="keynary" href="/atom.xml">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body class="site-shell">
+  <div class="ambient-background" aria-hidden="true">
+    <span class="ambient-glow ambient-glow--pointer"></span>
+    <span class="ambient-glow ambient-glow--blue"></span>
+    <span class="ambient-glow ambient-glow--warm"></span>
+  </div>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="site-title" href="/">keynary</a>
+      <nav class="site-nav" aria-label="主导航">
+        
+          <a href="/">首页</a>
+        
+          <a href="/archives/">归档</a>
+        
+          <a href="/about/">关于</a>
+        
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <article class="post">
+  <header class="post-header">
+    <time datetime="2025-10-05T13:02:15.000Z">2025-10-05</time>
+    <h1>CS189 (2) discussion 1 Pandas Review</h1>
+  </header>
+
+  <div class="post-content">
+    <h3 id="Q-1-1"><a href="#Q-1-1" class="headerlink" title="Q 1.1"></a>Q 1.1</h3><p>How many columns are in the <code>title_basics</code> <code>DataFrame</code>? What is the data type of the startYear column? Does this make sense?</p>
+
+
+<h3 id="Q-1-2"><a href="#Q-1-2" class="headerlink" title="Q 1.2"></a>Q 1.2</h3><p>What is the value in 101st row of the <code>primaryTitle</code> column of the <code>title_basics</code> <code>DataFrame</code>? <em>HINT: Recall that</em> <code>DataFrame</code> <em>uses 0-indexing</em></p>
+
+
+<h3 id="Q-1-3"><a href="#Q-1-3" class="headerlink" title="Q 1.3"></a>Q 1.3</h3><p>Display the first 3 rows and the last 6 rows of the <code>title_basics</code> <code>DataFrame</code> as a single <code>DataFrame</code>.</p>
+
+
+<h3 id="Q1-4"><a href="#Q1-4" class="headerlink" title="Q1.4"></a>Q1.4</h3><p>How many unique <code>titleTypes</code> are there in the <code>title_basics</code> <code>DataFrame</code>? Which is the most common</p>
+
+
+<h3 id="Q1-5"><a href="#Q1-5" class="headerlink" title="Q1.5"></a>Q1.5</h3><p>Remove the <code>originalTitle</code> and <code>endYear</code> columns from the <code>title_basics</code> <code>DataFrame</code>. Make sure that the columns are permanently removed from the <code>title_basics</code> <code>DataFrame</code></p>
+
+
+<h3 id="Q1-6"><a href="#Q1-6" class="headerlink" title="Q1.6"></a>Q1.6</h3><p>Rename <code>primaryTitle</code> to <code>title</code> and <code>startYear</code> to <code>year</code> in the <code>title_basics</code> <code>DataFrame</code>. Make sure that the changes are reflected permanently in the <code>title_basics</code> <code>DataFrame</code></p>
+
+
+<h3 id="Q1-7"><a href="#Q1-7" class="headerlink" title="Q1.7"></a>Q1.7</h3><p>A crucial step in most data processing pipelines for machine learning is dealing with missing or corrupted data. Often, these missing values are represented as a <code>NaN</code> (not a number). Sometimes in the context of machine learning we’d want to estimate a value for a missing feature rather than remove that sample point entirely. Can you think of some simple ways in which we could perform that estimation?</p>
+<p>使用平均值、中位数、邻近数进行插值处理</p>
+<h3 id="Q1-8"><a href="#Q1-8" class="headerlink" title="Q1.8"></a>Q1.8</h3><p>Remove all rows from the <code>title_basics</code> <code>DataFrame</code> where <code>runtimeMinutes</code> or <code>year</code> is `NaNo</p>
+
+
+<h3 id="Q1-9"><a href="#Q1-9" class="headerlink" title="Q1.9"></a>Q1.9</h3><p>Change the data type of the <code>year</code> column in the <code>title_basics</code> <code>DataFrame</code> to something that makes more sense. Then confirm that the change is permanently applied.</p>
+
+
+<p>Let’s practice some more basic filtering and sorting now.</p>
+<h3 id="Q1-10"><a href="#Q1-10" class="headerlink" title="Q1.10"></a>Q1.10</h3><p>Extract the feature films (<code>titleType == "movie"</code>) released in 1954 from the <code>title_basics</code> <code>DataFrame</code> (save this as a new <code>DataFrame</code>, <code>feature_films_1954</code>).</p>
+
+
+<h3 id="Q1-11"><a href="#Q1-11" class="headerlink" title="Q1.11"></a>Q1.11</h3><p>Among the feature films from 1954, which film has the longest runtime? Return its <code>title</code> and <code>runtimeMinutes</code> as a <code>DataFrame</code> extracted from the <code>feature_films_1954</code> <code>DataFrame</code>.</p>
+
+
+<h3 id="Q2-1"><a href="#Q2-1" class="headerlink" title="Q2.1"></a>Q2.1</h3><p>For each <code>genre</code> in the <code>title_basics</code> <code>DataFrame</code>, compute the mean runtime of feature films released since 1960.</p>
+<p>Show the five longest-mean genres.</p>
+
+
+<h3 id="Q2-2"><a href="#Q2-2" class="headerlink" title="Q2.2"></a>Q2.2</h3><p>Merge the <code>title_ratings</code> <code>DataFrame</code> with the <code>title_basics</code> <code>DataFrame</code> by joining on the <code>tconst</code> column. How many titles are present in the <code>title_basics</code> <code>DataFrame</code> but not in the <code>title_ratings</code> <code>DataFrame</code>? Store the merged <code>DataFrame</code> as <code>merged_df</code>. <strong>Hint:</strong> Recall that because of the genre splitting, the number of titles is not equal to the number of rows.</p>
+
+
+<h3 id="Q2-3"><a href="#Q2-3" class="headerlink" title="Q2.3"></a>Q2.3</h3><p>Using the <code>merged_df</code> <code>DataFrame</code> and plotly express, create an interactive scatter plot of the <code>runtimeMinutes</code> vs. <code>numVotes</code> for movies in the <code>merged_df</code> <code>DataFrame</code>. Color the points by the <code>year</code> of the movie and add a title and axis labels to the plot. Also, make sure the movie title is visible when hovering over the data points. <strong>Note:</strong> To make the data easier to visualize, we take a sample of just 2000 movies. That’s why you may not see your favorites on this plot. It’s important not to change the random state as you’ll end up getting different results for the following questions.</p>
+
+
+<h3 id="Part-3-Finding-the-perfect-movie"><a href="#Part-3-Finding-the-perfect-movie" class="headerlink" title="Part 3: Finding the perfect movie"></a>Part 3: Finding the perfect movie</h3><p>Aakarsh has spent his whole summer brainrotting and doomscrolling, so now his attention span is COOKED. He wants to pick a movie to watch tonight but wants to make sure it isn’t so long he gets bored. He decides to construct a Brainrot Score (BRS) to help him find the perfect movie: $BRS = \frac{\text{averageRating}}{\sqrt{\text{runtimeMinutes}}}$ He also wants to make sure the following criteria hold: - The title should be a <em>movie</em> made in 1980 or later. - It must have at least 10000 votes. - It must be in the <code>History</code>, <code>Thriller</code>, or <code>Comedy</code> genres. Can you help Aakarsh out by finding the 3 best movies by BRS in each of his preferred genres?</p>
+
+
+  </div>
+
+  
+</article>
+
+<nav class="post-navigation" aria-label="文章导航">
+  
+    <a href="/2025/10/09/2022%20iCPC%20%E6%B2%88%E9%98%B3/">
+      <span>上一篇</span>
+      <strong>2022 iCPC 沈阳</strong>
+    </a>
+  
+  
+    <a href="/2025/10/05/CS189%20(1)%20data%20tool/">
+      <span>下一篇</span>
+      <strong>CS189 (1) data tool</strong>
+    </a>
+  
+</nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© 2026 keynary</span>
+    </div>
+  </footer>
+  
+<script src="/js/ambient.js"></script>
+
+</body>
+</html>

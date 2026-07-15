@@ -1,0 +1,94 @@
+
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>oj_dashboard——聚合Codeforces、atcoder、leetcode提交记录形成热力图的工具 · keynary</title>
+  <meta name="description" content="stay hungry, stay foolish">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#f6f5f2">
+  <link rel="icon" href="/images/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&amp;display=swap" rel="stylesheet">
+  
+    <link rel="alternate" type="application/atom+xml" title="keynary" href="/atom.xml">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body class="site-shell">
+  <div class="ambient-background" aria-hidden="true">
+    <span class="ambient-glow ambient-glow--pointer"></span>
+    <span class="ambient-glow ambient-glow--blue"></span>
+    <span class="ambient-glow ambient-glow--warm"></span>
+  </div>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="site-title" href="/">keynary</a>
+      <nav class="site-nav" aria-label="主导航">
+        
+          <a href="/">首页</a>
+        
+          <a href="/archives/">归档</a>
+        
+          <a href="/about/">关于</a>
+        
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <article class="post">
+  <header class="post-header">
+    <time datetime="2026-03-04T14:44:38.000Z">2026-03-04</time>
+    <h1>oj_dashboard——聚合Codeforces、atcoder、leetcode提交记录形成热力图的工具</h1>
+  </header>
+
+  <div class="post-content">
+    <p>我大部分题都是在Codeforces上刷的，但有的时候也在atcoder上刷，有时候就会出现在atcoder上刷完题力竭后，没精力再继续在Codeforces上刷，导致刷墙中断，一个美美的热力图就缺了个洞，这就会让我非常的难受，所以我一直在想有没有一个什么工具可以统计我多个平台，统计我的提交记录，画一个多平台聚合的热力图，同时统计我的各个平台的做题数。然后我从去年七月份开始就断断续续地找有没有现成的工具，但最多只找到可以统计过题数的，但这个不是我最想要的，所以我就决定自己vibe coding一个，所以也就有了现在这个东西，如果你也有对应的需求，可以部署下来玩玩。</p>
+<p>登录界面，这里我做成表格了，就不用自己再去找代码位置改config了</p>
+<p><img src="/2026/03/04/oj_dashboard%E2%80%94%E2%80%94%E8%81%9A%E5%90%88Codeforces%E3%80%81atcoder%E3%80%81leetcode%E6%8F%90%E4%BA%A4%E8%AE%B0%E5%BD%95%E5%BD%A2%E6%88%90%E7%83%AD%E5%8A%9B%E5%9B%BE%E7%9A%84%E5%B7%A5%E5%85%B7/2012655494389597455-01.png" loading="lazy"></p>
+<p>外观大概这个样子，提交热力图下面的是当日过题中最大难度的难度热力图</p>
+<p><img src="/2026/03/04/oj_dashboard%E2%80%94%E2%80%94%E8%81%9A%E5%90%88Codeforces%E3%80%81atcoder%E3%80%81leetcode%E6%8F%90%E4%BA%A4%E8%AE%B0%E5%BD%95%E5%BD%A2%E6%88%90%E7%83%AD%E5%8A%9B%E5%9B%BE%E7%9A%84%E5%B7%A5%E5%85%B7/2012655494389597455-02.png" loading="lazy"></p>
+<p>整个表的最下面是当日解决的题目的标题，你可以直观地看到今天做了那些题，我觉得这个还挺实用的。</p>
+<p>诶，你怎么没做牛客和洛谷的？</p>
+<p>答：洛谷和牛客的爬取要cookie，我也用的不多，所以就没做支持了，leetcode、atcoder、Codeforces只需要你输入你的用户名就可以查到所有的信息，api文档比较完善</p>
+<p>更详细的使用方法，你可以在这个项目的仓库里找到，这里就不多赘述了</p>
+<p>地址：<a target="_blank" rel="noopener" href="https://github.com/stoic-yang/oj_dashboard">https://github.com/stoic-yang/oj_dashboard</a></p>
+
+  </div>
+
+  
+</article>
+
+<nav class="post-navigation" aria-label="文章导航">
+  
+    <a href="/2026/03/13/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0%EF%BC%9AFedMultimodal%EF%BC%9AA%20Benchmark%20For%20Multimodal%20Federated%20Learning/">
+      <span>上一篇</span>
+      <strong>论文阅读与复现：FedMultimodal:A Benchmark For Multimodal Federated Learning</strong>
+    </a>
+  
+  
+    <a href="/2026/02/22/%E5%A4%A7%E4%BA%8C%E8%A2%AB%E9%A2%84%E5%88%B6%E8%BF%9B%E5%AD%A6%E6%A0%A1%E8%AF%BE%E9%A2%98%E7%BB%84%E6%89%93%E5%B7%A5%E6%98%AF%E4%BB%80%E4%B9%88%E4%BD%93%E9%AA%8C%EF%BC%882%EF%BC%89/">
+      <span>下一篇</span>
+      <strong>大二被预制进学校课题组打工是什么体验（2）</strong>
+    </a>
+  
+</nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© 2026 keynary</span>
+    </div>
+  </footer>
+  
+<script src="/js/ambient.js"></script>
+
+</body>
+</html>

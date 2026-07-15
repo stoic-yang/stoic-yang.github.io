@@ -1,0 +1,114 @@
+
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ABC428 · keynary</title>
+  <meta name="description" content="stay hungry, stay foolish">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#f6f5f2">
+  <link rel="icon" href="/images/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&amp;display=swap" rel="stylesheet">
+  
+    <link rel="alternate" type="application/atom+xml" title="keynary" href="/atom.xml">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body class="site-shell">
+  <div class="ambient-background" aria-hidden="true">
+    <span class="ambient-glow ambient-glow--pointer"></span>
+    <span class="ambient-glow ambient-glow--blue"></span>
+    <span class="ambient-glow ambient-glow--warm"></span>
+  </div>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="site-title" href="/">keynary</a>
+      <nav class="site-nav" aria-label="主导航">
+        
+          <a href="/">首页</a>
+        
+          <a href="/archives/">归档</a>
+        
+          <a href="/about/">关于</a>
+        
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <article class="post">
+  <header class="post-header">
+    <time datetime="2025-11-26T07:46:37.000Z">2025-11-26</time>
+    <h1>ABC428</h1>
+  </header>
+
+  <div class="post-content">
+    <h3 id="C"><a href="#C" class="headerlink" title="C"></a>C</h3><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc428/tasks/abc428_c">https://atcoder.jp/contests/abc428/tasks/abc428_c</a> #前缀和 #括号匹配</p>
+<p>合法括号的处理办法：</p>
+<ol>
+<li><code>（</code> <code>）</code> 括号的数量要相等</li>
+<li>序列中的<code>(</code>的数量一定要大于等于 <code>)</code></li>
+</ol>
+<p>这可以把括号抽象为数字，<code>(</code> 代表 1， <code>)</code> 代表 -1</p>
+<p>这样，一个合法的括号就可以用下面的数学语言来表达</p>
+<ol>
+<li>和为 0</li>
+<li>过程中前缀和大于等于 0</li>
+</ol>
+<p>所以我们在处理序列的时候维护两个值即可，一个是最小前缀和，另一个是当前前缀和</p>
+<h3 id="D"><a href="#D" class="headerlink" title="D"></a>D</h3><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc428/tasks/abc428_d">https://atcoder.jp/contests/abc428/tasks/abc428_d</a> #数论 #十进制拼接 #前缀和 #logn</p>
+<p>Let z be the string obtained by interpreting x,y in decimal notation as strings and concatenating them in this order. Let f(x,y) be the value when z is interpreted as an integer in decimal notation.</p>
+<p>$f(3, 14)=314$</p>
+<p>类似这样的拼接，用字符串进行转化非常麻烦，可以直接用 int 表示，把 $y$ 的十进制位数设为 $d$</p>
+<p>那么就有</p>
+<p>$f(x, y)=x\times 10^d + y$</p>
+<p>这个表示同时还可以解决一个问题，也就是上下限区间的问题，我们可以通过这个直接计算出所有连续的可能的取值的上下限，不仅如此，这个区间的我们可以通过枚举 d 来获得，而 d 的取值范围非常小</p>
+<p>这里还有一个比较显然的小结论，也就是，在区间 l~r 中，到底有多少的完全平方数？ 答案是 $\sqrt{ r } - \sqrt{ l -1 }$ #数学小知识</p>
+
+
+<h3 id="E"><a href="#E" class="headerlink" title="E"></a>E</h3><p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc428/tasks/abc428_e">https://atcoder.jp/contests/abc428/tasks/abc428_e</a> #树的直径 #bfs #树 #最长路径</p>
+<p>这里有一个小结论，在一个树形结构中，对于任意节点 $u$，距离它最远的节点 $v$，一定满足 $v$ 是树直径的两个端点之一</p>
+<p>所以，对于树上每一个点，离这个点最远的点一定是树的直径的两个点之间的一个</p>
+<p>那么，我们可以先找出树的直径的两个端点，再计算每一个点到这两个点的距离，最后把去这两个距离中的最大值，这个值就是我们需要的最大距离，对应的点就是符合题意的点</p>
+<p>找这个两个点 x，y 可以通过 bfs 来实现</p>
+<p>先对任意一个点进行 bfs，找到 x，然后再对 x bfs 找到 y，再对 y bfs，即可获得 x 和 y 到任意一个点的距离，最后遍历输出答案即可</p>
+
+
+  </div>
+
+  
+</article>
+
+<nav class="post-navigation" aria-label="文章导航">
+  
+    <a href="/2025/12/29/gemini%E4%BD%BF%E7%94%A8%E5%B0%8F%E6%8A%80%E5%B7%A7%EF%BC%88%E8%80%83%E8%AF%95%E5%91%A8%E5%90%91%EF%BC%89/">
+      <span>上一篇</span>
+      <strong>gemini使用小技巧（考试周向）</strong>
+    </a>
+  
+  
+    <a href="/2025/11/26/CF1063/">
+      <span>下一篇</span>
+      <strong>CF1063</strong>
+    </a>
+  
+</nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© 2026 keynary</span>
+    </div>
+  </footer>
+  
+<script src="/js/ambient.js"></script>
+
+</body>
+</html>

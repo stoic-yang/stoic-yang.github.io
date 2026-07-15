@@ -1,0 +1,141 @@
+
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JavaWeb事务管理 · keynary</title>
+  <meta name="description" content="stay hungry, stay foolish">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#f6f5f2">
+  <link rel="icon" href="/images/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&amp;display=swap" rel="stylesheet">
+  
+    <link rel="alternate" type="application/atom+xml" title="keynary" href="/atom.xml">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body class="site-shell">
+  <div class="ambient-background" aria-hidden="true">
+    <span class="ambient-glow ambient-glow--pointer"></span>
+    <span class="ambient-glow ambient-glow--blue"></span>
+    <span class="ambient-glow ambient-glow--warm"></span>
+  </div>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="site-title" href="/">keynary</a>
+      <nav class="site-nav" aria-label="主导航">
+        
+          <a href="/">首页</a>
+        
+          <a href="/archives/">归档</a>
+        
+          <a href="/about/">关于</a>
+        
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <article class="post">
+  <header class="post-header">
+    <time datetime="2024-12-31T03:17:33.000Z">2024-12-31</time>
+    <h1>JavaWeb事务管理</h1>
+  </header>
+
+  <div class="post-content">
+    <h3 id="事务管理"><a href="#事务管理" class="headerlink" title="事务管理"></a>事务管理</h3><p><strong>概念：</strong> 事务是一组操作的集合，它是一个不可分割的工作单位。事务会把所有的操作作为一个整体一起向系统提交或撤销操作请求，即这些操作要么同时成功，要么同时失败。</p>
+<h3 id="Spring事务管理"><a href="#Spring事务管理" class="headerlink" title="Spring事务管理"></a>Spring事务管理</h3><h3 id="Transactional"><a href="#Transactional" class="headerlink" title="Transactional"></a>Transactional</h3><p>**作用：**就是在当前这个方法执行开始之前来开启事务，方法执行完毕之后提交事务。如果在这个方法执行的过程当中出现了异常，就会进行事务的回滚操作。</p>
+<p>**位置：**业务层的方法上、类上、接口上</p>
+<ul>
+<li><p>方法上：当前方法交给spring进行事务管理</p>
+</li>
+<li><p>类上：当前类中所有的方法都交由spring进行事务管理</p>
+</li>
+<li><p>接口上：接口下所有的实现类当中所有的方法都交给spring 进行事务管理</p>
+</li>
+</ul>
+<p>说明：可以在 <code>application.yml</code> 配置文件中开启事务管理日志，这样就可以在控制看到和事务相关的日志信息了</p>
+
+
+<ul>
+<li><p>异常回滚的属性：<code>rollbackFor</code></p>
+</li>
+<li><p>事务传播行为：<code>propagation</code></p>
+</li>
+</ul>
+<p><strong>默认情况下，只有出现RuntimeException(运行时异常)才会回滚事务。</strong></p>
+<p>假如我们想让所有的异常都回滚，需要来配置@Transactional注解当中的rollbackFor属性，通过rollbackFor这个属性可以指定出现何种异常类型回滚事务。</p>
+<p>@Transactional(rollbackFor = Exception.class)</p>
+<h3 id="propagation"><a href="#propagation" class="headerlink" title="propagation"></a>propagation</h3><p>所谓事务的传播行为，指的就是在A方法运行的时候，首先会开启一个事务，在A方法当中又调用了B方法， B方法自身也具有事务，那么B方法在运行的时候，到底是加入到A方法的事务当中来，还是B方法在运行的时候新建一个事务？这个就涉及到了事务的传播行为。</p>
+<p>我们要想控制事务的传播行为，在@Transactional注解的后面指定一个属性propagation，通过 propagation 属性来指定传播行为。接下来我们就来介绍一下常见的事务传播行为。</p>
+<table>
+<thead>
+<tr>
+<th>属性值</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>REQUIRED</td>
+<td>【默认值】需要事务，有则加入，无则创建新事务</td>
+</tr>
+<tr>
+<td>REQUIRES_NEW</td>
+<td>需要新事务，无论有无，总是创建新事务</td>
+</tr>
+<tr>
+<td>SUPPORTS</td>
+<td>支持事务，有则加入，无则在无事务状态中运行</td>
+</tr>
+<tr>
+<td>NOT_SUPPORTED</td>
+<td>不支持事务，在无事务状态下运行,如果当前存在已有事务,则挂起当前事务</td>
+</tr>
+<tr>
+<td>MANDATORY</td>
+<td>必须有事务，否则抛异常</td>
+</tr>
+<tr>
+<td>NEVER</td>
+<td>必须没事务，否则抛异常</td>
+</tr>
+</tbody></table>
+
+  </div>
+
+  
+</article>
+
+<nav class="post-navigation" aria-label="文章导航">
+  
+    <a href="/2025/01/05/2025%E7%AC%AC%E4%B8%80%E5%91%A8%E5%91%A8%E7%BB%93/">
+      <span>上一篇</span>
+      <strong>2025第一周周结</strong>
+    </a>
+  
+  
+    <a href="/2024/12/30/12%E6%9C%88%E5%B0%8F%E7%BB%93/">
+      <span>下一篇</span>
+      <strong>12月小结</strong>
+    </a>
+  
+</nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© 2026 keynary</span>
+    </div>
+  </footer>
+  
+<script src="/js/ambient.js"></script>
+
+</body>
+</html>

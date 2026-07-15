@@ -1,0 +1,99 @@
+
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2022 iCPC 沈阳 · keynary</title>
+  <meta name="description" content="stay hungry, stay foolish">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#f6f5f2">
+  <link rel="icon" href="/images/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&amp;display=swap" rel="stylesheet">
+  
+    <link rel="alternate" type="application/atom+xml" title="keynary" href="/atom.xml">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body class="site-shell">
+  <div class="ambient-background" aria-hidden="true">
+    <span class="ambient-glow ambient-glow--pointer"></span>
+    <span class="ambient-glow ambient-glow--blue"></span>
+    <span class="ambient-glow ambient-glow--warm"></span>
+  </div>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="site-title" href="/">keynary</a>
+      <nav class="site-nav" aria-label="主导航">
+        
+          <a href="/">首页</a>
+        
+          <a href="/archives/">归档</a>
+        
+          <a href="/about/">关于</a>
+        
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <article class="post">
+  <header class="post-header">
+    <time datetime="2025-10-09T05:06:09.000Z">2025-10-09</time>
+    <h1>2022 iCPC 沈阳</h1>
+  </header>
+
+  <div class="post-content">
+    <h3 id="C-Clamped-Sequence"><a href="#C-Clamped-Sequence" class="headerlink" title="C Clamped Sequence"></a>C Clamped Sequence</h3><h2 id="暴力"><a href="#暴力" class="headerlink" title="暴力"></a>暴力</h2><p>这里非常的小丑，首先应该注意到，数据范围是 5e3，是可以支持 $O (n^2)$ 的时间复杂度的，所以其实可以直接暴力枚举</p>
+<p>这里可以学习一下题解的部分写法：</p>
+<h3 id="去重复技巧："><a href="#去重复技巧：" class="headerlink" title="去重复技巧："></a>去重复技巧：</h3>
+
+<h3 id="F-Tavern-Chess"><a href="#F-Tavern-Chess" class="headerlink" title="F Tavern Chess"></a>F Tavern Chess</h3><h2 id="模拟-概率-dfs"><a href="#模拟-概率-dfs" class="headerlink" title="模拟 #概率 #dfs"></a>模拟 #概率 #dfs</h2><p>这里同样是发现很多问题，赛时的时候没有写出来，很快就想到了用 dfs 暴力模拟，但是写 dfs 的过程非常的不顺利，对如何写 dfs 函数不熟悉，这里也有很多可以学习题解的点</p>
+<h3 id="审题问题"><a href="#审题问题" class="headerlink" title="审题问题"></a>审题问题</h3><p>有些长难句，就 TM 巨难读 <code>When a team takes the attack, the leftmost minion taking the minimum number of attacks from the team attacks one of the alive minions from the other team uniformly at random, and then the other team takes the attack.</code> 这巨话翻译错了，导致我模拟反复改，最后也没有改对，平时还是要少依赖翻译</p>
+<h3 id="solve-函数内嵌-dfs-函数的非-C-23-写法"><a href="#solve-函数内嵌-dfs-函数的非-C-23-写法" class="headerlink" title="solve 函数内嵌 dfs 函数的非 C++23 写法"></a>solve 函数内嵌 dfs 函数的非 C++23 写法</h3>
+
+<h3 id="概率计算"><a href="#概率计算" class="headerlink" title="概率计算"></a>概率计算</h3><p><code>uniformly at random</code>，计算这个概率是不能通过计算总数量来得到，还必须要通过每一层的概率相加得到，可能是我的概率学的不好，不太理解两着有什么区别，有机会我要再找几道概率的题目写一写，看到底怎么回事。</p>
+<p>另一个启发的点就是，在计算这类概率的时候，直接全部开 double 就完事了，最后要是还乘以一个 $1.0$ 反而麻烦</p>
+<h3 id="dfs-（递归）设计"><a href="#dfs-（递归）设计" class="headerlink" title="dfs （递归）设计"></a>dfs （递归）设计</h3><p>我自己写的 dfs 简直就是一坨，最后甚至 TLE 了，现在想来应该就是我每次到达终点都要计算一次 A 队和 B 队的生存状态，这个时间开销的巨大的，另外，我还传入了两个复制的数组作为参数，这就更加 sb，纯纯冗余的代码。</p>
+<p>dfs 的参数应该带有两类信息，一个是可以帮助确定递归边界的信息（i，n，在本题目中为队伍 1 和队伍 2 的死亡数量），还有一个是递归过程中需要传递到终点的参数。</p>
+<p>写 dfs 时，先考虑递归的边界，先把边界条件写好，再写递归主逻辑</p>
+<p><strong>在 dfs 中，每次调用递归后一定要进行复原!!!</strong>，这个题目，我就是忘记把一个比较外层的攻击次数复原，导致了很多次的模拟错误。</p>
+
+
+  </div>
+
+  
+</article>
+
+<nav class="post-navigation" aria-label="文章导航">
+  
+    <a href="/2025/10/12/%E5%9B%BD%E5%BA%86%E5%89%8D%E5%90%8E%E4%B8%A4%E5%91%A8%E5%91%A8%E6%8A%A5%EF%BC%8810.1-10.12%EF%BC%89/">
+      <span>上一篇</span>
+      <strong>国庆前后两周周报（10.1-10.12）</strong>
+    </a>
+  
+  
+    <a href="/2025/10/05/CS189%20(2)%20discussion%201%20Pandas%20Review/">
+      <span>下一篇</span>
+      <strong>CS189 (2) discussion 1 Pandas Review</strong>
+    </a>
+  
+</nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© 2026 keynary</span>
+    </div>
+  </footer>
+  
+<script src="/js/ambient.js"></script>
+
+</body>
+</html>

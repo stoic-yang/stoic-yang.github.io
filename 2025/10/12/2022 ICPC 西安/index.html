@@ -1,0 +1,107 @@
+
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2022 ICPC 西安 · keynary</title>
+  <meta name="description" content="stay hungry, stay foolish">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#f6f5f2">
+  <link rel="icon" href="/images/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&amp;display=swap" rel="stylesheet">
+  
+    <link rel="alternate" type="application/atom+xml" title="keynary" href="/atom.xml">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body class="site-shell">
+  <div class="ambient-background" aria-hidden="true">
+    <span class="ambient-glow ambient-glow--pointer"></span>
+    <span class="ambient-glow ambient-glow--blue"></span>
+    <span class="ambient-glow ambient-glow--warm"></span>
+  </div>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="site-title" href="/">keynary</a>
+      <nav class="site-nav" aria-label="主导航">
+        
+          <a href="/">首页</a>
+        
+          <a href="/archives/">归档</a>
+        
+          <a href="/about/">关于</a>
+        
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <article class="post">
+  <header class="post-header">
+    <time datetime="2025-10-12T12:17:56.000Z">2025-10-12</time>
+    <h1>2022 ICPC 西安</h1>
+  </header>
+
+  <div class="post-content">
+    <h2 id="J"><a href="#J" class="headerlink" title="J"></a>J</h2><p><a target="_blank" rel="noopener" href="https://codeforces.com/gym/104077/problem/J">https://codeforces.com/gym/104077/problem/J</a></p>
+<p>签到题，仔细观察发现最多选两个数，那选最大的两个非负数就行了</p>
+<h2 id="F-Hotel"><a href="#F-Hotel" class="headerlink" title="F. Hotel"></a>F. Hotel</h2><p><em>贪心</em></p>
+<p>签到题，对于每一个队伍进行贪心的选择就可以了，这里我思考不周，漏写了一种情况导致 WA 了一发，qwq，而且我写还比较一坨</p>
+
+
+<h3 id="C-Clone-Ranran"><a href="#C-Clone-Ranran" class="headerlink" title="C . Clone Ranran"></a>C . Clone Ranran</h3><p>#模拟 #倍增 #贪心</p>
+<p>不难看出，在复制前进行生产一定是亏的，所以最后的时间一定都是在进行操作二，所以先复制，再生产</p>
+<p><strong>反思</strong></p>
+<p>在除以一个数的时候，应该考虑这个数是否可能为 0，lz 因为没有检查这个 RE 了一发，lz 写到这里的时候大脑有点宕机，竟然没有在 10 分钟想到解法，太惭愧了，严肃加训</p>
+<h2 id="Problem-E-Find-Maximum"><a href="#Problem-E-Find-Maximum" class="headerlink" title="Problem E. Find Maximum"></a>Problem E. Find Maximum</h2><p>#dfs #暴力</p>
+<p>找规律，队友干出来的，被狠狠带飞</p>
+
+
+<h2 id="G-Perfect-Word"><a href="#G-Perfect-Word" class="headerlink" title="G. Perfect Word"></a>G. Perfect Word</h2><p>#字符串 #思维 #观察</p>
+<p>对于一个合法字符串来说，一个字符也是子串，所以一个合法的字符串肯定是一堆在给定字符串中的字符拼接而成的，假设一个长度大于 1 的字串合法，那么两个长度大于 1 的字串拼接而成的字串肯定合法，由此可以推断出，一个字串合法，肯定是由两个小于当前字串的子串拼接而成，也就是说，一个字串合法，那么它第一个字符肯定出现在集合中，最后一个字符也出现在集合中，这样拼接出来的字串合法</p>
+
+
+<h2 id="L-Tree"><a href="#L-Tree" class="headerlink" title="L. Tree"></a>L. Tree</h2><p>#树 #入度 #反链 #构造</p>
+<p><img src="/2025/10/12/2022%20ICPC%20%E8%A5%BF%E5%AE%89/1960800874415781262-01.jpg" loading="lazy"></p>
+
+
+<p>参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Euphria/article/details/132245077">https://blog.csdn.net/Euphria/article/details/132245077</a></p>
+
+  </div>
+
+  
+</article>
+
+<nav class="post-navigation" aria-label="文章导航">
+  
+    <a href="/2025/10/12/CF%201057/">
+      <span>上一篇</span>
+      <strong>CF 1057</strong>
+    </a>
+  
+  
+    <a href="/2025/10/12/%E5%9B%BD%E5%BA%86%E5%89%8D%E5%90%8E%E4%B8%A4%E5%91%A8%E5%91%A8%E6%8A%A5%EF%BC%8810.1-10.12%EF%BC%89/">
+      <span>下一篇</span>
+      <strong>国庆前后两周周报（10.1-10.12）</strong>
+    </a>
+  
+</nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© 2026 keynary</span>
+    </div>
+  </footer>
+  
+<script src="/js/ambient.js"></script>
+
+</body>
+</html>

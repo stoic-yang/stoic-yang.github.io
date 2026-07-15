@@ -1,0 +1,99 @@
+
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CS189 (1) data tool · keynary</title>
+  <meta name="description" content="stay hungry, stay foolish">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#f6f5f2">
+  <link rel="icon" href="/images/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&amp;display=swap" rel="stylesheet">
+  
+    <link rel="alternate" type="application/atom+xml" title="keynary" href="/atom.xml">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body class="site-shell">
+  <div class="ambient-background" aria-hidden="true">
+    <span class="ambient-glow ambient-glow--pointer"></span>
+    <span class="ambient-glow ambient-glow--blue"></span>
+    <span class="ambient-glow ambient-glow--warm"></span>
+  </div>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="site-title" href="/">keynary</a>
+      <nav class="site-nav" aria-label="主导航">
+        
+          <a href="/">首页</a>
+        
+          <a href="/archives/">归档</a>
+        
+          <a href="/about/">关于</a>
+        
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <article class="post">
+  <header class="post-header">
+    <time datetime="2025-10-05T11:48:56.000Z">2025-10-05</time>
+    <h1>CS189 (1) data tool</h1>
+  </header>
+
+  <div class="post-content">
+    <h3 id="之前学过数据分析课，也看过一点data100，快速过一下"><a href="#之前学过数据分析课，也看过一点data100，快速过一下" class="headerlink" title="之前学过数据分析课，也看过一点data100，快速过一下"></a>之前学过数据分析课，也看过一点data100，快速过一下</h3><h3 id="Creating-an-Interactive-Scatter-Plot-with-Plotly-Express"><a href="#Creating-an-Interactive-Scatter-Plot-with-Plotly-Express" class="headerlink" title="Creating an Interactive Scatter Plot with Plotly Express"></a>Creating an Interactive Scatter Plot with Plotly Express</h3><p>Plotly express is closely related to Pandas Plotting, but it is a separate library that provides a high-level interface for creating plots. It is designed to work seamlessly with <code>pandas</code> <code>DataFrames</code> and provides a simple API for creating a wide range of visualizations. Plotly express offers more flexibility and customization options than <code>pandas</code> plotting, making it a powerful tool for creating complex visualizations. <strong>Key components:</strong> 1. <code>**px.scatter**</code>: Generates a scatter plot to visualize relationships between two numerical variables. 2. <strong>Parameters</strong>: - <code>**mpg**</code>: Dataset containing car information. - <code>**x='weight'**</code>: X-axis represents car weight. - <code>**y='mpg'**</code>: Y-axis represents miles per gallon. - <code>**color='origin'**</code>: Groups points by car origin. - <code>**size='cylinders'**</code>: Marker size reflects the number of cylinders. - <code>**size_max=12**</code>: Limits marker size. - <code>**hover_data=mpg.columns**</code>: Displays all dataset columns on hover. - <code>**title='MPG vs. Weight by Origin'**</code>: Adds a plot title. - <code>**labels=&#123;'weight': 'Weight (lbs)', 'mpg': 'Miles Per Gallon (MPG)'&#125;**</code>: Customizes axis labels. - <code>**width=800, height=600**</code>: Sets plot dimensions.</p>
+<p>All the basic plotting functions in <code>pandas</code> and <code>plotly express</code> return <code>Figure</code> objects, which can be further customized using the methods available in the <code>plotly.graph_objects</code> module. We can use <code>update_layout</code> to update some parameters in the figure.</p>
+
+
+<p>We can also save plots to HTML files, which can be shared and embedded in web applications. This is useful for creating interactive reports and dashboards.</p>
+
+
+<p>The figure object is made of two key components: - the <strong>data</strong> and - the <strong>layout</strong>.</p>
+<p>The data is a list of traces, which are the individual plots that make up the figure. The layout is a dictionary that contains information about the appearance of the plot, such as the title, axis labels, and legend.</p>
+<h3 id="Using-Plotly-Graphics-Objects"><a href="#Using-Plotly-Graphics-Objects" class="headerlink" title="Using Plotly Graphics Objects"></a>Using Plotly Graphics Objects</h3><p>The Graphics objects are a more flexible and powerful interface that allows for fine-grained control over the appearance and behavior of plots. It is suitable for creating complex visualizations and custom layouts.</p>
+<p>A Figure Graphic Object is composed of: - <strong>Data:</strong> A list of traces (e.g., Scatter, Lines, Annotations) - <strong>Layout:</strong> A dictionary describing the overall layout (e.g., title, axis properties, …)</p>
+<h3 id="Visualizing-Different-Kinds-of-Data"><a href="#Visualizing-Different-Kinds-of-Data" class="headerlink" title="Visualizing Different Kinds of Data"></a>Visualizing Different Kinds of Data</h3><p>Now that we have seen the basics of using Plotly, let’s explore how to visualize different kinds of data.</p>
+
+
+<p>![[newplot.png]]</p>
+
+  </div>
+
+  
+</article>
+
+<nav class="post-navigation" aria-label="文章导航">
+  
+    <a href="/2025/10/05/CS189%20(2)%20discussion%201%20Pandas%20Review/">
+      <span>上一篇</span>
+      <strong>CS189 (2) discussion 1 Pandas Review</strong>
+    </a>
+  
+  
+    <a href="/2025/09/27/%E7%A7%8B%E5%AD%A3week1%E5%91%A8%E7%BB%93/">
+      <span>下一篇</span>
+      <strong>秋季week1周结</strong>
+    </a>
+  
+</nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© 2026 keynary</span>
+    </div>
+  </footer>
+  
+<script src="/js/ambient.js"></script>
+
+</body>
+</html>

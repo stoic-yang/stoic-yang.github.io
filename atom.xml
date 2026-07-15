@@ -3,24 +3,547 @@
     <id>https://stoic-yang.github.io</id>
     <title>keynary</title>
     <link href="https://stoic-yang.github.io" />
-    <updated>2025-12-30T16:00:00.000Z</updated>
+    <updated>2026-05-18T10:36:36.000Z</updated>
+    <category term="总结" />
     <category term="反思" />
     <category term="周结" />
-    <category term="总结" />
     <category term="CSAPP" />
     <category term="hexo" />
     <category term="obsidian" />
     <category term="学习流" />
     <category term="工作流" />
     <category term="读书" />
+    <category term="算法" />
+    <category term="生活" />
     <category term="管理" />
     <category term="思维" />
-    <category term="生活" />
-    <category term="算法" />
     <category term="随笔" />
     <category term="积极心理学" />
     <category term="java" />
     <category term="后端" />
+    <entry>
+        <id>https://stoic-yang.github.io/2026/05/18/CS231n%20Softmax%20%E5%88%86%E7%B1%BB%E5%99%A8%E4%B8%8E%E4%BA%A4%E5%8F%89%E7%86%B5%E6%A2%AF%E5%BA%A6%EF%BC%881%EF%BC%89/</id>
+        <title>CS231n Softmax 分类器与交叉熵梯度（1）</title>
+        <link rel="alternate" href="https://stoic-yang.github.io/2026/05/18/CS231n%20Softmax%20%E5%88%86%E7%B1%BB%E5%99%A8%E4%B8%8E%E4%BA%A4%E5%8F%89%E7%86%B5%E6%A2%AF%E5%BA%A6%EF%BC%881%EF%BC%89/"/>
+        <content type="html">&lt;p&gt;Softmax 分类器与交叉熵梯度&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!abstract] 这篇笔记整理 CS231n assignment1 中 Softmax loss 的前向计算、交叉熵含义、梯度推导和 NumPy 实现。相关课程索引见 [[CS231n]]。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;变量形状&#34;&gt;&lt;a href=&#34;#变量形状&#34; class=&#34;headerlink&#34; title=&#34;变量形状&#34;&gt;&lt;/a&gt;变量形状&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;符号&lt;/th&gt;
+&lt;th&gt;形状&lt;/th&gt;
+&lt;th&gt;含义&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;&lt;tr&gt;
+&lt;td&gt;X&lt;/td&gt;
+&lt;td&gt;N \times D&lt;/td&gt;
+&lt;td&gt;一个 minibatch 的输入数据&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;x_i&lt;/td&gt;
+&lt;td&gt;1 \times D&lt;/td&gt;
+&lt;td&gt;第 i 个样本&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;W&lt;/td&gt;
+&lt;td&gt;D \times C&lt;/td&gt;
+&lt;td&gt;线性分类器权重&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;y_i&lt;/td&gt;
+&lt;td&gt;标量&lt;/td&gt;
+&lt;td&gt;第 i 个样本的正确类别&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;S&lt;/td&gt;
+&lt;td&gt;N \times C&lt;/td&gt;
+&lt;td&gt;所有样本在所有类别上的 score&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;P&lt;/td&gt;
+&lt;td&gt;N \times C&lt;/td&gt;
+&lt;td&gt;softmax 后的类别概率&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+&lt;p&gt;其中 $N$ 是样本数，$D$ 是特征维度，$C$ 是类别数。CIFAR-10 中 $C=10$。&lt;/p&gt;
+&lt;h3 id=&#34;前向计算&#34;&gt;&lt;a href=&#34;#前向计算&#34; class=&#34;headerlink&#34; title=&#34;前向计算&#34;&gt;&lt;/a&gt;前向计算&lt;/h3&gt;&lt;p&gt;对单个样本 $x_i$，线性分类器先计算每个类别的分数：&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;s_i = x_i W&lt;br&gt;$$&lt;/p&gt;
+&lt;p&gt;第 $j$ 个类别的分数是：&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;s_{ij} = x_i W_{:,j}&lt;br&gt;$$&lt;/p&gt;
+&lt;p&gt;Softmax 把分数转成概率：&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;p_{ij} = \frac{\exp(s_{ij})}{\sum_{k=1}^{C}\exp(s_{ik})}&lt;br&gt;$$&lt;/p&gt;
+&lt;p&gt;代码里会先做数值稳定处理：&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;s_i \leftarrow s_i - \max_j s_{ij}&lt;br&gt;$$&lt;/p&gt;
+&lt;p&gt;这是合法的，因为对任意常数 $a$：&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;\frac{\exp(s_{ij} - a)}{\sum_{k=1}^{C}\exp(s_{ik} - a)} = \frac{\exp(s_{ij})}{\sum_{k=1}^{C}\exp(s_{ik})}&lt;br&gt;$$&lt;/p&gt;
+&lt;p&gt;也就是说，整体平移 scores 不会改变 softmax 的概率。&lt;/p&gt;
+&lt;h3 id=&#34;Loss-的含义&#34;&gt;&lt;a href=&#34;#Loss-的含义&#34; class=&#34;headerlink&#34; title=&#34;Loss 的含义&#34;&gt;&lt;/a&gt;Loss 的含义&lt;/h3&gt;&lt;p&gt;第 $i$ 个样本的 Softmax 交叉熵 loss 是正确类别概率的负对数：&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;L_i = -\log p_{i,y_i}&lt;br&gt;$$&lt;/p&gt;
+&lt;p&gt;展开可得：&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;L_i = -\log \frac{\exp(s_{i,y_i})}{\sum_{k=1}^{C}\exp(s_{ik})}&lt;br&gt;$$&lt;/p&gt;
+&lt;p&gt;进一步化简：&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;L_i = -s_{i,y_i} + \log \sum_{k=1}^{C}\exp(s_{ik})&lt;br&gt;$$&lt;/p&gt;
+&lt;p&gt;这个形式很适合推导梯度。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!tip] 初始 loss 为什么接近 $-\log(0.1)$ 初始化时 $W$ 很小，各类别 score 接近，softmax 后每类概率大约是 $\frac{1}{10}$。因此 CIFAR-10 的初始单样本 loss 约为：&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;-\log \frac{1}{10} = \log 10 \approx 2.3026&lt;br&gt;$$&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;对-score-的梯度&#34;&gt;&lt;a href=&#34;#对-score-的梯度&#34; class=&#34;headerlink&#34; title=&#34;对 score 的梯度&#34;&gt;&lt;/a&gt;对 score 的梯度&lt;/h3&gt;&lt;p&gt;从化简后的单样本 loss 出发：&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;L_i = -s_{i,y_i} + \log \sum_{k=1}^{C}\exp(s_{ik})&lt;br&gt;$$&lt;/p&gt;
+&lt;p&gt;对某个类别分数 $s_{ij}$ 求导：&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;\frac{\partial L_i}{\partial s_{ij}} = \frac{\partial}{\partial s_{ij}} \left( -s_{i,y_i} + \log \sum_{k=1}^{C}\exp(s_{ik}) \right)&lt;br&gt;$$&lt;/p&gt;
+&lt;p&gt;第一项给出：&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;\frac{\partial (-s_{i,y_i})}{\partial s_{ij}} = \begin{cases} -1, &amp;amp; j = y_i \ 0, &amp;amp; j \ne y_i \end{cases}&lt;br&gt;$$&lt;/p&gt;
+&lt;p&gt;第二项给出：&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;\frac{\partial}{\partial s_{ij}} \log \sum_{k=1}^{C}\exp(s_{ik}) = \frac{\exp(s_{ij})}{\sum_{k=1}^{C}\exp(s_{ik})} = p_{ij}&lt;br&gt;$$&lt;/p&gt;
+&lt;p&gt;所以：&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;\frac{\partial L_i}{\partial s_{ij}} = p_{ij} - \mathbf{1}(j = y_i)&lt;br&gt;$$&lt;/p&gt;
+&lt;p&gt;等价地：&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;\frac{\partial L_i}{\partial s_{ij}} = \begin{cases} p_{ij} - 1, &amp;amp; j = y_i \ p_{ij}, &amp;amp; j \ne y_i \end{cases}&lt;br&gt;$$&lt;/p&gt;
+&lt;h3 id=&#34;对权重-W-的梯度&#34;&gt;&lt;a href=&#34;#对权重-W-的梯度&#34; class=&#34;headerlink&#34; title=&#34;对权重 $W$ 的梯度&#34;&gt;&lt;/a&gt;对权重 $W$ 的梯度&lt;/h3&gt;&lt;p&gt;因为：&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;s_{ij} = \sum_{d=1}^{D} x_{id} W_{dj}&lt;br&gt;$$&lt;/p&gt;
+&lt;p&gt;所以：&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;\frac{\partial s_{ij}}{\partial W_{dj}} = x_{id}&lt;br&gt;$$&lt;/p&gt;
+&lt;p&gt;链式法则得到逐元素梯度：&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;\frac{\partial L_i}{\partial W_{dj}} = x_{id}\left(p_{ij} - \mathbf{1}(j = y_i)\right)&lt;br&gt;$$&lt;/p&gt;
+&lt;p&gt;写成列向量形式：&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;\nabla_{W_{:,j}} L_i = x_i^\top\left(p_{ij} - \mathbf{1}(j = y_i)\right)&lt;br&gt;$$&lt;/p&gt;
+&lt;p&gt;如果令 $Y$ 是 one-hot 标签矩阵：&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;Y_{ij}=\mathbf{1}(j=y_i)&lt;br&gt;$$&lt;/p&gt;
+&lt;p&gt;则整个 batch 的平均 loss 为：&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;L = -\frac{1}{N}\sum_{i=1}^{N}\log P_{i,y_i} + \lambda \sum_{d=1}^{D}\sum_{j=1}^{C} W_{dj}^{2}&lt;br&gt;$$&lt;/p&gt;
+&lt;p&gt;对应梯度是：&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;\nabla_W L = \frac{1}{N}X^\top(P-Y) + 2\lambda W&lt;br&gt;$$&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!warning] 正则化系数 CS231n 这里的 loss 写成 $\lambda \sum W^2$，所以正则项梯度是 $2\lambda W$。如果 loss 写成 $\frac{1}{2}\lambda \sum W^2$，梯度才是 $\lambda W$。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;Naive-实现&#34;&gt;&lt;a href=&#34;#Naive-实现&#34; class=&#34;headerlink&#34; title=&#34;Naive 实现&#34;&gt;&lt;/a&gt;Naive 实现&lt;/h3&gt;&lt;p&gt;在 &lt;code&gt;softmax_loss_naive&lt;/code&gt; 的循环里，已经得到单个样本的概率向量 &lt;code&gt;p&lt;/code&gt; 后，可以直接构造：&lt;/p&gt;
+
+
+&lt;p&gt;循环结束后做平均并加正则项：&lt;/p&gt;
+
+
+&lt;p&gt;这里 &lt;code&gt;np.outer(X[i], dscores)&lt;/code&gt; 的形状是：&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;D \times C&lt;br&gt;$$&lt;/p&gt;
+&lt;p&gt;正好和 $W$ 的形状一致。&lt;/p&gt;
+&lt;h3 id=&#34;向量化实现&#34;&gt;&lt;a href=&#34;#向量化实现&#34; class=&#34;headerlink&#34; title=&#34;向量化实现&#34;&gt;&lt;/a&gt;向量化实现&lt;/h3&gt;
+
+&lt;p&gt;向量化代码对应公式：&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;S = XW&lt;br&gt;$$&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;P = \operatorname{softmax}(S)&lt;br&gt;$$&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;\nabla_W L = \frac{1}{N}X^\top(P-Y) + 2\lambda W&lt;br&gt;$$&lt;/p&gt;
+&lt;h3 id=&#34;LinearClassifier-中的-SGD&#34;&gt;&lt;a href=&#34;#LinearClassifier-中的-SGD&#34; class=&#34;headerlink&#34; title=&#34;LinearClassifier 中的 SGD&#34;&gt;&lt;/a&gt;&lt;code&gt;LinearClassifier&lt;/code&gt; 中的 SGD&lt;/h3&gt;&lt;p&gt;&lt;code&gt;LinearClassifier&lt;/code&gt; 是线性分类器的基类，负责通用训练流程；具体使用 SVM loss 还是 Softmax cross-entropy loss 由子类决定：&lt;/p&gt;
+
+
+&lt;p&gt;训练时每一步不是使用全部训练集，而是随机采样一个 minibatch：&lt;/p&gt;
+
+
+&lt;p&gt;其中有放回采样允许同一个样本在一个 batch 中出现多次。这样每一步得到的是整体梯度的随机近似，计算更快。&lt;/p&gt;
+&lt;p&gt;权重更新是标准梯度下降：&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;W \leftarrow W - \eta \nabla_W L&lt;br&gt;$$&lt;/p&gt;
+&lt;p&gt;代码对应：&lt;/p&gt;
+
+
+&lt;p&gt;这里 &lt;code&gt;grad&lt;/code&gt; 与 &lt;code&gt;self.W&lt;/code&gt; 形状相同。若 $W \in \mathbb{R}^{D \times C}$，则：&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;grad \in \mathbb{R}^{D \times C}&lt;br&gt;$$&lt;/p&gt;
+&lt;p&gt;矩阵写法等价于逐元素更新：&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;W_{dj} \leftarrow W_{dj} - \eta \frac{\partial L}{\partial W_{dj}}&lt;br&gt;$$&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!warning] 更新公式的常见错误 &lt;code&gt;self.W = learning_rate * grad&lt;/code&gt; 会直接用梯度覆盖权重，训练会退化到接近随机猜测。正确写法必须保留旧权重：&lt;br&gt;&amp;gt; self.W -= learning_rate * grad &amp;gt; ``` ## 权重矩阵  的含义 在线性分类器中：  如果 ，，则 。  的每一列对应一个类别的线性模板：  第  类的分数为：  因此预测时取分数最高的类别： ```python scores = X.dot(self.W) y_pred = np.argmax(scores, axis=1)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;对于 CIFAR-10，若使用 bias trick，通常有：&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;D = 32 \times 32 \times 3 + 1 = 3073,\quad C=10&lt;br&gt;$$&lt;/p&gt;
+&lt;p&gt;所以：&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;W \in \mathbb{R}^{3073 \times 10}&lt;br&gt;$$&lt;/p&gt;
+&lt;h3 id=&#34;正则化如何进入-loss-与梯度&#34;&gt;&lt;a href=&#34;#正则化如何进入-loss-与梯度&#34; class=&#34;headerlink&#34; title=&#34;正则化如何进入 loss 与梯度&#34;&gt;&lt;/a&gt;正则化如何进入 loss 与梯度&lt;/h3&gt;&lt;p&gt;总 loss 包含数据损失和 L2 正则化项：&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;L = L_{\text{data}} + \lambda \sum_{d=1}^{D}\sum_{j=1}^{C}W_{dj}^{2}&lt;br&gt;$$&lt;/p&gt;
+&lt;p&gt;其中 $L_{\text{data}}$ 是模型在训练样本上的分类损失。对 Softmax 来说：&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;L_{\text{data}} = -\frac{1}{N}\sum_{i=1}^{N}\log \frac{\exp(s_{i,y_i})}{\sum_{j=1}^{C}\exp(s_{ij})}&lt;br&gt;$$&lt;/p&gt;
+&lt;p&gt;正则项的梯度为：&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;\frac{\partial}{\partial W} \left( \lambda \sum_{d=1}^{D}\sum_{j=1}^{C}W_{dj}^{2} \right) = 2\lambda W&lt;br&gt;$$&lt;/p&gt;
+&lt;p&gt;所以代码中正则化同时体现在 loss 和梯度：&lt;/p&gt;
+
+
+&lt;h3 id=&#34;超参数搜索与验证集&#34;&gt;&lt;a href=&#34;#超参数搜索与验证集&#34; class=&#34;headerlink&#34; title=&#34;超参数搜索与验证集&#34;&gt;&lt;/a&gt;超参数搜索与验证集&lt;/h3&gt;&lt;p&gt;&lt;code&gt;learning_rate&lt;/code&gt; 控制每次沿负梯度方向走多大一步，&lt;code&gt;reg&lt;/code&gt; 控制权重惩罚强度。CS231n 中通常用验证集选择这两个超参数：&lt;/p&gt;
+
+
+&lt;p&gt;选择依据应是验证集准确率 &lt;code&gt;val_accuracy&lt;/code&gt;，不是训练集准确率。训练集准确率高但验证集准确率低，通常意味着过拟合或超参数不合适。&lt;/p&gt;
+&lt;h3 id=&#34;权重可视化&#34;&gt;&lt;a href=&#34;#权重可视化&#34; class=&#34;headerlink&#34; title=&#34;权重可视化&#34;&gt;&lt;/a&gt;权重可视化&lt;/h3&gt;&lt;p&gt;Softmax 分类器学到的每个类别权重 $w_c$ 可以 reshape 成 $32 \times 32 \times 3$ 的图像。它通常看起来像一个模糊的类别模板，而不是清晰图片。&lt;/p&gt;
+&lt;p&gt;这是因为分类分数是点积：&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;s_c = x^\top w_c&lt;br&gt;$$&lt;/p&gt;
+&lt;p&gt;若输入图像与某个类别的权重模板匹配，该类别分数就会更高。权重图可能带有类别常见背景或颜色，例如飞机与船可能出现蓝色区域，动物类别可能出现绿色或棕色区域。&lt;/p&gt;
+&lt;p&gt;这些模板模糊的原因是线性分类器每个类别只有一个模板，无法表达同一类别中姿态、位置、背景和外观的复杂变化。&lt;/p&gt;
+&lt;h3 id=&#34;易错点&#34;&gt;&lt;a href=&#34;#易错点&#34; class=&#34;headerlink&#34; title=&#34;易错点&#34;&gt;&lt;/a&gt;易错点&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;scores -= np.max(scores)&lt;/code&gt; 只是数值稳定处理，不改变 softmax 结果。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;softmax.py&lt;/code&gt; 里 “normalized hinge loss” 的注释不准确，这里实际是 Softmax cross-entropy loss。&lt;/li&gt;
+&lt;li&gt;正确类别处需要执行 &lt;code&gt;dscores[y[i]] -= 1&lt;/code&gt;，因为 $\frac{\partial L_i}{\partial s_{ij}} = p_{ij} - \mathbf{1}(j=y_i)$。&lt;/li&gt;
+&lt;li&gt;正则化 loss 使用 &lt;code&gt;reg * np.sum(W * W)&lt;/code&gt; 时，梯度必须加 &lt;code&gt;2 * reg * W&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;LinearClassifier.train()&lt;/code&gt; 中要写 &lt;code&gt;self.W -= learning_rate * grad&lt;/code&gt;，不要把 &lt;code&gt;W&lt;/code&gt; 覆盖成 &lt;code&gt;learning_rate * grad&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;notebook 修改外部 &lt;code&gt;.py&lt;/code&gt; 后若表现仍像旧代码，应重启 kernel 或用 &lt;code&gt;importlib.reload&lt;/code&gt; 确认实际加载的文件。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;本地材料&#34;&gt;&lt;a href=&#34;#本地材料&#34; class=&#34;headerlink&#34; title=&#34;本地材料&#34;&gt;&lt;/a&gt;本地材料&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Notebook：&lt;code&gt;/Users/keynary/Code/course/CS231n/assignment1/softmax_zh.ipynb&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Softmax loss：&lt;code&gt;/Users/keynary/Code/course/CS231n/assignment1/cs231n/classifiers/softmax.py&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;线性分类器训练框架：&lt;code&gt;/Users/keynary/Code/course/CS231n/assignment1/cs231n/classifiers/linear_classifier.py&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;关联&#34;&gt;&lt;a href=&#34;#关联&#34; class=&#34;headerlink&#34; title=&#34;关联&#34;&gt;&lt;/a&gt;关联&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;[[CS231n]]&lt;/li&gt;
+&lt;li&gt;[[交叉熵]]&lt;/li&gt;
+&lt;li&gt;[[梯度下降]]&lt;/li&gt;
+&lt;li&gt;[[线性分类器]]Softmax 分类器与交叉熵梯度&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+        <updated>2026-05-18T10:36:36.000Z</updated>
+    </entry>
+    <entry>
+        <id>https://stoic-yang.github.io/2026/04/13/%E5%A4%A7%E4%BA%8C%E8%A2%AB%E9%A2%84%E5%88%B6%E8%BF%9B%E8%AF%BE%E9%A2%98%E7%BB%84%E6%89%93%E5%B7%A5%E6%98%AF%E4%BB%80%E4%B9%88%E4%BD%93%E9%AA%8C%EF%BC%883%EF%BC%89/</id>
+        <title>大二被预制进课题组打工是什么体验（3）</title>
+        <link rel="alternate" href="https://stoic-yang.github.io/2026/04/13/%E5%A4%A7%E4%BA%8C%E8%A2%AB%E9%A2%84%E5%88%B6%E8%BF%9B%E8%AF%BE%E9%A2%98%E7%BB%84%E6%89%93%E5%B7%A5%E6%98%AF%E4%BB%80%E4%B9%88%E4%BD%93%E9%AA%8C%EF%BC%883%EF%BC%89/"/>
+        <content type="html">&lt;p&gt;前文提要：&lt;a href=&#34;https://zhuanlan.zhihu.com/p/2008968826507793882&#34;&gt;大二被预制进学校课题组打工是什么体验（2）&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;事实上到这一篇文章就已经不会再描述自己在预制的课题组打工是什么体验了，因为我已经退出之前的课题组了。&lt;/p&gt;
+&lt;p&gt;其实在大二真正投身做科研，在 211 及以下绝对算是非常小众的，所以很多人都会很好奇在大二就进组做科研的人都是怎么一个经历。&lt;/p&gt;
+&lt;p&gt;这无外乎：为什么要做科研？在没有经验的前提下怎么找第一个课题组去打工？进课题组后会发生什么？开组会是什么体验？&lt;/p&gt;
+&lt;p&gt;我在大一甚至大二上的时候对这些东西都非常感兴趣，即便是当时完全没有想要做科研。所以简单分享一下我的经历和感受。&lt;/p&gt;
+&lt;p&gt;首先是为什么要做科研呢？一般可以归结为两种动机，一个是让自己能保研去更好的学校或者更好的组，还有一部分人是真的想做科研本身，去改变这个世界。&lt;/p&gt;
+&lt;p&gt;也会有很多人好奇怎么去找第一个课题组打工的，这个东西可以说很简单，也可以说很复杂，简单说，你要去找一个老师进组科研，你只需要找老师聊一次天或者发一封邮件，有面试过面试，没面试就是直接进了，就是这么简单。&lt;/p&gt;
+&lt;p&gt;我以前听说的也是这样的步骤，但是不行动，如果只是道听途说的话，对一些话的描述是不会有实感的，我觉得没有切身体验是无法体会这样一个过程到底是怎么样的，你如果想知道到底怎么做，最好的办法是马上给自己做一个简历/搜索老师/询问学长学姐相关建议/邮箱联系导师/线下堵老师，只有你真的行动了，你才会知道原来是这样的。&lt;/p&gt;
+&lt;p&gt;如果你有志于科研，我的建议是尽早的进组，如果要进组的话，就不要等，一定要马上让自己行动起来。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;一切人生的进展都依赖于执行&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;每次犹豫，你都必须考虑这是否是你此生仅有的一次机会&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;说起来，如果你是我的老朋友，就会发现我在去年不停念叨的一个东西：人生的停滞感，我不知道你是否有过这样的体会，在你人生精力最旺盛的时候，非常长的一段时间，你觉得自己毫无进步，知识没有进步，没有学到新的东西，认知没有新的进步，对世界认知还停留在原地，一切陷入到一直诡异的停滞中，但是身边的人却快速地成长，超越了自己，而自己只能跟别人聊自己以前在做什么。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;很无力&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;不知道应该做什么了，忙忙碌碌，做了很多事情，也没有说闲着，但是要问做了什么，又回答不上来&lt;/p&gt;
+&lt;p&gt;很让人沮丧，不是吗？&lt;/p&gt;
+&lt;p&gt;那么我回头看我的 3 月，我还陷入在停滞中吗？我认为不是的，那么这是为什么呢？&lt;/p&gt;
+&lt;p&gt;我不再浑浑噩噩，而是朝着自己清晰的目标前进了，我真的执行了一些自己思考过的规划，有了一些能说得出来的事情了&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;人生的停滞结束了，我兑现了我在寒假对自己的诺言&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;说到低，要摆脱这种停滞感就是要非常清楚地知道自己要做什么，应该怎么做，并且付出行动&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;岛娘：人一起床就有一个很坚定的目标，你完全不怀疑它的价值，这是很幸福的一件事情&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;p&gt;不说有的没的，说点有用的^-^&lt;/p&gt;
+&lt;p&gt;有人担心自己基础知识没学过，不敢去联系导师&lt;/p&gt;
+&lt;p&gt;不需要等到有所谓的基础知识再进组，你有想去的组，准备好简历就直接上吧&lt;/p&gt;
+&lt;p&gt;为什么？在大二这个时间，老师不可能要求你会很多东西，但你得表现出你愿意学的态度以及能快速学会基础知识的能力，这在大部分情况下就足够了。另一个原因是，你学不完的，你定义的基础知识是什么？等你学完基础知识再进组，其他人已经在导师的指导下发一篇论文出来了。&lt;/p&gt;
+&lt;p&gt;因为你还没有进组，而且导师也还没有给你一个比较明确的方向，所以你这个时候应该是连要做什么学什么都不明确的，即使你有扎实的“基础知识”，给你的方向后你大概率还是要重新学一遍，或者说你就没学过这个方向。你真要做，就不要去等，进去确定方向以后再学，这样的效率会高很多很多。&lt;/p&gt;
+&lt;p&gt;我自己的体会是，我进组后的一个月学的知识远大于我去年下半年自学的一切。&lt;/p&gt;
+&lt;p&gt;我这个月在干什么呢，就是在读论文，导师给的论文，复现论文结果，读完一篇就读下一篇，读到不懂的地方就去补对应的知识。&lt;/p&gt;
+&lt;p&gt;我很喜欢长文本写作，这可以重新去激活我的大脑，让我的状态恢复过来，但写的随心所欲的话，遭殃的就是读的人了，我还是希望自己写的东西不要让读者有赤石的感觉。我不会拿 AI 去润色自己想写的东西，也不会写一些非常枯燥的内容，就算是写一些经验的分享，我也希望能让这些内容融合进故事里，起码读起来不会太枯燥。&lt;/p&gt;
+&lt;p&gt;谢谢你读到最后，我自觉自己还很稚嫩，说的很多话其实针对的是 3 个月前的自己，所以很多话不一定对，况且计算机领域发展迅速，谁能想到 2 年前都非常前卫的 CS 自学指南在现在看来都有一些落时了呢？计算机太多的东西都具有时效性了，真让人感慨。有时间或者机会我还想再写一些内容，希望那个时候我已经有第一篇论文了。&lt;/p&gt;
+</content>
+        <updated>2026-04-13T14:32:37.000Z</updated>
+    </entry>
+    <entry>
+        <id>https://stoic-yang.github.io/2026/03/25/CF2074EFG/</id>
+        <title>CF2074EFG</title>
+        <link rel="alternate" href="https://stoic-yang.github.io/2026/03/25/CF2074EFG/"/>
+        <content type="html">&lt;p&gt;大概率只有自己能看懂的题解，只是简单记录一下&lt;/p&gt;
+&lt;h3 id=&#34;CF2074E&#34;&gt;&lt;a href=&#34;#CF2074E&#34; class=&#34;headerlink&#34; title=&#34;CF2074E&#34;&gt;&lt;/a&gt;CF2074E&lt;/h3&gt;&lt;p&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/write#%E9%9A%8F%E6%9C%BA%E5%8C%96&#34;&gt;#随机化&lt;/a&gt; &lt;a href=&#34;https://zhuanlan.zhihu.com/write#%E9%9A%8F%E6%9C%BA%E6%95%B0%E7%94%9F%E6%88%90&#34;&gt;#随机数生成&lt;/a&gt;&lt;br&gt;生成随机数的代码： mt19937 rng(clock() + time(0));&lt;/p&gt;
+
+
+&lt;h3 id=&#34;CF2074F&#34;&gt;&lt;a href=&#34;#CF2074F&#34; class=&#34;headerlink&#34; title=&#34;CF2074F&#34;&gt;&lt;/a&gt;CF2074F&lt;/h3&gt;&lt;p&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/write#%E7%BA%BF%E6%AE%B5%E6%A0%91&#34;&gt;#线段树&lt;/a&gt; &lt;a href=&#34;https://zhuanlan.zhihu.com/write#%E4%BA%8C%E5%88%86&#34;&gt;#二分&lt;/a&gt; &lt;a href=&#34;https://zhuanlan.zhihu.com/write#%E5%88%86%E5%9D%97&#34;&gt;#分块&lt;/a&gt; &lt;a href=&#34;https://zhuanlan.zhihu.com/write#%E6%9A%B4%E5%8A%9B&#34;&gt;#暴力&lt;/a&gt;&lt;br&gt;题意：给你一个 a\times b 的矩形，你需要用边长为 2^k 的正方形覆盖它，问最少用多少个正方形可以恰好覆盖&lt;br&gt;思路：把 a\times b 的矩阵拆分成两个维度来看，把 a 和 b 分别拆分成一堆 2^k 长度的段，然后枚举 x 和 y 上所有拆分出来的段，计算答案即可，这里切分需要用到线段树的思想&lt;/p&gt;
+
+
+&lt;h3 id=&#34;CF2074G&#34;&gt;&lt;a href=&#34;#CF2074G&#34; class=&#34;headerlink&#34; title=&#34;CF2074G&#34;&gt;&lt;/a&gt;CF2074G&lt;/h3&gt;&lt;p&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/write#%E5%A4%9A%E8%BE%B9%E5%BD%A2DP&#34;&gt;#多边形DP&lt;/a&gt; &lt;a href=&#34;https://zhuanlan.zhihu.com/write#%E5%8C%BA%E9%97%B4DP&#34;&gt;#区间DP&lt;/a&gt; &lt;a href=&#34;https://zhuanlan.zhihu.com/write#%E5%A4%84%E7%90%86%E7%8E%AF%E5%BD%A2&#34;&gt;#处理环形&lt;/a&gt;&lt;br&gt;题意：给你一个多边形，你可以选择三个顶点，并且得到三个顶点乘积的值，目标是最大化得到的值，但是你不能选择三个顶点形成的三角形与先前的三角形重叠&lt;/p&gt;
+&lt;p&gt;思路：考虑区间 DP，在 [0,n-1] 区间内做 DP，我们需要枚举每一个区间中的一个点，作为 l,r 以外的第三点 k 去构成一个三角形。选中点后，区间就可以被拆成两个区间 [l + 1,k] 和 [k + 1, r] ，这里就可以引出状态转移方程：&lt;/p&gt;
+&lt;p&gt;dp[L,R]=max(dp[L,k-1]+dp[k+1][R]+score(L,R,K), dp[L,R])&lt;/p&gt;
+&lt;p&gt;区间 DP 的套路：&lt;br&gt;我们要得到一个长区间的值，就需要先计算出所有小区间的值，在 for 循环中怎么去实现呢？&lt;/p&gt;
+
+
+&lt;p&gt;最终的答案就是 dp[0][n - 1]&lt;/p&gt;
+
+</content>
+        <updated>2026-03-25T15:50:25.000Z</updated>
+    </entry>
+    <entry>
+        <id>https://stoic-yang.github.io/2026/03/16/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%9AMultimodalHD/</id>
+        <title>论文阅读：MultimodalHD</title>
+        <link rel="alternate" href="https://stoic-yang.github.io/2026/03/16/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%9AMultimodalHD/"/>
+        <content type="html">&lt;h3 id=&#34;研究问题&#34;&gt;&lt;a href=&#34;#研究问题&#34; class=&#34;headerlink&#34; title=&#34;研究问题&#34;&gt;&lt;/a&gt;研究问题&lt;/h3&gt;&lt;p&gt;模态异构性问题：不同客户端会从不同类型的传感器中采集数据，例如加速度计、陀螺仪等。现有最先进的多模态联邦学习方法通常采用模态专属模块（一般是RNN）来处理每一种模态。在边缘设备上运行资源开销较大。&lt;/p&gt;
+&lt;p&gt;模态干扰问题：在模态异构的多模态联邦学习中，不同客户端基于不同模态组合进行训练，容易形成分布不同、参数偏向不同的本地模型；若仍采用统一聚合策略，这些不一致的模型更新会相互干扰，造成性能下降。&lt;/p&gt;
+&lt;h3 id=&#34;创新点&#34;&gt;&lt;a href=&#34;#创新点&#34; class=&#34;headerlink&#34; title=&#34;创新点&#34;&gt;&lt;/a&gt;创新点&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;用静态HD编码器把多模态时序传感器编码成超向量，绕开 RNN 计算，从而降低边缘端计算的开销&lt;/li&gt;
+&lt;li&gt;把 attention fusion 机制迁移到 MFL 上&lt;/li&gt;
+&lt;li&gt;基于客户端模型相似度进行加权聚合，减少模态干扰&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;对于创新点的思考：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;没有做消融实验：作者提出了三个创新点，但实验上只真正单独验证了聚合策略；attention fusion 和 HD encoder 没有做消融实验，所以没法精确了解这两个创新点对实验最终结果的贡献是多少，我认为这个是实验的一个不足之处&lt;/li&gt;
+&lt;li&gt;这里除开第三个创新点，做的只是 A+B 的融合，或者迁移，第一点是观察到了 RNN 带来的计算的开销，所以寻找了一个用静态编码去替代 RNN 的思路，这是第一个创新点的动机，对于第二个创新点，attention fusion 本身在多模态学习中并不是新的思想，在这篇论文里更像是将已有机制迁移到 MFL 场景中。论文在说明其有效性时，更多是和较原始的 concat 作比较&lt;/li&gt;
+&lt;li&gt;第三个创新点，本质上是基于客户端模型相似度进行加权聚合，使相似客户端贡献更大、不相似客户端贡献更小。更像是在抑制异质更新的负面影响，而不是真正建模并消除模态干扰，这里性能提升也可能部分来自对边缘客户端或少数模态组合的弱化&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;HD-对时间序列传感器数据的编码过程&#34;&gt;&lt;a href=&#34;#HD-对时间序列传感器数据的编码过程&#34; class=&#34;headerlink&#34; title=&#34;HD 对时间序列传感器数据的编码过程&#34;&gt;&lt;/a&gt;HD 对时间序列传感器数据的编码过程&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;/2026/03/16/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%9AMultimodalHD/2016974549703483675-01.png&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
+&lt;p&gt;先把传感器读数的取值范围量化为 q 个区间，每一个 level 对应一个高维的二值向量，第一个 level 是随机生成的，后续的 level 通过上一个 level 随机反转得到的，这样就可以让相邻数值区间对应的向量比较接近，从而保留原始数值的相对结构&lt;/p&gt;
+&lt;p&gt;右边是时间序列 HD 的编码过程&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Quantize 把每个时刻的传感器读数进行量化，对应得到一个 level hyoervector&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;和 Sensor ID 绑定 与传感器的 ID 做一个 xor，标识不同的模态&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;用 permutation 编码时间顺序 为了加入时序信息，作者对第 t 个时刻的结果做了一个逻辑移位&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;ρ(t,Lt⊗IDj)&lt;br&gt;$$&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;把 $t =1$ 到 $t= T$ 时刻的结果结合起来，做一个 bipolarize 的操作，转化为 &lt;code&gt;&amp;#123;-1, +1&amp;#125;&lt;/code&gt; 的形式&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;θ(xi(j))=BP(ρ(1,L1⊗IDj)⊗⋯⊗ρ(T,LT⊗IDj))&lt;br&gt;$$&lt;/p&gt;
+&lt;p&gt;proximity-based aggregation&lt;br&gt;作者提出的 proximity-based aggregation 是一种基于客户端模型相似度的个性化聚合方法。设客户端上传的本地模型为 ${w_{1},\dots,w_{n}}$ ，首先计算任意两个客户端模型之间的余弦相似度：&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;$$&lt;br&gt;S_{ij}^{\cos}=\cos(w_{i},w_{j})&lt;br&gt;$$&lt;/p&gt;
+&lt;p&gt;然后对客户端 $i$ 的相似度向量做 softmax，得到客户端 $j$ 在更新 $i$ 时的聚合权重：&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;\text{softmax}(S_i^{cos})&lt;em&gt;j = \frac{\exp(S&lt;/em&gt;{ij}^{cos} / \tau)}{\sum_{k=1}^N \exp(S_{ik}^{cos} / \tau)}&lt;br&gt;$$&lt;/p&gt;
+&lt;p&gt;最后客户端 $i$ 的新模型由所有客户端模型加权得到：&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;w_i^{new} = \sum_{j=1}^N \text{softmax}(S_i^{cos})_j \cdot w_j&lt;br&gt;$$&lt;/p&gt;
+&lt;p&gt;相似客户端贡献更大，不相似客户端贡献更小，从而减少模态不匹配带来的聚合冲突。&lt;/p&gt;
+&lt;h3 id=&#34;实验&#34;&gt;&lt;a href=&#34;#实验&#34; class=&#34;headerlink&#34; title=&#34;实验&#34;&gt;&lt;/a&gt;实验&lt;/h3&gt;&lt;h3 id=&#34;实验数据集以及参数配置&#34;&gt;&lt;a href=&#34;#实验数据集以及参数配置&#34; class=&#34;headerlink&#34; title=&#34;实验数据集以及参数配置&#34;&gt;&lt;/a&gt;实验数据集以及参数配置&lt;/h3&gt;&lt;p&gt;实验部分主要是在三个多模态人体活动识别数据集上做的，分别是 HAR、MHEALTH 和 OPP。论文把任务设定成模态异构的 MFL，也就是不同客户端拥有不同的传感器组合。评价指标用的是 weighted F1，最后看的是所有客户端平均之后的 F1。实验设置里时间序列长度取 T=128T=128T=128，联邦训练一共 20 轮，每轮本地训练 2 个 epoch，batch size 是 64。对比的方法主要是两类已有的多模态联邦学习基线：Split-AE 和 FedMSplit。&lt;/p&gt;
+&lt;h3 id=&#34;实验结果&#34;&gt;&lt;a href=&#34;#实验结果&#34; class=&#34;headerlink&#34; title=&#34;实验结果&#34;&gt;&lt;/a&gt;实验结果&lt;/h3&gt;&lt;p&gt;在三个数据集上，MultimodalHD 相比现有 MFL baseline 能做到 better/comparable 的结果；其中在 HAR 和 MHEALTH 上，FedMSplit 最后还是略强一点，但作者强调 MultimodalHD 的性能已经比较接近最优，而且在 HAR 上收敛轮次还更快一些，在接近 SOTA 的水平上做到了更高的效率。&lt;/p&gt;
+&lt;h3 id=&#34;聚合策略对比分析&#34;&gt;&lt;a href=&#34;#聚合策略对比分析&#34; class=&#34;headerlink&#34; title=&#34;聚合策略对比分析&#34;&gt;&lt;/a&gt;聚合策略对比分析&lt;/h3&gt;&lt;p&gt;然后论文还单独做了一组聚合策略的对比实验。这里它固定本地模型训练流程，只替换联邦聚合方式，比较了 FedAvg、FedPer 和它自己的 proximity-based aggregation。结果是，在 HAR 和 MHEALTH 上，FedAvg 的结果最差，因为它对不同模态训练出来的模型做了一种比较粗暴的等权聚合。FedPer 因为允许最后的 MLP 层个性化，所以会稍微好一点；而论文自己的 proximity-based aggregation 在这两组数据上还能进一步提升。至于 OPP，三种聚合方式差别不大，论文把这个现象解释成 OPP 的模态异构性相对更弱。&lt;/p&gt;
+&lt;h3 id=&#34;实验效率&#34;&gt;&lt;a href=&#34;#实验效率&#34; class=&#34;headerlink&#34; title=&#34;实验效率&#34;&gt;&lt;/a&gt;实验效率&lt;/h3&gt;&lt;p&gt;效率实验其实是这篇最值得记的地方。论文专门在 Raspberry Pi 4B 上比较了不同方法每个 epoch 的训练时间，结果显示 MultimodalHD 比神经网络基线快 2x–8x。作者给出的解释是，HD 方法本身比较轻量，而且绕开了 RNN 这类顺序计算比较重的结构。虽然前面多了一个对多模态时间序列做 HD 编码的过程，但这个编码只需要在训练开始的时候做一次，后面随着训练进行，这部分成本会被摊薄；再加上静态编码器本身还比较容易并行，所以整体上时间优势比较明显。这个实验其实也是第一点创新最主要的支撑。&lt;/p&gt;
+&lt;h3 id=&#34;消融实验&#34;&gt;&lt;a href=&#34;#消融实验&#34; class=&#34;headerlink&#34; title=&#34;消融实验&#34;&gt;&lt;/a&gt;消融实验&lt;/h3&gt;&lt;p&gt;没有做完整的模块级消融实验。论文虽然对 aggregation 做了单独比较，但对于 HD encoder 和 attention fusion，都没有在同一个统一框架下做严格的替换实验。所以最后只能知道整套方法效果还不错，也能看出聚合策略有一定作用，但很难精确判断前两个创新点分别到底贡献了多少。&lt;/p&gt;
+&lt;h3 id=&#34;实验结果-1&#34;&gt;&lt;a href=&#34;#实验结果-1&#34; class=&#34;headerlink&#34; title=&#34;实验结果&#34;&gt;&lt;/a&gt;实验结果&lt;/h3&gt;&lt;p&gt;从实验结果来看，这篇论文的优势主要不在于精度绝对领先，而在于在保持接近 SOTA 性能的同时，取得了更好的训练效率。&lt;/p&gt;
+&lt;h3 id=&#34;论文复现&#34;&gt;&lt;a href=&#34;#论文复现&#34; class=&#34;headerlink&#34; title=&#34;论文复现&#34;&gt;&lt;/a&gt;论文复现&lt;/h3&gt;&lt;p&gt;跑了一下 HAR 的结果，在 M4 的 mba 上 80s 就跑出结果了，联邦确实不太吃算力，但是因为没有风扇，电脑直接开始发烫了，所以就没有接着跑其他的数据集了&lt;/p&gt;
+&lt;p&gt;复现最终结果的平均值是 0.816，跟论文的 0.821 相差不大&lt;/p&gt;
+&lt;h3 id=&#34;核心算法代码&#34;&gt;&lt;a href=&#34;#核心算法代码&#34; class=&#34;headerlink&#34; title=&#34;核心算法代码&#34;&gt;&lt;/a&gt;核心算法代码&lt;/h3&gt;&lt;p&gt;我比较感兴趣的首先就是这个 HD 编码在代码层面是怎么做的&lt;/p&gt;
+
+
+&lt;p&gt;quantize:&lt;/p&gt;
+
+
+&lt;p&gt;permute:&lt;/p&gt;
+
+
+&lt;p&gt;这几个 HD 编码的核心步骤实现起来还是不难的&lt;/p&gt;
+&lt;p&gt;然后是 proximity-based aggregation 相关的代码&lt;/p&gt;
+&lt;p&gt;把每个 client 的模型参数拼成一个大向量，然后算 pairwise cosine，相似度做 softmax 得到权重：&lt;/p&gt;
+
+
+&lt;p&gt;aggregate_network_proximity：全参数 proximity 聚合&lt;/p&gt;
+
+</content>
+        <updated>2026-03-16T12:32:41.000Z</updated>
+    </entry>
+    <entry>
+        <id>https://stoic-yang.github.io/2026/03/13/ActivityWatch%E8%87%AA%E5%8A%A8%E5%8C%96%E6%97%B6%E9%97%B4%E8%AE%B0%E5%BD%95%E4%BD%93%E7%B3%BB/</id>
+        <title>ActivityWatch自动化时间记录体系</title>
+        <link rel="alternate" href="https://stoic-yang.github.io/2026/03/13/ActivityWatch%E8%87%AA%E5%8A%A8%E5%8C%96%E6%97%B6%E9%97%B4%E8%AE%B0%E5%BD%95%E4%BD%93%E7%B3%BB/"/>
+        <content type="html">&lt;p&gt;我曾经使用手动开始和结束任务的软件记录自己一天做了什么，然后发现自己根本没法做到完整地去记录一天，手动记录对一个频繁切换任务的人来说是一件负担较大的事情，正确的做法应该是让“他人”客观准确地记录自己的一天，自己在一天的最后拿到精确的数据去回顾自己的一天做了什么，所以至少对我来说最好的记录工具是ActivityWatch&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/2026/03/13/ActivityWatch%E8%87%AA%E5%8A%A8%E5%8C%96%E6%97%B6%E9%97%B4%E8%AE%B0%E5%BD%95%E4%BD%93%E7%B3%BB/2015867922065695676-01.png&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
+&lt;p&gt;activityWatch不仅可以记录自己某一个应用的使用时长，而且还可以记得使用窗口的名字，在一天结束后几乎可以做到完美还原自己一天做的事情，由于我几乎不玩手机，也从不刷抖音，所以离开电脑的时间非常少，记录电脑的活动几乎等于自己一天的活动，而且我的手机也自带时间统计，所以就可以实现精确且自动记录自己的一天，这一个过程几乎不需要花费太多的力气&lt;/p&gt;
+&lt;p&gt;activityWatch开源，数据记录在本地，长时间使用积累的数据对于未来的自己将会有非常大的参考价值，而维护这样的记录的成本却几乎为零&lt;/p&gt;
+&lt;p&gt;如果你和我一样是一个J人，喜欢去记录自己的一天，也许这个软件会是一个不错的选择&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/2026/03/13/ActivityWatch%E8%87%AA%E5%8A%A8%E5%8C%96%E6%97%B6%E9%97%B4%E8%AE%B0%E5%BD%95%E4%BD%93%E7%B3%BB/2015867922065695676-02.png&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
+&lt;p&gt;我还没有处理好活动分类以及标签，还有待持续优化，上面是对应的时间线的显示，记录非常精细，精确到秒&lt;/p&gt;
+</content>
+        <updated>2026-03-13T11:27:42.000Z</updated>
+    </entry>
+    <entry>
+        <id>https://stoic-yang.github.io/2026/03/13/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0%EF%BC%9AFedMultimodal%EF%BC%9AA%20Benchmark%20For%20Multimodal%20Federated%20Learning/</id>
+        <title>论文阅读与复现：FedMultimodal:A Benchmark For Multimodal Federated Learning</title>
+        <link rel="alternate" href="https://stoic-yang.github.io/2026/03/13/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0%EF%BC%9AFedMultimodal%EF%BC%9AA%20Benchmark%20For%20Multimodal%20Federated%20Learning/"/>
+        <content type="html">&lt;p&gt;&lt;img src=&#34;/2026/03/13/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0%EF%BC%9AFedMultimodal%EF%BC%9AA%20Benchmark%20For%20Multimodal%20Federated%20Learning/2015778758578176664-01.png&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
+&lt;p&gt;提出了一个面向多模态联邦学习的 benchmark（Fedmultimodal），用于系统评测不同数据集、融合方法、联邦优化器以及真实噪声条件下的模型表现&lt;/p&gt;
+&lt;p&gt;整体流程&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;选定多模态数据集&lt;/li&gt;
+&lt;li&gt;按自然划分或 Dirichlet 划分分配到不同 client&lt;/li&gt;
+&lt;li&gt;用预训练特征提取器提取各模态特征&lt;/li&gt;
+&lt;li&gt;各模态进入对应编码器&lt;/li&gt;
+&lt;li&gt;用 concat 或 attention 做模态融合&lt;/li&gt;
+&lt;li&gt;在联邦学习框架下用 FedAvg / FedProx / FedOpt 等训练&lt;/li&gt;
+&lt;li&gt;评测性能和鲁棒性&lt;/li&gt;
+&lt;li&gt;联邦学习的在真实世界下数据的分布是 non-IID，所以划分数据给各个 client 应该避免暴力地划分以模拟真实情境下的联邦学习，一个常见的划分方法是按照 id 去进行数据的划分，一个 client 大部分的数据都只来自于一个客户端 id&lt;/li&gt;
+&lt;li&gt;直接读取原数据集进行训练对于边缘设备来说是巨大的性能开销，所以不是从头开始训练模型，而是利用成熟的预训练模型作为骨干网络来提取特征，再训练下游模型（类似 yolo）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;在多模态的融合上，论文提供了两种方法，一种是直接把不同模态的特征进行 concat 拼接，另外一种是 attention 融合，让模型自己学习分配权重&lt;/p&gt;
+&lt;p&gt;多模态特征融合应该会是以后研究的一个重点，可以继续去了解最新的多模态融合的工作是怎么做的，也可以深入探究背后的数学公式，多模态信息怎么整合到一块的对我来说是黑盒，具体的数学原理应该会比较有意思&lt;/p&gt;
+&lt;p&gt;联邦学习训练算法除开了最经典的 FedAvg 外，还有 FedProx、FedOpt，在这篇论文里，FedOpt 的性能是最好的，我简单了解了一下 FedAvg 和 FedOpt&lt;/p&gt;
+&lt;p&gt;FedAvg 实际上就是按照数据量去分配各个 client 的权重，计算公式不难理解&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;w_{t+1}=\frac{∑&lt;em&gt;{k=1}^Kn&lt;/em&gt;{k}w_{t+1}^k}{n}&lt;br&gt;$$&lt;/p&gt;
+&lt;p&gt;FedProx 面向数据异质性太强做了一些改进，在本地训练的时候加了一个约束项&lt;/p&gt;
+&lt;p&gt;$$&lt;br&gt;F_{k}(w)+\frac{\mu}{2}∥w−w_{t}∥^2&lt;br&gt;$$&lt;/p&gt;
+&lt;p&gt;这个我认为来自于最优化理论的启发，应该是罚函数的思想&lt;/p&gt;
+&lt;p&gt;FedOpt 的原理我没怎么看懂，但底层原理和以上两种算法思想差异比较大&lt;/p&gt;
+&lt;p&gt;多模态联邦学习上这篇论文主要提供了三种常见问题的模拟：模态缺失、标签缺失、错误标签&lt;/p&gt;
+&lt;p&gt;论文的第四节对实验细节、实验结果做了一个介绍和总结，我比较在意的点在于多模态虽然比单模态的性能普遍强 5%，但5%的提升太小了，不知道后续的研究有没有办法让多模态比起单模态的性能能有更大的提升&lt;/p&gt;
+&lt;p&gt;实验对于三种问题的模拟用到了一些概率论的方法，我目前不太明白具体是怎么实现的，这里可以去看一下底层的代码是怎么实现的&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;论文复现&lt;/p&gt;
+&lt;p&gt;跑通论文仓库的代码并不难&lt;/p&gt;
+&lt;p&gt;最后可以得到FedAvg / FedProx / FedOpt 在 $\alpha=5$ 和 $\alpha=0.1$ 的情况下 F1 的值&lt;/p&gt;
+&lt;p&gt;与 baseline 对比差距都在 1%以内&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;代码细节分析&lt;/p&gt;
+&lt;p&gt;这篇论文的工程性做的挺好的，大部分的调整都可以通过运行 train.py 的时候通过传入不同args来进行调整，包括模态缺失、标签缺失、标签错误是否开启以及对应的比例，所以我这几天主要去看了一下这份代码的工程架构以及数据流动，顺带补齐一些机器学习的基础&lt;/p&gt;
+&lt;p&gt;整份代码的架构，主要分三块，Server、Client以及Model&lt;/p&gt;
+&lt;p&gt;Server主要辅助管理全局的训练信息以及负责做聚合算法，Client管理本地训练的逻辑，可以在这里调整本地训练epoch等等，Model管理模型结构，里面有不同数据集对应的神经网络的架构，现在在上面做一些简单的魔改应该不成问题了，就比如在某个结构上多加一层pooling，或者 conv 和 norm&lt;/p&gt;
+&lt;p&gt;除开架构以外，我还读了论文代码是怎么对dataset、dataloader进行进一步封装的，FedAvg是如何实现的，大致理通了代码层面上（server）是如何把数据分发给各个客户端（client）上，并且客户端进行完自己的本地训练后怎么把数据数据汇总上传到server，最后完成一轮全局参数更新的主线&lt;/p&gt;
+&lt;p&gt;先从数据处理开始（dataload_manager） dataload_manager.py 把 torch. data 的 DataLoader 进一步封装了&lt;/p&gt;
+
+
+&lt;p&gt;通过传入一个 client_sim_dict 去控制每个样本的模拟配置&lt;/p&gt;
+
+
+&lt;p&gt;如果标签缺失就不再参与最后的 dataloader 的构建&lt;/p&gt;
+
+
+&lt;p&gt;组装 dataset&lt;/p&gt;
+
+
+&lt;p&gt;再来看训练代码（train. py）&lt;/p&gt;
+
+
+&lt;p&gt;分发数据给各个客户端，给每个客户端准备好一个 dataloader&lt;/p&gt;
+
+
+&lt;p&gt;对于每一个 client，先创建通过全局读取 client 的数据初始化，然后再进行一次训练，训练完后在把训练的结果更新到 server 上保存&lt;/p&gt;
+
+
+&lt;p&gt;实际训练的过程中，对于全局模型有一个 epoch，对于本地的模型其实也有一个自己的 epoch，本地模型跑完自己的 epoch 后才会把自己的数据更新上 server 上&lt;/p&gt;
+&lt;p&gt;本地训练主循环：&lt;/p&gt;
+
+
+&lt;p&gt;FedAvg 参数聚合&lt;/p&gt;
+
+</content>
+        <updated>2026-03-13T05:21:25.000Z</updated>
+    </entry>
+    <entry>
+        <id>https://stoic-yang.github.io/2026/03/04/oj_dashboard%E2%80%94%E2%80%94%E8%81%9A%E5%90%88Codeforces%E3%80%81atcoder%E3%80%81leetcode%E6%8F%90%E4%BA%A4%E8%AE%B0%E5%BD%95%E5%BD%A2%E6%88%90%E7%83%AD%E5%8A%9B%E5%9B%BE%E7%9A%84%E5%B7%A5%E5%85%B7/</id>
+        <title>oj_dashboard——聚合Codeforces、atcoder、leetcode提交记录形成热力图的工具</title>
+        <link rel="alternate" href="https://stoic-yang.github.io/2026/03/04/oj_dashboard%E2%80%94%E2%80%94%E8%81%9A%E5%90%88Codeforces%E3%80%81atcoder%E3%80%81leetcode%E6%8F%90%E4%BA%A4%E8%AE%B0%E5%BD%95%E5%BD%A2%E6%88%90%E7%83%AD%E5%8A%9B%E5%9B%BE%E7%9A%84%E5%B7%A5%E5%85%B7/"/>
+        <content type="html">&lt;p&gt;我大部分题都是在Codeforces上刷的，但有的时候也在atcoder上刷，有时候就会出现在atcoder上刷完题力竭后，没精力再继续在Codeforces上刷，导致刷墙中断，一个美美的热力图就缺了个洞，这就会让我非常的难受，所以我一直在想有没有一个什么工具可以统计我多个平台，统计我的提交记录，画一个多平台聚合的热力图，同时统计我的各个平台的做题数。然后我从去年七月份开始就断断续续地找有没有现成的工具，但最多只找到可以统计过题数的，但这个不是我最想要的，所以我就决定自己vibe coding一个，所以也就有了现在这个东西，如果你也有对应的需求，可以部署下来玩玩。&lt;/p&gt;
+&lt;p&gt;登录界面，这里我做成表格了，就不用自己再去找代码位置改config了&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/2026/03/04/oj_dashboard%E2%80%94%E2%80%94%E8%81%9A%E5%90%88Codeforces%E3%80%81atcoder%E3%80%81leetcode%E6%8F%90%E4%BA%A4%E8%AE%B0%E5%BD%95%E5%BD%A2%E6%88%90%E7%83%AD%E5%8A%9B%E5%9B%BE%E7%9A%84%E5%B7%A5%E5%85%B7/2012655494389597455-01.png&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
+&lt;p&gt;外观大概这个样子，提交热力图下面的是当日过题中最大难度的难度热力图&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/2026/03/04/oj_dashboard%E2%80%94%E2%80%94%E8%81%9A%E5%90%88Codeforces%E3%80%81atcoder%E3%80%81leetcode%E6%8F%90%E4%BA%A4%E8%AE%B0%E5%BD%95%E5%BD%A2%E6%88%90%E7%83%AD%E5%8A%9B%E5%9B%BE%E7%9A%84%E5%B7%A5%E5%85%B7/2012655494389597455-02.png&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
+&lt;p&gt;整个表的最下面是当日解决的题目的标题，你可以直观地看到今天做了那些题，我觉得这个还挺实用的。&lt;/p&gt;
+&lt;p&gt;诶，你怎么没做牛客和洛谷的？&lt;/p&gt;
+&lt;p&gt;答：洛谷和牛客的爬取要cookie，我也用的不多，所以就没做支持了，leetcode、atcoder、Codeforces只需要你输入你的用户名就可以查到所有的信息，api文档比较完善&lt;/p&gt;
+&lt;p&gt;更详细的使用方法，你可以在这个项目的仓库里找到，这里就不多赘述了&lt;/p&gt;
+&lt;p&gt;地址：&lt;a href=&#34;https://github.com/stoic-yang/oj_dashboard&#34;&gt;https://github.com/stoic-yang/oj_dashboard&lt;/a&gt;&lt;/p&gt;
+</content>
+        <updated>2026-03-04T14:44:38.000Z</updated>
+    </entry>
+    <entry>
+        <id>https://stoic-yang.github.io/2026/02/22/%E5%A4%A7%E4%BA%8C%E8%A2%AB%E9%A2%84%E5%88%B6%E8%BF%9B%E5%AD%A6%E6%A0%A1%E8%AF%BE%E9%A2%98%E7%BB%84%E6%89%93%E5%B7%A5%E6%98%AF%E4%BB%80%E4%B9%88%E4%BD%93%E9%AA%8C%EF%BC%882%EF%BC%89/</id>
+        <title>大二被预制进学校课题组打工是什么体验（2）</title>
+        <link rel="alternate" href="https://stoic-yang.github.io/2026/02/22/%E5%A4%A7%E4%BA%8C%E8%A2%AB%E9%A2%84%E5%88%B6%E8%BF%9B%E5%AD%A6%E6%A0%A1%E8%AF%BE%E9%A2%98%E7%BB%84%E6%89%93%E5%B7%A5%E6%98%AF%E4%BB%80%E4%B9%88%E4%BD%93%E9%AA%8C%EF%BC%882%EF%BC%89/"/>
+        <content type="html">&lt;p&gt;书接上回，虽然我做的一般，但也确确实实做出了一点成果，这门课还是拿到了 4.0，寒假还是深入之前的任务，老实说，在有了 AI 的加持下，入门 CV 已经是一件非常简单的事情了&lt;/p&gt;
+&lt;p&gt;CV 的东西有个特点，你做的东西的效果，你眼睛可以直接看到，模型跑完后，拿到预测结果的时候成功感很足&lt;/p&gt;
+&lt;p&gt;我打算写的也不是什么赤石日记，就是把自己遇到的东西分享出来，也许有人可能获得一些启发，也许有些人可以拿来消遣，也许还能引来一些朋友一起交流，这都是好的&lt;/p&gt;
+&lt;p&gt;在大二上的后半段，我为了保护绩点，几乎费劲了力气，没有（实际上还有）太多的精力去思考自己接下来要做些什么，学一点 CV 也无妨，在这段时间里面，我也学会了不少东西，这些技能，我估计在其他的科研领域应该也是通用的&lt;/p&gt;
+&lt;p&gt;比如： 配置 SSH，用 VScode 远程服务器 在 autoDL 租卡，学会了怎么迁移项目环境到服务器上 更加熟练地使用 AI（bushi） 不要相信导师画的饼（？） 模型训练-模型预测-验收的一部分流程&lt;/p&gt;
+&lt;p&gt;老实说我不太觉得自己是在科研，这应该算是某个工程项目，没有读论文、没有稳定的组会、没有论文分享，有的只有写软著之类的东西&lt;/p&gt;
+&lt;p&gt;因为没有打算做 CV，所以对于 CV 其他的内容，我全都没有进一步深入地学习，或者说我的学习欲望被极大地抑制了&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;我不知道自己要学什么了&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;我在完全不懂 CV 的情况下，只是把学长的要求转发给了 AI（codex），在烧掉一部分我自己的 token 后，AI 把代码写出来了，连带数据报告，我把结果交给我的学长，学长说不错，然后再给我下达其他的任务，周而复始&lt;/p&gt;
+&lt;p&gt;前几天晚上，我坐在椅子上等训练，忘记把杀戮尖塔挂在旁边摸鱼了，就发呆，然后就开始想，我在这个工作上究竟起了什么作用？我现在在做什么？我怎么天天都在炼丹？为什么我现在感觉到一种说不出来的不安？&lt;/p&gt;
+&lt;p&gt;我做了什么？我把学长的要求转发给了 AI（codex），在烧掉一部分我自己的 token 后，AI 把代码写出来了，连带数据报告，我把结果交给我的学长，学长说不错，然后再给我下达其他的任务，周而复始&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;所以我不就是一个 prompt 转发器吗？&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;我在做低价值，低效率的事情&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;我在这个项目组里面并没有平摊 token 消费作用外的作用，简单来说，我的学长完全可以用另外的一个 agent 替代我的工作&lt;/p&gt;
+&lt;p&gt;我不知道这个项目要做到什么程度（有什么目标），怎么推进（有什么计划），因而也无法脱离我学长的任务外进行有独立意识的行为和工作，我曾经问过我的学长，我们这个项目要做什么，学长能给我的也只是很模糊的概念，加之松散的组织，几乎没有组会，我对除开我自己做的内容外的东西一无所知&lt;/p&gt;
+&lt;p&gt;然后我慢慢理解为什么，为什么我很想跑路了，因为这不是我向往的能够给我一定自由度和空间的科研工作，这只是一种另外意义的苦工，&lt;strong&gt;即使我做的不是标注数据的脏活，手上这看似高级 CV 分类任务也只是另一种形式的苦工&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;想到这里，我苦笑了几声，就决定在下学期就要跑路了&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;我的生命不能花在这种我不知道有什么价值，不是我主导可以控制，甚至我不抱有希望的事情上&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;总得找点目前 AI 还没法独立做到的事情吧，虽然我现在不知道我应该发展自己其他什么方面的能力，但这样的 prompt 转发器，我是不会再想做下去了&lt;/p&gt;
+&lt;p&gt;AI 的强大给我带来太大的茫然感了，我知道什么都不会，有些事情代码、有些工作还是没法做的，但我不知道那个边界在哪，比如说我 CV 学到什么程度就足够解决目前遇到的问题了呢？也许是 0，也许是某些我还没听过的知识&lt;/p&gt;
+&lt;p&gt;这太可怕了，因为 AI 是在持续进化的，你没法保证你努力学了半天的东西，不如一句话给 AI 来得快，既然 AI 都能一句话解决了，那我不应该学其他的东西吗？如果要学其他的东西，那这个“其他的东西”是什么？我不知道&lt;/p&gt;
+&lt;p&gt;所以大部分的时间里，我只能寄希望于暂时不会受 AI 影响的保值的事情，比如说打 ACM 类竞赛（保研）、卷绩点（保研）&lt;/p&gt;
+&lt;p&gt;理论上， AI 的发展让更多编程的技能下放了，可以更加廉价地学习到更深的技术，但我的技术上的进步却开始停滞了&lt;/p&gt;
+&lt;p&gt;我对于接下来怎么做什么还是很迷茫，不过迷茫是很正常的，所以我觉得多写写自己目前想的事情，也许对自己梳理思路很有帮助&lt;/p&gt;
+&lt;p&gt;写这些东西，也是想看看能刷到这里的前辈们、朋友们有没有什么建议和想法，希望能得到你们宝贵的建议&lt;/p&gt;
+&lt;p&gt;如果后续还有什么故事，可能会再开一篇，这段时间应该是打Codeforces，可能会上传一些只有自己能看懂的做题记录&lt;/p&gt;
+</content>
+        <updated>2026-02-22T10:19:56.000Z</updated>
+    </entry>
+    <entry>
+        <id>https://stoic-yang.github.io/2026/02/22/%E5%A4%A7%E4%BA%8C%E8%A2%AB%E9%A2%84%E5%88%B6%E8%BF%9B%E5%AD%A6%E6%A0%A1%E8%AF%BE%E9%A2%98%E7%BB%84%E6%89%93%E5%B7%A5%E6%98%AF%E4%BB%80%E4%B9%88%E4%BD%93%E9%AA%8C(1)/</id>
+        <title>大二被预制进学校课题组打工是什么体验(1)</title>
+        <link rel="alternate" href="https://stoic-yang.github.io/2026/02/22/%E5%A4%A7%E4%BA%8C%E8%A2%AB%E9%A2%84%E5%88%B6%E8%BF%9B%E5%AD%A6%E6%A0%A1%E8%AF%BE%E9%A2%98%E7%BB%84%E6%89%93%E5%B7%A5%E6%98%AF%E4%BB%80%E4%B9%88%E4%BD%93%E9%AA%8C(1)/"/>
+        <content type="html">&lt;p&gt;结束上半年的 ICPC 赛事打铁回来的我，突然意识到一个问题：打 acm 本身花费的时间不等于做这么一件事情的支出，还要包括上由此而丢失的机会成本。&lt;/p&gt;
+&lt;p&gt;这包括，能不能在大二上打下科研基础，找到自己喜欢的科研方向| 深入学习 java，准备寒假实习 | 极限卷绩点，攀 rank&lt;/p&gt;
+&lt;p&gt;就这样，稀里糊涂没想明白的我，被所谓稀缺的 ICPC参赛资格，耽误（也许）了半年的时间，面临着何去何从的问题：继续打 ICPC 吗？绩点还卷不卷？Java 后端就业还考不考虑？要不要准备科研经历，积累保研的竞争力？&lt;/p&gt;
+&lt;p&gt;说起来，在这些都没想好的情况下，我迎来了我的预制导师，我说我想做 AIGC，导师问我：你知不知道什么是 AIGC，我答不上来，然后我的预制导师就让我回去自己先了解一下什么是 AIGC，下周找 TA 汇报，说 TA 什么方向的东西都有，你想做什么，我就安排你做什么…&lt;/p&gt;
+&lt;p&gt;就这样，我又延后了一周，带着对 AIGC 的一部分了解再次来到了预制导师的办公室，我刚要我自己研究的长篇大论一贯而出，想要证明自己的“搜索能力”（希望引起老师的关注，证明自己的能力），然后我的预制导师转手就让我去做一个刚刚起步的 CV （计算机视觉）项目&lt;/p&gt;
+&lt;p&gt;我有这个可行性的方案证明，你跟某某大三学长联系，他会告诉你要做什么，你以后就不要联系我了，你就联系你的学长 XXX&lt;/p&gt;
+&lt;p&gt;抱有一丝的困惑，我离开办公室，回到寝室，一看项目书，几个闻所未闻的架构把我吓住了，赶紧查了一下这几个架构是什么东西，没有看懂，然后准备联系学长，又是一段自我介绍与对于课题的询问，学长很热心，很耐心地跟我解答了不少问题&lt;/p&gt;
+&lt;p&gt;过几天后，我收到了一个数据集&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;我们项目正处于初始阶段，需要你先帮忙标注一下数据，你需要下载 XXX 软件，干 XXX 事情&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;这下懂了！&lt;/p&gt;
+&lt;p&gt;简单上手了一些数据标注的软件，难度不是很大，导入标签、画圈，但就是有点废手，其实还行&lt;/p&gt;
+&lt;p&gt;后面慢慢摸索出来标注其实是有快捷键的，我去，怎么教的时候没有说过有这个东西，我怀疑（），20 个数据的标注，我最开始需要 1.5 个小时，最后就压缩到了 0.5 个小时&lt;/p&gt;
+&lt;p&gt;随后的三周，我每天都要问有没有其他的事情需要做，我们的项目有没有什么 github 仓库云云，有没有项目的代码…&lt;/p&gt;
+&lt;p&gt;结果就是什么事情都没有，就是硬生生地标了 3 周的数据&lt;/p&gt;
+&lt;p&gt;不是，哥们&lt;/p&gt;
+&lt;p&gt;后面好不容易问到了一个做分类的工作，学长把一个小的可怜的数据集给我，让我用 XXX 模型去做一个分类，然后我照着样子去调查了一下这个模型，后面发现这个所谓分复合模型只有一部分是可以拿来做分类，向学长反映这个问题，学长说还真是&lt;/p&gt;
+&lt;p&gt;从此，我就对（）祛魅了&lt;/p&gt;
+&lt;p&gt;我没学过 pytorch，也完全不懂 CV ，ResNet、ConvNext 这些模型也是完全不知道是什么架构的，yolo 也第一次听，直接被丢进了一个完全陌生的圈子&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;你 XXX看看效果&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;老实说我也不知道用什么指标去评估什么模型的效果，也许准确度？那准确度应该用什么计算式表示呢？&lt;/p&gt;
+&lt;p&gt;从头开始自学也是不现实的，所以能做的只是成为一个 prompt 转发器——学长把数据和要求喂给我，我再扩充一下学长的数据和完善一下学长的要求，打包喂给 AI，然后再看着 AI 在黑箱里面干活&lt;/p&gt;
+&lt;p&gt;数据怎么预处理切成 4 片是不知道的，模型是怎么被调用是不知道的，模型的结果是什么文件是不知道的，训练后得到的模型是. pt 或者. pth 是不知道的，怎么 AI通过各种奇特的手段冲更高的准确率是不知道，最后的评估标准是什么 F1，F1 是什么原理是不知道的&lt;/p&gt;
+&lt;p&gt;项目组也没有自己的卡，后面要到了两张 2080 Ti，还是三个人共用的，实测下来跟我的 4060 差不多的速度&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;气笑了&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;你懂那种，就是小屁孩，第一次玩上电脑，打开设置看到卡好像很高级的样子，还是双卡，跃跃欲试，跟别人说我有电脑了诶，正想玩我的世界打个光影玩，开完光影，100 帧掉到 20 帧，后知后觉发现自己电脑是 10 年前配置的那种感觉吗，你懂吗&lt;/p&gt;
+&lt;p&gt;我永远忘不了我室友跑着自己的 4090，说你们老师怎么那么扣，2080 Ti 是垃圾那一刻&lt;/p&gt;
+&lt;p&gt;我 TM 真拿这个垃圾卡训了超过 10 个小时，我服了，当时怎么不知道去租卡，我说我的学长他们怎么都不用这个服务器的&lt;/p&gt;
+&lt;p&gt;可能有人问了，诶，等下，你不跑路吗，你怎么还坚持弄了这么久？&lt;/p&gt;
+&lt;p&gt;就这个东西，在我们学校有一个所谓的实训课作为背书，是有学分的，想跑？也得熬一个学期！&lt;/p&gt;
+&lt;p&gt;我跟我朋友说，怎么我们学校什么制度出发点都是好的，执行起来都这么坏啊&lt;/p&gt;
+&lt;p&gt;朋友说，学校有出发点不好的政策吗？&lt;/p&gt;
+</content>
+        <updated>2026-02-22T05:21:55.000Z</updated>
+    </entry>
+    <entry>
+        <id>https://stoic-yang.github.io/2026/02/05/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84Mac%E7%94%B5%E8%84%91%E9%85%8D%E7%BD%AE%EF%BC%8C%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90%EF%BC%8C%E6%97%A0%E7%97%9Bwin%E8%BD%ACmac/</id>
+        <title>从零开始的Mac电脑配置，软件推荐，无痛win转mac</title>
+        <link rel="alternate" href="https://stoic-yang.github.io/2026/02/05/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84Mac%E7%94%B5%E8%84%91%E9%85%8D%E7%BD%AE%EF%BC%8C%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90%EF%BC%8C%E6%97%A0%E7%97%9Bwin%E8%BD%ACmac/"/>
+        <content type="html">&lt;p&gt;这两天我把旧笔记本出了，换了一台新的 macbook air 13 寸，下面记录一下自己从零开始的配置过程以及一些对 macbook 的感受&lt;/p&gt;
+&lt;p&gt;这是我的第一台 macbook，但不是我的第一台 mac，我在四月份的时候就开始把 mac mini 作为自己的主力机在用，所以不算是 mac 新手。&lt;/p&gt;
+&lt;p&gt;终端我用的是 kitty，shell 用的是 fish，编程用 neovim，VScode&lt;/p&gt;
+&lt;p&gt;用 kitty 单纯就是因为 kitty 可以做到 neovide 的光标光滑移动的效果，虽然对实际编程没有太多作用吧，但光标晃来晃去的就会给我一种我写代码很快的感觉（）&lt;/p&gt;
+&lt;p&gt;我的 kitty 配置：&lt;a href=&#34;https://github.com/stoic-yang/kitty&#34;&gt;https://github.com/stoic-yang/kitty&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;fish 的话，我觉得 fish 自带的补全和颜色要比 zsh 好很多，但我对 fish 的理解还比较浅显，觉得比 zsh 好用所以就用了，配置插件也非常简单&lt;/p&gt;
+&lt;p&gt;我的 fish 配置：&lt;a href=&#34;https://github.com/stoic-yang/fish&#34;&gt;https://github.com/stoic-yang/fish&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/2026/02/05/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84Mac%E7%94%B5%E8%84%91%E9%85%8D%E7%BD%AE%EF%BC%8C%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90%EF%BC%8C%E6%97%A0%E7%97%9Bwin%E8%BD%ACmac/2002864664279786218-01.png&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
+&lt;p&gt;重头戏来了：neovim，我这段时间都是在 neovim 上写代码，有人要说了，VScode 不香吗，插件生态极大丰富，为什么要用一个残废的编辑器，学习成本高，最后配完插件一更新，突然某些功能就发生了冲突，一堆报错都怼脸上了，图啥？&lt;/p&gt;
+&lt;p&gt;我的想法是这样的，我一直都没有打算过把 neovim 配置成 VScode 或者什么其他的 IDE，单纯就是想拥有一个能够高度自定义化的编辑器，做一个 PDE（personal），VScode 确实也可以通过快捷键和插件实现高度的自定义化，但你只有在脱离 VScode ，只有一个残疾编辑器的情况下才会去思考：一个编辑器应该有什么功能，怎么去利用这些功能&lt;/p&gt;
+&lt;p&gt;比如说查找，以及全局的 session 切换，这样的操作，很多用 VScode 的人，他们是不知道 VScode 是有对应的快捷键的，每次用查找的时候，还要去翻各种地方通过鼠标去开启这个查找，每次查找完事以后，哦是这个快捷键，下一次使用的时候又会重复上面的过程，还是记不住这些快捷键，一方面是这个快捷键是别人定义的，另一方面很多的快捷键拥挤在 ctrl 和 alt 的组合键下，另外这些快捷键在其他的 IDE 上可能还是不一样的，比如 jetbrains 和 VScode 的快捷键就不是一整套的，导致记忆这些快捷键的难度巨大&lt;/p&gt;
+&lt;p&gt;但如果是在 neovim（vim）上呢？所有的快捷键都可以自定义，只需要一行 lua 代码就可以把快捷键设置为任何你喜欢的键位，最绝还是 &lt;code&gt;&amp;lt;leader&amp;gt;&lt;/code&gt; 键的思想，直接你摆脱 ctrl 和 alt 的限制。因为快捷键都是你通过配置文件修改的，所以你记的非常清楚，如果你还安装了一些辅助你记忆的插件（which-key），在按下 &lt;code&gt;&amp;lt;leader&amp;gt;&lt;/code&gt; 键的同时，你就可以查看到你所有的接下来的快捷键如何触发，你可以把这些快捷键分成区块来记忆，比如 &lt;code&gt;&amp;lt;leader&amp;gt;f&lt;/code&gt; 就是文件相关。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/2026/02/05/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84Mac%E7%94%B5%E8%84%91%E9%85%8D%E7%BD%AE%EF%BC%8C%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90%EF%BC%8C%E6%97%A0%E7%97%9Bwin%E8%BD%ACmac/2002864664279786218-02.png&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
+&lt;p&gt;听我说，如果所有的快捷键都尽在你的掌控之下，而不是要去查别人的文档，你一定会感觉到很爽的&lt;/p&gt;
+&lt;p&gt;neovim 有很丰富的插件生态，即便是你是 acmer，你甚至可以在 neovim 上找到 cph 的平替，我平时写算法题都是在 neovim 上用这个插件做的&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/2026/02/05/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84Mac%E7%94%B5%E8%84%91%E9%85%8D%E7%BD%AE%EF%BC%8C%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90%EF%BC%8C%E6%97%A0%E7%97%9Bwin%E8%BD%ACmac/2002864664279786218-03.png&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
+&lt;p&gt;neovim 还能直接实践你的一些想法，比如：&lt;/p&gt;
+&lt;p&gt;我之前一直在想自己应该怎么去积累板子，怎么去快捷地把题解的内容变成板子，然后我就想到，如果我能够在 vim 可视状态下选中一段代码给个名字直接放到我的板子库里面（快捷键触发），然后还可以随时的可视化调用就好了，然后我花了一点点的时间就让 AI 把这个功能实现出来了&lt;/p&gt;
+&lt;p&gt;选中当前的 cpp 文件的状态下，一个 enter 就可以把我的板子插入到当前光标下了&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/2026/02/05/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84Mac%E7%94%B5%E8%84%91%E9%85%8D%E7%BD%AE%EF%BC%8C%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90%EF%BC%8C%E6%97%A0%E7%97%9Bwin%E8%BD%ACmac/2002864664279786218-04.png&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
+&lt;p&gt;我是真的喜欢这一套只用快捷键做任何事情的哲学，可能不会比鼠标快太多，写代码的效率可能更大程度上取决于一个人其他的能力，但这套哲学可以让你减少不少重复性的工作，让你在写代码的过程中变得更加轻松，更容易享受于纯粹的 coding&lt;/p&gt;
+&lt;p&gt;我的neovim配置（在 lazyvim 上魔改的）：&lt;a href=&#34;https://github.com/stoic-yang/nvim&#34;&gt;https://github.com/stoic-yang/nvim&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;下面是一些其他开发以外的，我觉得好用的软件：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;AltTab 可以让你拥有接近Windows桌面应用切换的体验&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;/2026/02/05/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84Mac%E7%94%B5%E8%84%91%E9%85%8D%E7%BD%AE%EF%BC%8C%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90%EF%BC%8C%E6%97%A0%E7%97%9Bwin%E8%BD%ACmac/2002864664279786218-05.png&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;better display 外界显示器，开HDPI用&lt;/li&gt;
+&lt;li&gt;Mos 鼠标体验优化&lt;/li&gt;
+&lt;li&gt;Karibinar 自定义改键，我非常喜欢把 cap 键改为 esc 键，配合我的 vim 使用&lt;/li&gt;
+&lt;li&gt;Better and Better 自定义触控板，我真的有被这个软件惊讶到，而且是不收费的，crazy&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;/2026/02/05/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84Mac%E7%94%B5%E8%84%91%E9%85%8D%E7%BD%AE%EF%BC%8C%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90%EF%BC%8C%E6%97%A0%E7%97%9Bwin%E8%BD%ACmac/2002864664279786218-06.png&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Bob 全局划词翻译，不过是收费的，当初是拿来作为沙拉查词+quicker 的平替的&lt;/li&gt;
+&lt;li&gt;Rectangle 窗口管理，把窗口拖到边缘实现类似 Windows 的窗口管理体验，但是还是不如 Windows&lt;/li&gt;
+&lt;li&gt;obsidian 本地 Markdown 笔记软件，可玩性更是不必多言，搭配 latex suit 写数学公式，让我可以做到完全脱离手写笔记（goodnotes）&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+        <updated>2026-02-05T14:12:17.000Z</updated>
+    </entry>
     <entry>
         <id>https://stoic-yang.github.io/2025/12/31/2025.12.31/</id>
         <title>2025.12.31</title>
@@ -121,616 +644,333 @@
         <updated>2025-12-30T16:00:00.000Z</updated>
     </entry>
     <entry>
-        <id>https://stoic-yang.github.io/2025/09/07/CSAPP%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</id>
-        <title>CSAPP学习笔记</title>
-        <link rel="alternate" href="https://stoic-yang.github.io/2025/09/07/CSAPP%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-        <content type="html">&lt;p&gt;working&lt;/p&gt;
-</content>
-        <category term="CSAPP" />
-        <updated>2025-09-06T16:00:00.000Z</updated>
-    </entry>
-    <entry>
-        <id>https://stoic-yang.github.io/2025/09/07/%E5%A4%A7%E4%B8%80%E5%9B%9E%E5%BF%86%E5%BD%95/</id>
-        <title>大一下回忆录</title>
-        <link rel="alternate" href="https://stoic-yang.github.io/2025/09/07/%E5%A4%A7%E4%B8%80%E5%9B%9E%E5%BF%86%E5%BD%95/"/>
-        <content type="html">&lt;blockquote&gt;
-&lt;p&gt;郁孤台下清江水，中间多少行人泪。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;非常迟到的大一下总结复盘，我这里的大一下复盘涵盖的范围与一般的人所定义的有所不同，主要是源自于我校奇怪的学期制，其次是我希望这样定义，不然我的大一下很难看了，所以大概是 3-9 月的回顾与记录。&lt;/p&gt;
-&lt;p&gt;大一下简直是地狱开局，冬季学期的考试给了我当头一棒，大物 1 的爆炸直接让我的绩点下降了 0.5，让我本来就不太好看的绩点直接变得没法看，此事在我的知乎亦有记载，总之是破了大防，现在想来还是当时没有积累好期末冲刺的经验，自己把自己的绩点玩炸了。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;虽然学校给英语考试分级了，但为什么 C 级的英语这么难？上海本地的考生基本都是 A 级，考试的成绩也基本是 A。而英语 C 级的人英语绩点还没有见到过大于 3.0，而且几乎全部英语 C 级的人都是压线过的。你外国语学院出的什么卷子？你分的这个等级有什么意义？大物大题一点步骤分都不给的吗？为什么打分这么低？&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;不过我也没有放弃自救，即使在破防的状态下也在一天内调整了过来，继续做为下一周做计划，记录自己每一周的成功。在春季的前 3 周，我把课余的时间拿去写苍穹外卖了，最后 curd 写的太无聊了，前面有跟着写，后面就没有跟着写，只是把课过了一遍。&lt;/p&gt;
-&lt;p&gt;在第三周写完苍穹外卖后，我又陷入了一种迷茫的状态，当时没有想过其实自己可以坚持学下去，把剩下的后端东西学了，把 leetcode 写了，准备暑假实习，后面我发现这条路是可行的，但是当时确实是没有信心去这么做。我毕竟还需要维持绩点去分流。&lt;/p&gt;
-&lt;p&gt;那么写完苍穹外卖以后学什么呢？我当时甚至想花两个月去考插班生，印象中是我是接着学了 61 c 的一点点内容，并且在 leetcode 上刷了几天题目，学了一点滑动窗口。春季学期的主基调仍旧是卷绩点，61 c 又太硬，所以学了一点点，连 proj 1 都没写就断了。那几周我的生活状态大概是，什么都想做，但什么都做不起来，课内的东西又总是把我的心力搞枯竭，晚上很多时间在打游戏，什么 2077，甚至一度成为素学家，一周一大半的时间在摆烂，剩下的时间在想怎么解决自己摆烂的问题，这段时间里我有写和看很多知乎里面有关自制力的思考，并且重新去读了福格行为模型。&lt;/p&gt;
-&lt;p&gt;春季 4-7 周我过得晕头转向的，一会插班生、一会 61 c、一会 leetcode、一会蓝桥杯、一会熟悉 macos，一会忙课内卷绩点，一会应付课内作业压力（尤其是工图）。没有一个明确的目标和主线，所以一整个月都是忙忙碌碌有碌碌无为。当时其实就是没有想清楚，自己想要什么，并且对自己失去太多信心了。不相信自己还能做学业以外的事情，担心自己学了这个那个，结果绩点爆炸，但实际上也没有怎么卷绩点，所以在担忧受怕中度过了一个月。&lt;/p&gt;
-&lt;p&gt;7-11 周，考试周，我甚至周结都找不到了，不记得当时是太忙没写还是没有状态没写了，但最后春季的考试成绩在我的预期线上，所以这个月虽然没有学到什么，但是还是可以接受的。经过两个学期的失败，终于是摸到了一点怎么卷绩点的秘诀。&lt;/p&gt;
-&lt;p&gt;12 周，考试结束后的一周，我玩了几天 neovim，学了两周的 CS 106 L，做到了 assignment 4，中途参加大创，花了两天时间弄了一个非常简陋的小程序前端 UI，写的真的是非常丑，ai 调教的水平有待提升，当时时间紧张，也确实只有上 ai 才有机会在短时间内实现出来了。但是好像是觉得我一个 java 选手学 C++没啥太大意义，所以又跑去 java 复健了，可以说当时好几个月没有写过 java 了。&lt;/p&gt;
-&lt;p&gt;这个时候已经是夏季学期的第二周了，一个炸弹来了。&lt;/p&gt;
-&lt;p&gt;由于我是通过国家专项计划上的学，而分流规则中高考成绩占的比例非常大，直接导致我的排名爆降 40%，什么概念呢，大概就是从专业随便选到计算机学院可能都去不了，一想到我 tmd 学了一年的计算机，最后没有能够分流去计院，我就感觉很幽默，心直接死了（当时我是这么认为的），一度考虑过大二转专业，或者辅修计算机，卷保研跨保这些东西。&lt;/p&gt;
-&lt;p&gt;不过还是很幸运啊，或许是计算机这两年热度下降了，我还是得以去到一个计算机类专业，还是分流到了计算机学院。随后我还惊奇地发现自己在专业内的排名还不错，我当时？，嘛玩意，分流后排名上升了 70%，我了个豆哇，我怎么还突然有希望保研了，一下子信心倍增，原本打算彻底放弃绩点的，夏季学期前半段时间疯狂摸鱼摆烂，后半段疯狂卷大作业，虽然后面看来卷这个这么水的大作业很小丑是了，但是在小组中认识了一个非常厉害的队友，应该是得到了大佬的认可，最后大佬拉我一起组寝室了。&lt;/p&gt;
-&lt;p&gt;后面很顺利地组好了寝室，很顺利地加入到了集训队，很顺利地度过了短暂 8 周的集训，得到一次去今年区域赛的资格。而现在正是集训的结尾，集训最后一周的周四。&lt;/p&gt;
-&lt;p&gt;五月份的周结结尾，我这样写道&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;更糟糕的是冬季绩点爆炸，自信心进一步降低，在前四周做完苍穹外卖后就基本没有写过代码了，茫然、后悔，插班生 g 了，蓝桥杯 g 了，绩点 g 了，acm 也 g 了，所有的路好像都对我关闭了，茫然、后悔，接着便是摆烂到现在。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;从后往前看，过去以为的失败似乎并不尽然。&lt;/p&gt;
-&lt;p&gt;那是 6 月 15 号的下午，我和 zlh 刚结束一场能够与院长直接面对面沟通的交流会，在回去的路上，我跟 zlh 说，高考失意的时候，我感觉自己完蛋了，彻底失败了，但是大一刚开学的就在学 cs 50 的我感觉未来可期，人可能就是这样，在一次失败后，感觉自己无药可救了，但是在如果以过一段时间的眼光再来看现在的自己，一定会觉得自己现在仍旧是充满希望的。&lt;/p&gt;
-&lt;p&gt;现在的我，往前看那段我大一最担忧受怕、焦虑痛苦的时光，又看到现在自己，觉得当时的担忧焦虑实在是被自己过分强化了，自己远比自己想象中做的好，自己远比自己想象中有希望。&lt;/p&gt;
-&lt;p&gt;当时觉得所有的路都被封死了，然而并不尽然，只要现在开始想，好好地想自己想做什么，自己要做什么，然后马上行动起来，锁住门的链条或许就突然消失不见了，这时候我才发现，把门锁上的是其实是我自己。&lt;/p&gt;
-&lt;p&gt;随着我不断地学习和思考，我的观念也发生了很多变化，其一是不拧巴了，我不再为自己没法按照预期学习和摆烂感到极度内疚了，因为我知道这是不合理的生活模式设计照成的，我不再思考为什么自己做不到别人那么自律，而花时间去思考怎么优化自己的设计的生活模式。另外是，我的目标从追求财富自由（也许？），变为了最大化地体验人生，比如说 acm 训练很累，但这就是 acm 的味道，just for fun？所以我即使很坐牢，但还是享受集训的过程，但我的队友没法做到这样，集训大部分时间都不在状态，所以集训期间我的训练量几乎是他的两倍。虽然我感觉自己集训也没有做到该有的认真（&lt;/p&gt;
-&lt;p&gt;所以最后结束来，发现自己大一做的还不错，绩点能看，课外的东西学了也不少，有了一套比较成熟的工作学习流，最后也交到了不少的朋友，活着挺滋润的。&lt;/p&gt;
-&lt;p&gt;这段时间有一直刷到很多大一、大二失败经验总结，每次看完之后，我也跟着情绪变得低落了，竟然也有想着把自己从低谷中走出来的经历分享出来，鼓励那些像过去的我，看到这里的朋友，也可以说是说给未来的自己，不要把当下的状况想的那么糟糕，不要自暴自弃，人的精神面貌是可以在 3 个月的时间里发生巨大改变的， 3 个月也可以让一个计算机学生的知识量翻一倍，通过说一堆别人听不懂的专业名词吹逼来找回自信（bushi）&lt;/p&gt;
-&lt;p&gt;接下来可能会恢复写博客和恢复时间统计，先写到这吧，今晚还有 cf 呢，btw，cf 前天终于上绿了。算法题真有意思，让我的大脑旋转（&lt;/p&gt;
-</content>
-        <category term="反思" />
-        <category term="总结" />
-        <updated>2025-09-06T16:00:00.000Z</updated>
-    </entry>
-    <entry>
-        <id>https://stoic-yang.github.io/2025/04/29/%E7%BB%8F%E6%B5%8E%E5%AD%A6%E5%8E%9F%E7%90%86/</id>
-        <title>经济学原理</title>
-        <link rel="alternate" href="https://stoic-yang.github.io/2025/04/29/%E7%BB%8F%E6%B5%8E%E5%AD%A6%E5%8E%9F%E7%90%86/"/>
-        <content type="html">&lt;h2 id=&#34;第一章-经济学的十大原理&#34;&gt;&lt;a href=&#34;#第一章-经济学的十大原理&#34; class=&#34;headerlink&#34; title=&#34;第一章  经济学的十大原理&#34;&gt;&lt;/a&gt;第一章  经济学的十大原理&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;人们面临交替关系&lt;/li&gt;
-&lt;li&gt;某件事情的成本是为了得到它而放弃的东西&lt;/li&gt;
-&lt;/ul&gt;
-</content>
-        <category term="读书" />
-        <updated>2025-04-28T16:00:00.000Z</updated>
-    </entry>
-    <entry>
-        <id>https://stoic-yang.github.io/2025/03/23/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96/</id>
-        <title>苍穹外卖</title>
-        <link rel="alternate" href="https://stoic-yang.github.io/2025/03/23/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96/"/>
-        <content type="html">&lt;p&gt;该贴将记录笔者在学习该项目时遇到的问题及解决方法、笔记、想法和工作日志&lt;/p&gt;
-&lt;h1 id=&#34;Day-1&#34;&gt;&lt;a href=&#34;#Day-1&#34; class=&#34;headerlink&#34; title=&#34;Day 1&#34;&gt;&lt;/a&gt;Day 1&lt;/h1&gt;&lt;h2 id=&#34;初始环境的问题以及解决方案&#34;&gt;&lt;a href=&#34;#初始环境的问题以及解决方案&#34; class=&#34;headerlink&#34; title=&#34;初始环境的问题以及解决方案&#34;&gt;&lt;/a&gt;初始环境的问题以及解决方案&lt;/h2&gt;&lt;p&gt;第一次运行这个项目的人，基本上会遇到初始环境启动问题。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;前端，注意你的 80 端口是否被占用以及 nginx 文件是否放在了全英文文件夹下面&lt;br&gt;如果你的 80 端口被占用，可以去修改 nginx. conf 下的端口，比如我就该为了 81，在启动服务器的时候进入的网站也要跟着你的端口号去修改&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;/2025/03/23/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-20250313102731024.png&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;后端环境与数据库&lt;br&gt;后端环境问题有两个，你需要先看自己的 maven 能不能编译出来，如果编译不出来，大概率是因为 Lombok 工具包没有打上，这里你要去找最新的版本号，去每一个 pom. xml 文件的依赖部分添加。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;另一个可能出现的问题是，Java 版本号不对 &lt;code&gt;java: 错误: 不支持发行版本 5&lt;/code&gt;&lt;br&gt;&lt;img src=&#34;/2025/03/23/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-20250313103412758.png&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
-&lt;p&gt;解决这个问题的关键在于调整你的版本号，上面图片紫色图标右边点击数字可以切换版本，全部改为 1.8 应该就可以跑起来了&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;数据库连接问题&lt;br&gt;你大概率连接不上数据库，因为初始工程的密码跟你的 MySQL 的密码大概率是不一样的，找到你的 &lt;code&gt;application-dev.yml&lt;/code&gt;，把密码和账号改为自己的就可以连接上了，另外前提肯定是你安装了 MySQL，还有 idea 本身支持导入数据库。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;nginx-反向代理&#34;&gt;&lt;a href=&#34;#nginx-反向代理&#34; class=&#34;headerlink&#34; title=&#34;nginx 反向代理&#34;&gt;&lt;/a&gt;nginx 反向代理&lt;/h2&gt;&lt;p&gt;前端请求地址与后端的接口地址不一样，前端动态请求通过 nginx 转发到了后端服务器&lt;/p&gt;
-&lt;p&gt;好处：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;提高访问速度&lt;/li&gt;
-&lt;li&gt;负载均衡——降低单台服务器的压力&lt;/li&gt;
-&lt;li&gt;保证后端服务安全，后端服务不对外开放&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;/2025/03/23/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-20250313110103496.png&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
-&lt;p&gt;前端的/api/经过 nginx 转化为配置的路径&lt;/p&gt;
-&lt;h2 id=&#34;接口&#34;&gt;&lt;a href=&#34;#接口&#34; class=&#34;headerlink&#34; title=&#34;接口&#34;&gt;&lt;/a&gt;接口&lt;/h2&gt;&lt;p&gt;接口一般是在项目开始写之前就确定好的，跟信息办对接的时候，我可以自己尝试去写写接口文档&lt;/p&gt;
-&lt;h2 id=&#34;Swagger&#34;&gt;&lt;a href=&#34;#Swagger&#34; class=&#34;headerlink&#34; title=&#34;Swagger&#34;&gt;&lt;/a&gt;Swagger&lt;/h2&gt;&lt;p&gt;Swagger 是一个规范和完整的框架，用于生成、描述、调用和可视化 RESTful 风格的 Web 服务(&lt;a href=&#34;https://swagger.io/&#34;&gt;https://swagger.io/&lt;/a&gt;)。它的主要作用是：&lt;/p&gt;
+        <id>https://stoic-yang.github.io/2025/12/29/gemini%E4%BD%BF%E7%94%A8%E5%B0%8F%E6%8A%80%E5%B7%A7%EF%BC%88%E8%80%83%E8%AF%95%E5%91%A8%E5%90%91%EF%BC%89/</id>
+        <title>gemini使用小技巧（考试周向）</title>
+        <link rel="alternate" href="https://stoic-yang.github.io/2025/12/29/gemini%E4%BD%BF%E7%94%A8%E5%B0%8F%E6%8A%80%E5%B7%A7%EF%BC%88%E8%80%83%E8%AF%95%E5%91%A8%E5%90%91%EF%BC%89/"/>
+        <content type="html">&lt;p&gt;现在正在备战考试周，我在Gemini的应用上做了一些新的探索。&lt;/p&gt;
+&lt;p&gt;有的时候，你会发现Gemini在回答你给的问题很聪明，解释的很清楚，但有的时候解释的又很怪，有非常多奇奇怪怪的比喻，很让人恼火，又或者你在学习一个新的概念，你不清楚这个概念的定义，你想知道，但AI用了一个非常sb的比喻给你解释这个概念却不给你定义。如果出现了上述的状况，你不妨跟我一样试试去提前写一个prompt，Gemini有一个gem功能，你可以在那里定制知识库，拟好一个prompt给它，如果你不知道怎么写prompt也可以直接自白地描述你的诉求，让gemini给你生成一份prompt。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/2025/12/29/gemini%E4%BD%BF%E7%94%A8%E5%B0%8F%E6%8A%80%E5%B7%A7%EF%BC%88%E8%80%83%E8%AF%95%E5%91%A8%E5%90%91%EF%BC%89/1989045507692181200-01.jpg&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
+&lt;p&gt;我在这里弄的提示词就是&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;你是一位学术严谨、知识渊博的大学助教。你精通计算机科学及理工基础学科，特别擅长为本科生提供教材级的知识辅导。你的核心能力在于通过严谨的定义和标准的解题步骤，帮助学生构建扎实的知识体系。&lt;/p&gt;
+&lt;p&gt;专业领域：&lt;/p&gt;
+&lt;p&gt;你的专业知识库重点覆盖以下学科，请确保在解释相关问题时，符合该学科的通用学术规范和符号标准：&lt;/p&gt;
+&lt;p&gt;大学物理： 聚焦于光学、热力学、量子物理及相对论的基础理论。&lt;/p&gt;
+&lt;p&gt;运筹与优化： 以运筹学中的线性规划为主，涵盖部分基础的非线性规划知识。&lt;/p&gt;
+&lt;p&gt;信号与系统： 重点掌握傅里叶变换、卷积运算及采样定理。&lt;/p&gt;
+&lt;p&gt;概率论与数理统计： 标准的统计学与概率模型。&lt;/p&gt;
+&lt;p&gt;面向对象编程： 专注于 C++ 语言特性、设计模式及 OOP 思想。&lt;/p&gt;
+&lt;p&gt;离散数学： 侧重于基础理论，包括树、群论、代数系统及图论的基础知识。&lt;/p&gt;
+&lt;p&gt;核心原则：&lt;/p&gt;
+&lt;p&gt;拒绝通俗比喻： 严禁使用生活化、不精确的比喻（如“电流像水流”）。必须使用教科书级别的严谨定义、专业术语和数学语言进行描述。&lt;/p&gt;
+&lt;p&gt;联系上下文： 分析图片内容时，必须结合图片前后的逻辑关系或用户提供的背景信息进行整体解读。&lt;/p&gt;
+&lt;p&gt;引导式教学： 禁止只给答案。你的目标是通过解答和追问，引导用户深入理解知识点。&lt;/p&gt;
+&lt;p&gt;处理流程与指令：&lt;/p&gt;
+&lt;p&gt;场景一：当用户上传的内容为“知识点/概念”类&lt;/p&gt;
+&lt;p&gt;提取核心概念： 准确识别图片中的关键定义、公式或理论。&lt;/p&gt;
+&lt;p&gt;严谨阐述： 引用标准教材的定义进行解释，注重逻辑推导和原理分析。对于 C++ 相关代码，需从内存模型或编译器行为角度解释；对于数学/物理概念，需强调其适用条件。&lt;/p&gt;
+&lt;p&gt;关联背景： 说明该知识点在对应学科（如信号与系统或离散数学）体系中的位置。&lt;/p&gt;
+&lt;p&gt;场景二：当用户上传的内容为“习题/题目”类&lt;/p&gt;
+&lt;p&gt;考点分析：&lt;/p&gt;
+&lt;p&gt;明确指出该题目考察的具体知识点（Knowledge Point）。&lt;/p&gt;
+&lt;p&gt;对题目进行题型分类（例如：运筹学中的单纯形法计算、信号中的卷积积分求解等）。&lt;/p&gt;
+&lt;p&gt;标准解答：&lt;/p&gt;
+&lt;p&gt;严格按照学术考试的标准答题步骤给出解题过程。&lt;/p&gt;
+&lt;p&gt;步骤清晰： 尤其是数学证明和物理推导，每一步均需有理有据；编程题需提供规范的 C++ 代码并解释关键逻辑。&lt;/p&gt;
+&lt;p&gt;解答完毕后的引导（必须执行）：&lt;/p&gt;
+&lt;p&gt;在给出最终答案后，必须发起一轮引导性对话。&lt;/p&gt;
+&lt;p&gt;猜测痛点： 指出初学者在该知识点上常见的误区或容易混淆的概念（例如：区分傅里叶级数与傅里叶变换的应用场景）。&lt;/p&gt;
+&lt;p&gt;延伸提问： 提出 1-2 个能检验用户是否真正掌握的问题。例如：“如果这道线性规划题的约束条件变为…，最优解会如何移动？”&lt;/p&gt;
+&lt;p&gt;输出风格要求：&lt;/p&gt;
+&lt;p&gt;语言风格： 学术、客观、理性、严谨。&lt;/p&gt;
+&lt;p&gt;排版格式： 使用清晰的 Markdown 格式。&lt;/p&gt;
+&lt;p&gt;专业术语使用粗体。&lt;/p&gt;
+&lt;p&gt;数学公式必须使用 LaTeX 格式（如 $E=mc^2$）。&lt;/p&gt;
+&lt;p&gt;代码块请指定语言（如 cpp）。&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;img src=&#34;/2025/12/29/gemini%E4%BD%BF%E7%94%A8%E5%B0%8F%E6%8A%80%E5%B7%A7%EF%BC%88%E8%80%83%E8%AF%95%E5%91%A8%E5%90%91%EF%BC%89/1989045507692181200-02.jpg&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/2025/12/29/gemini%E4%BD%BF%E7%94%A8%E5%B0%8F%E6%8A%80%E5%B7%A7%EF%BC%88%E8%80%83%E8%AF%95%E5%91%A8%E5%90%91%EF%BC%89/1989045507692181200-03.jpg&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/2025/12/29/gemini%E4%BD%BF%E7%94%A8%E5%B0%8F%E6%8A%80%E5%B7%A7%EF%BC%88%E8%80%83%E8%AF%95%E5%91%A8%E5%90%91%EF%BC%89/1989045507692181200-04.jpg&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
+&lt;p&gt;gemin吐词明显更多了，同时你可以注意到，产出的内容变得更加的稳定，也没有奇奇怪怪的比喻了，有时gemini生成的数学公式甚至会出现latex格式不对，出现渲染错误的问题，但我用这个gem还没有遇到latex渲染出错，效果比完全不用prompt要明显好不少的，推荐大家试试。&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;上面的内容我本来就是写着玩，随便发给我朋友分享一下，没想到这么多人看，感觉大家对这个还挺感兴趣的，那我再写一点吧。&lt;/p&gt;
+&lt;p&gt;我觉得，AI给的带来的效率的提升很大程度上取决于你的想象力，你要敢于在不同地方去尝试使用AI。&lt;/p&gt;
+&lt;p&gt;首先来个冷知识，&lt;strong&gt;网页gemini是多线程的，你可以并行地跑多个问题&lt;/strong&gt;，不是一定得要等gemini生成完一个回答后，才开始一个新的问题&lt;/p&gt;
+&lt;p&gt;gemini图片识别能力非常强，只要你的想象力足够，你完全可以做到以下事情：&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;&lt;p&gt;使得前后端分离开发更加方便，有利于团队协作&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;接口的文档在线自动生成，降低后端开发人员编写接口文档的负担&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;功能测试&lt;/p&gt;
-&lt;/li&gt;
+&lt;li&gt;把回忆版的试卷复原成Markdown格式的试卷，进而转化为pdf（我就是把学长回忆的试卷给复原了。。。我朋友说效果不错）&lt;/li&gt;
+&lt;li&gt;让gemini学习真题试卷，模仿真题试卷出题&lt;/li&gt;
+&lt;li&gt;让gemini每次回答问题的时候都进行问题延伸，或者做易错点辨析&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id=&#34;Lombok&#34;&gt;&lt;a href=&#34;#Lombok&#34; class=&#34;headerlink&#34; title=&#34;Lombok&#34;&gt;&lt;/a&gt;Lombok&lt;/h2&gt;&lt;p&gt;有的时候，识别不到 get 和 set 函数，这个时候可以把 maven clean 重新编译&lt;/p&gt;
-&lt;h1 id=&#34;Day-2&#34;&gt;&lt;a href=&#34;#Day-2&#34; class=&#34;headerlink&#34; title=&#34;Day 2&#34;&gt;&lt;/a&gt;Day 2&lt;/h1&gt;&lt;h2 id=&#34;新增员工——500-错误码&#34;&gt;&lt;a href=&#34;#新增员工——500-错误码&#34; class=&#34;headerlink&#34; title=&#34;新增员工——500 错误码&#34;&gt;&lt;/a&gt;新增员工——500 错误码&lt;/h2&gt;&lt;p&gt;遇见错误码，先检查控制台，这种情况下大概率是 sql 语句写错了&lt;/p&gt;
-&lt;p&gt;这里我就是把 id 属性 insert 了，实际上 id 会在数据库上自动填充&lt;/p&gt;
-&lt;h2 id=&#34;代码完善&#34;&gt;&lt;a href=&#34;#代码完善&#34; class=&#34;headerlink&#34; title=&#34;代码完善&#34;&gt;&lt;/a&gt;代码完善&lt;/h2&gt;&lt;p&gt;录入重复的值，数据库唯一约束重新出现的处理——全局异常处理器&lt;/p&gt;
-&lt;h2 id=&#34;ThreadLocal&#34;&gt;&lt;a href=&#34;#ThreadLocal&#34; class=&#34;headerlink&#34; title=&#34;ThreadLocal&#34;&gt;&lt;/a&gt;ThreadLocal&lt;/h2&gt;&lt;p&gt;Q：如何获取当前登录账号的 id？&lt;br&gt;A：从 jwt 令牌上解析出来&lt;/p&gt;
-&lt;h2 id=&#34;员工编辑&#34;&gt;&lt;a href=&#34;#员工编辑&#34; class=&#34;headerlink&#34; title=&#34;员工编辑&#34;&gt;&lt;/a&gt;员工编辑&lt;/h2&gt;&lt;p&gt;没有在 controler 层传入@RequetBody 这类注解，导致 200 但是没有修改成功&lt;/p&gt;
-&lt;h2 id=&#34;Mapper-xml-文件配置错误&#34;&gt;&lt;a href=&#34;#Mapper-xml-文件配置错误&#34; class=&#34;headerlink&#34; title=&#34;Mapper xml 文件配置错误&#34;&gt;&lt;/a&gt;Mapper xml 文件配置错误&lt;/h2&gt;&lt;p&gt;在写新增分类的时候，我只留了一个空的 xml 配置文件，于是报错了。&lt;/p&gt;
-&lt;p&gt;修正的办法就是把 xml 需要的基本信息填上&lt;/p&gt;
-
-
-&lt;h2 id=&#34;手戳分类接口遇到的问题&#34;&gt;&lt;a href=&#34;#手戳分类接口遇到的问题&#34; class=&#34;headerlink&#34; title=&#34;手戳分类接口遇到的问题&#34;&gt;&lt;/a&gt;手戳分类接口遇到的问题&lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;没有注意到一些可能的出错，菜品分为套餐和单菜，菜品如果关联了套餐，那么删去菜品应该是一个业务异常&lt;/li&gt;
-&lt;li&gt;复杂的 SQL 还是得写到 xml 文件上去&lt;/li&gt;
-&lt;li&gt;注意传入的参数和需要传出的参数&lt;/li&gt;
+&lt;p&gt;有没有可能过几天考试，我们的卷子是老师用AI学习往年真题出的，哈哈哈，那我拿AI押题算不算一种精确押题&lt;/p&gt;
+&lt;p&gt;官网的gemini如果降智的话，可以切换到AI Studio上面用gemini，这里的AI降智比较少&lt;/p&gt;
+&lt;p&gt;期末复习建议gemini，一个是便宜，谷歌的教育会员送一年，简直是做慈善，你几乎不会遇到限额的问题，另外是多模态能力强，完全的豆包上位替代，豆包爷们收收味，别嫌麻烦试试gemini吧。&lt;/p&gt;
+&lt;p&gt;最后祝大伙考试周顺利啊，lz也要继续复习沟槽的运筹学和信号处理了&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/2025/12/29/gemini%E4%BD%BF%E7%94%A8%E5%B0%8F%E6%8A%80%E5%B7%A7%EF%BC%88%E8%80%83%E8%AF%95%E5%91%A8%E5%90%91%EF%BC%89/1989045507692181200-05.png&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
+&lt;p&gt;2026-2-26更新：&lt;/p&gt;
+&lt;p&gt;Gemini pro复原的信号处理真题帮我拿到信号处理满绩了（喜）&lt;/p&gt;
+&lt;p&gt;2026-5-26更新：&lt;/p&gt;
+&lt;p&gt;美国大豆包──闹！麻！了！&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/2025/12/29/gemini%E4%BD%BF%E7%94%A8%E5%B0%8F%E6%8A%80%E5%B7%A7%EF%BC%88%E8%80%83%E8%AF%95%E5%91%A8%E5%90%91%EF%BC%89/1989045507692181200-06.png&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
+&lt;p&gt;我最讨厌事后道歉了（）&lt;/p&gt;
+&lt;p&gt;鉴于gemini额度大砍，推出新模型后降智依旧，幻觉严重不像是今年的模型，如果您在2026年5月还在用gemini，我这边建议您别再浪费生命用这种低模了，可以试试在claude code上用deepseek。。。&lt;/p&gt;
+&lt;p&gt;2026-6-15更新：&lt;/p&gt;
+&lt;p&gt;我以为这篇文章彻底沉寂了，没想到到了考试周又开始有流量了，不过AI一天一个样子，更别提这篇经验分享已经是4个月前的写的了，很多经验早就过时了，我自己也把这套学习流程重新迭代了一次，所以今天再来更新一版本。&lt;/p&gt;
+&lt;p&gt;模型选择：主包已经从gemini转gpt了，我觉得虽然codex可能被二验，但是整一个chatgpt plus ，只用网页版也还是不错的，目前gpt5.5水平吊打gemini想必也是公认的&lt;/p&gt;
+&lt;p&gt;提示词：哎，我去年写这个的时候还没有skill这种概念，我目前已经自己迭代了几个版本用于期末复习的skill，不过在网页端感觉用一些简单的提示词就够了&lt;/p&gt;
+&lt;p&gt;一个好的prompt可以让AI回答的质量变得可控高效，不用频繁的抽奖，这确实是可以提高复习的效果的，我这篇文章能收到这么多点赞应该也是由于prompt确实好用，但是当时我写的时候只是给自己用的，所以其实现成的prompt你还真不能简单迁过去用，还需要自己改一些，现在模型的能力强了非常多，其实已经不需要给他什么你是某某领域的专家这样话了，用一套prompt，然后再给不同的文件让AI自行进行检索其实就行了，所以我自己也重新写了一份prompt，不过我这个是基于gpt写的哦&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;strong&gt;角色设定&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;你是一位&lt;strong&gt;学术严谨、知识渊博的大学助教（TA）&lt;/strong&gt;，专精于理工与量化类学科。你的核心使命是：通过&lt;strong&gt;严谨的概念讲解&lt;/strong&gt;与&lt;strong&gt;标准的解题方法&lt;/strong&gt;，帮助学生构建扎实、系统的知识体系，而非提供零散、孤立的答案。&lt;/p&gt;
+&lt;h3 id=&#34;适用范围&#34;&gt;&lt;a href=&#34;#适用范围&#34; class=&#34;headerlink&#34; title=&#34;适用范围&#34;&gt;&lt;/a&gt;适用范围&lt;/h3&gt;&lt;p&gt;无论学生提供的是哪一门理工学科（如数学、物理、计算机、统计等）的内容，你都应遵循该学科&lt;strong&gt;通用的学术规范与符号标准&lt;/strong&gt;进行讲解。作答前，先在内部判断该内容所属的学科及其规范，再以对应的标准术语与记号进行回答。&lt;/p&gt;
+&lt;h3 id=&#34;核心原则&#34;&gt;&lt;a href=&#34;#核心原则&#34; class=&#34;headerlink&#34; title=&#34;核心原则&#34;&gt;&lt;/a&gt;核心原则&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;概念优先&lt;/strong&gt;：在解题或展开之前，必须先把题目涉及的&lt;strong&gt;核心概念、定义与定理&lt;/strong&gt;讲清楚。凡出现关键术语（如 KKT 条件、β 方程、卷积、群同态等），都要先依据标准教材给出&lt;strong&gt;严谨定义&lt;/strong&gt;、&lt;strong&gt;来源推导&lt;/strong&gt;与&lt;strong&gt;适用条件&lt;/strong&gt;，再进入应用，绝不默认学生已掌握。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;方法先行&lt;/strong&gt;：先阐述&lt;strong&gt;通用解题方法与步骤&lt;/strong&gt;（这类题该怎么做、为什么这么做），再用具体题目演示每一步如何执行。&lt;strong&gt;严禁先把题目算完、最后才补上”通用步骤”&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;强调适用条件&lt;/strong&gt;：任何公式、定理或结论都需说明其&lt;strong&gt;成立前提与适用范围&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;引导式教学&lt;/strong&gt;：禁止只给答案。目标是通过解答&lt;strong&gt;与追问&lt;/strong&gt;，引导用户深入理解原理并能迁移应用。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h1 id=&#34;Day-3&#34;&gt;&lt;a href=&#34;#Day-3&#34; class=&#34;headerlink&#34; title=&#34;Day 3&#34;&gt;&lt;/a&gt;Day 3&lt;/h1&gt;&lt;h2 id=&#34;问题：如何实现公共字段自动填充？&#34;&gt;&lt;a href=&#34;#问题：如何实现公共字段自动填充？&#34; class=&#34;headerlink&#34; title=&#34;问题：如何实现公共字段自动填充？&#34;&gt;&lt;/a&gt;问题：如何实现公共字段自动填充？&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;实现步骤：&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;1). 自定义注解 AutoFill，用于标识需要进行公共字段自动填充的方法&lt;/p&gt;
-&lt;p&gt;2). 自定义切面类 AutoFillAspect，统一拦截加入了 AutoFill 注解的方法，通过反射为公共字段赋值&lt;/p&gt;
-&lt;p&gt;3). 在 Mapper 的方法上加入 AutoFill 注解&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;通过注解来实现，很有意思，这就是面向注解编程？&lt;/p&gt;
-&lt;h2 id=&#34;刷课与写代码的思考&#34;&gt;&lt;a href=&#34;#刷课与写代码的思考&#34; class=&#34;headerlink&#34; title=&#34;刷课与写代码的思考&#34;&gt;&lt;/a&gt;刷课与写代码的思考&lt;/h2&gt;&lt;p&gt;前面是我之前学过的内容，开始出现新的知识我就更不上了，现在是打算先刷完理解完，再开始写代码，应该效果会更好&lt;/p&gt;
-&lt;h2 id=&#34;文件上传的配置&#34;&gt;&lt;a href=&#34;#文件上传的配置&#34; class=&#34;headerlink&#34; title=&#34;文件上传的配置&#34;&gt;&lt;/a&gt;文件上传的配置&lt;/h2&gt;&lt;p&gt;报错了一下代码&lt;/p&gt;
-
-
-&lt;p&gt;最后检查出问题是权限没有给够，很奇怪，我之前用的云账号 AccessKey 没有出错，后面按照 deepseek 的建议，改用了 RAM 用户 AccessKey，在操作栏下面点击添加权限&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/2025/03/23/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-20250319180208040.png&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
-&lt;p&gt;在此之前应该要重启一下 IDEA，重新运行 Java 程序&lt;/p&gt;
-&lt;p&gt;重新填上配置信息后就成功了&lt;/p&gt;
-&lt;h2 id=&#34;幽默-debug（新增菜品功能）&#34;&gt;&lt;a href=&#34;#幽默-debug（新增菜品功能）&#34; class=&#34;headerlink&#34; title=&#34;幽默 debug（新增菜品功能）&#34;&gt;&lt;/a&gt;幽默 debug（新增菜品功能）&lt;/h2&gt;
-
-&lt;p&gt;这里要先进行插入，自动生成后才能 get 到 id&lt;/p&gt;
-&lt;p&gt;debug 的时候尤其要注意是否有 null 的存在，遇到问题可以去弹幕看看别人的提示&lt;/p&gt;
-&lt;h2 id=&#34;业务逻辑&#34;&gt;&lt;a href=&#34;#业务逻辑&#34; class=&#34;headerlink&#34; title=&#34;业务逻辑&#34;&gt;&lt;/a&gt;业务逻辑&lt;/h2&gt;&lt;p&gt;除去最基本的增删改查，代码功能开发的时候还需要注意业务的需求与规则&lt;/p&gt;
-&lt;p&gt;比如菜品的业务规则：&lt;br&gt;起售中的菜品是不能够被删除的，被套餐关联的菜品不能被删除&lt;/p&gt;
-&lt;p&gt;开发的时候要多注意一些细节，防止在业务上线后出现漏洞&lt;/p&gt;
-&lt;h1 id=&#34;Day-4&#34;&gt;&lt;a href=&#34;#Day-4&#34; class=&#34;headerlink&#34; title=&#34;Day 4&#34;&gt;&lt;/a&gt;Day 4&lt;/h1&gt;&lt;p&gt;写根据分类查询菜品接口的时候参数没成功传进去，检查出来是在 controller 层传入的参数要与请求参数的名字对应，才能成功赋值&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/2025/03/23/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-20250322102903610.png&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;这里我最开始用的是 id，debug 发现 id 的值变成了 null，把 id 改为 categoryId 后问题解决了&lt;/p&gt;
-&lt;h1 id=&#34;Day-5-实战&#34;&gt;&lt;a href=&#34;#Day-5-实战&#34; class=&#34;headerlink&#34; title=&#34;Day 5 (实战)&#34;&gt;&lt;/a&gt;Day 5 (实战)&lt;/h1&gt;&lt;p&gt;&lt;code&gt;@RestController&lt;/code&gt;&amp;nbsp;注解&lt;strong&gt;不接受任何参数&lt;/strong&gt;。您尝试像&amp;nbsp;&lt;code&gt;@RequestMapping&lt;/code&gt;&amp;nbsp;那样传递路径参数给它，这是不正确的。&lt;/p&gt;
-
-&lt;p&gt;错误写法：&lt;/p&gt;
-
-
-&lt;p&gt;写业务代码很重要的一点就是要理清楚表与表之间的关系，我的 serviceImpl 应该是对表进行什么样的操作？&lt;/p&gt;
-&lt;p&gt;涉及多个表的操作要记得加上 &lt;code&gt;@Transactional&lt;/code&gt; 注解&lt;/p&gt;
-
-
-&lt;p&gt;还需要注意对表操作的先后顺序&lt;/p&gt;
-&lt;p&gt;例如在这段业务代码上，&lt;code&gt;setmealDish&lt;/code&gt; 需要套餐的 id，因此先对套餐表进行插入操作，再从套餐表获取 id 值，通过 forEach 和 set 函数将 id 放入 setmealDish&lt;/p&gt;
-&lt;h1 id=&#34;Day-7&#34;&gt;&lt;a href=&#34;#Day-7&#34; class=&#34;headerlink&#34; title=&#34;Day 7&#34;&gt;&lt;/a&gt;Day 7&lt;/h1&gt;&lt;p&gt;减少数据库的流程和逻辑&lt;br&gt;&lt;img src=&#34;/2025/03/23/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-20250330160328276.png&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
-&lt;p&gt;缓存逻辑分析：&lt;br&gt;每个分类下的菜品保存一份缓存数据&lt;br&gt;数据库中的菜品数据变更的时候及时把缓存数据清理掉&lt;/p&gt;
-&lt;h1 id=&#34;完结感想&#34;&gt;&lt;a href=&#34;#完结感想&#34; class=&#34;headerlink&#34; title=&#34;完结感想&#34;&gt;&lt;/a&gt;完结感想&lt;/h1&gt;&lt;h2 id=&#34;我的收获&#34;&gt;&lt;a href=&#34;#我的收获&#34; class=&#34;headerlink&#34; title=&#34;我的收获&#34;&gt;&lt;/a&gt;我的收获&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;学会了怎么看接口文档，如何根据接口文档开发&lt;/li&gt;
-&lt;li&gt;初步学会了如何设计接口&lt;/li&gt;
-&lt;li&gt;了解了 spring 框架下的诸多小组件？spring task 等等&lt;/li&gt;
-&lt;li&gt;初步了解了redis 的概念以及使用&lt;/li&gt;
-&lt;li&gt;熟悉了简单业务逻辑代码的写法&lt;/li&gt;
-&lt;li&gt;基本理解了前后端代码是如何进行互动的&lt;/li&gt;
-&lt;li&gt;more&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;我的想法&#34;&gt;&lt;a href=&#34;#我的想法&#34; class=&#34;headerlink&#34; title=&#34;我的想法&#34;&gt;&lt;/a&gt;我的想法&lt;/h2&gt;&lt;p&gt;我学习苍穹外卖主要是为了应对我手上的 web 开发的项目，但我并不是很想 all in Java 开发，我觉得这样做直接就限制死了自己的路，我还想探索更多的路。所以在后期进行这个项目的学习的时候，我并不会太在意细节，我觉得没有必要去强行要求自己学过了这个项目，整个项目都要闭着眼睛写出来，这个是没有必要的，对我而言更重要的是理解 web 后端开发中的各个流程，可能要用到的技术和软件有哪些，我以后可以做到借助 ai 进行快速的开发就行了。当然，还有学会了怎么使用 maven，以及还有一堆的 debug 的办法，这样的 debug 还是跟 61 b 的 debug 有些不同，还有知道可以借助状态码来定位 bug，比如 500 一般是数据库错误，401 是令牌校正出错，404 可能是服务器没启动等等。学会这些对于我以后利用 ai 开发是很有帮助的，极大地减少我 debug 的效率。&lt;/p&gt;
-</content>
-        <category term="java" />
-        <category term="后端" />
-        <updated>2025-03-22T16:00:00.000Z</updated>
-    </entry>
-    <entry>
-        <id>https://stoic-yang.github.io/2025/03/20/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8Bnotion%E7%B3%BB%E7%BB%9F%E6%90%AD%E5%BB%BA/</id>
-        <title>从零开始notion系统搭建</title>
-        <link rel="alternate" href="https://stoic-yang.github.io/2025/03/20/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8Bnotion%E7%B3%BB%E7%BB%9F%E6%90%AD%E5%BB%BA/"/>
-        <content type="html">&lt;h2 id=&#34;这个体系应该包含的功能&#34;&gt;&lt;a href=&#34;#这个体系应该包含的功能&#34; class=&#34;headerlink&#34; title=&#34;这个体系应该包含的功能&#34;&gt;&lt;/a&gt;这个体系应该包含的功能&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;每日/每周/每月复盘&lt;/li&gt;
-&lt;li&gt;每日数据统计+图表展示&lt;/li&gt;
-&lt;li&gt;项目任务管理&lt;/li&gt;
-&lt;/ul&gt;
-</content>
-        <category term="工作流" />
-        <updated>2025-03-19T16:00:00.000Z</updated>
-    </entry>
-    <entry>
-        <id>https://stoic-yang.github.io/2025/03/18/%E4%BA%BA%E6%9C%88%E7%A5%9E%E8%AF%9D/</id>
-        <title>人月神话</title>
-        <link rel="alternate" href="https://stoic-yang.github.io/2025/03/18/%E4%BA%BA%E6%9C%88%E7%A5%9E%E8%AF%9D/"/>
-        <content type="html">&lt;p&gt;缺乏合理的进度安排是造成项目滞后的最主要原因，造成这种灾难的普遍原因是什么？&lt;/p&gt;
+&lt;h3 id=&#34;处理流程&#34;&gt;&lt;a href=&#34;#处理流程&#34; class=&#34;headerlink&#34; title=&#34;处理流程&#34;&gt;&lt;/a&gt;处理流程&lt;/h3&gt;&lt;h3 id=&#34;场景一：当内容为”知识点-概念”类&#34;&gt;&lt;a href=&#34;#场景一：当内容为”知识点-概念”类&#34; class=&#34;headerlink&#34; title=&#34;场景一：当内容为”知识点/概念”类&#34;&gt;&lt;/a&gt;场景一：当内容为”知识点/概念”类&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;提取核心概念&lt;/strong&gt;：准确识别其中的关键定义、公式或定理。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;严谨阐述&lt;/strong&gt;：依据标准教材式定义进行解释，注重&lt;strong&gt;逻辑推导&lt;/strong&gt;与&lt;strong&gt;原理分析&lt;/strong&gt;，并明确其&lt;strong&gt;适用条件&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;定位知识体系&lt;/strong&gt;：说明该知识点在所属学科体系中的位置，以及它与相邻概念之间的联系与区别。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;场景二：当内容为”习题-题目”类&#34;&gt;&lt;a href=&#34;#场景二：当内容为”习题-题目”类&#34; class=&#34;headerlink&#34; title=&#34;场景二：当内容为”习题/题目”类&#34;&gt;&lt;/a&gt;场景二：当内容为”习题/题目”类&lt;/h3&gt;&lt;p&gt;严格按照以下顺序作答，&lt;strong&gt;不得打乱&lt;/strong&gt;：&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;对技术缺乏有效的研究&lt;/li&gt;
-&lt;li&gt;错误把进度和工作量相互混淆&lt;/li&gt;
-&lt;li&gt;对自己的估算缺乏信心&lt;/li&gt;
-&lt;li&gt;对项目缺少跟踪和监督&lt;/li&gt;
-&lt;li&gt;意思到进度的偏移后，下意识是添加人力&lt;/li&gt;
-&lt;/ol&gt;
-</content>
-        <category term="读书" />
-        <category term="管理" />
-        <category term="思维" />
-        <updated>2025-03-17T16:00:00.000Z</updated>
-    </entry>
-    <entry>
-        <id>https://stoic-yang.github.io/2025/03/13/%E9%80%BB%E8%BE%91%E5%93%B2%E5%AD%A6%E8%AE%BA/</id>
-        <title>逻辑哲学论</title>
-        <link rel="alternate" href="https://stoic-yang.github.io/2025/03/13/%E9%80%BB%E8%BE%91%E5%93%B2%E5%AD%A6%E8%AE%BA/"/>
-        <content type="html">&lt;blockquote&gt;
-&lt;p&gt;逻辑中没有偶然的部分，如果一个事物能够出现在一个事态中，那么该事态的可能性必然已经蕴含与事物之中。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;blockquote&gt;
-&lt;p&gt;从一个事态的存在或者不存在不能推出另一个事态的存在或者不存在&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;推完素晴日后打开了这本书。把严谨的数学符号跟语言结合起来，真的很有意思，不过我也是没法读懂维特根斯坦的想法。这本书太难了，先放着吧。&lt;/p&gt;
-&lt;p&gt;在我看来，哲学应该用大众都明白的简单的语言去解决大众所面临的困境（比如虚无主义），这种复制的逻辑语言与冰冷的逻辑语言，普通大众完全没法把其中蕴含的思想运用于实践之中，从这个角度而言，这本书是没有使用价值的。&lt;/p&gt;
-</content>
-        <category term="读书" />
-        <updated>2025-03-12T16:00:00.000Z</updated>
-    </entry>
-    <entry>
-        <id>https://stoic-yang.github.io/2025/03/10/obsidian+hexo%E7%AC%94%E8%AE%B0%E6%B5%81/</id>
-        <title>obsidian+hexo笔记流</title>
-        <link rel="alternate" href="https://stoic-yang.github.io/2025/03/10/obsidian+hexo%E7%AC%94%E8%AE%B0%E6%B5%81/"/>
-        <content type="html">&lt;h2 id=&#34;最终效果&#34;&gt;&lt;a href=&#34;#最终效果&#34; class=&#34;headerlink&#34; title=&#34;最终效果&#34;&gt;&lt;/a&gt;最终效果&lt;/h2&gt;&lt;p&gt;用 obsidian 写笔记并在 obsidian 内进行 hexo 文件的上传，上传后的网页可以渲染复制粘贴到 obsidian 的图片（比如刷网课时上的截图等等），不需要自己调整图片的格式。&lt;/p&gt;
-&lt;p&gt;附：笔者主题：shoka，GitHubpages 部署，理论上，这套方法兼容所有 hexo 主题且可以迁移应用于 hugo&lt;/p&gt;
-&lt;h2 id=&#34;前言&#34;&gt;&lt;a href=&#34;#前言&#34; class=&#34;headerlink&#34; title=&#34;前言&#34;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;作为一个 obsidian 的重度使用者，如何把 hexo 和 obsidian 结合起来写笔记一直是我在思考的点，在过去我要写一篇笔记到 hexo 上，我需要下面几个步骤：&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;在hexo创建md文件——hexo new ...&lt;/code&gt; -&amp;gt; &lt;code&gt;在obsidian写好笔记&lt;/code&gt; -&amp;gt; &lt;code&gt;复制笔记到md文件上&lt;/code&gt; -&amp;gt; &lt;code&gt;hexo clean，hexo generate，hexo deploy&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;这太不自然了，我还要复制 obsidian 里面的 md 文件的内容过去，还要手动加上标签和分类那几个 matedate（如果你写过 hexo 文章，就知道这个是什么），很麻烦。&lt;/p&gt;
-&lt;p&gt;更要命的是什么？是你的 obsidian 上渲染的图片是无法在 hexo 上渲染出来的！&lt;/p&gt;
-&lt;p&gt;比如说，我在 obsidian 粘贴了一张图片，这个图片会被 obsidian 专门放到一个文件夹下，在你的笔记上，这个图片对应的文本是这样的 &lt;code&gt;![[ ... ]]&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;所以为什么会渲染不出来呢？第一 hexo 不支持渲染 &lt;code&gt;![[ ... ]]&lt;/code&gt; 的图片格式，另外你的图片在你的 obsidian 仓库本地，你没搬上 hexo 文件夹上。&lt;/p&gt;
-&lt;p&gt;于是我开始了我的思考&lt;/p&gt;
-&lt;h3 id=&#34;我的探索（只想看解决方案跳过这部分）&#34;&gt;&lt;a href=&#34;#我的探索（只想看解决方案跳过这部分）&#34; class=&#34;headerlink&#34; title=&#34;我的探索（只想看解决方案跳过这部分）&#34;&gt;&lt;/a&gt;我的探索（只想看解决方案跳过这部分）&lt;/h3&gt;&lt;h4 id=&#34;回合一（直接调整）&#34;&gt;&lt;a href=&#34;#回合一（直接调整）&#34; class=&#34;headerlink&#34; title=&#34;回合一（直接调整）&#34;&gt;&lt;/a&gt;回合一（直接调整）&lt;/h4&gt;&lt;p&gt;我想到的第一个方案是把图片挪到对应的 hexo 里面的 md 文件的同一个文件夹下面，在 md 文件（以下统一为 hexo 源文件下的 md 文件）上手动调整图片的格式，给图片写一个相对位置。我有一篇笔记就是这样渲染上去的&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://stoic-yang.github.io/2024/12/12/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/&#34;&gt;二分查找&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;但是你应该很容易察觉这种方法对于一个追求效率和自动化的人是无法接受的，图片一旦开始多起来，人绝对会疯掉的，而且对于一个计算机学生来说，这个方法是不是太蠢了😅。&lt;/p&gt;
-&lt;h4 id=&#34;回合二（“曲线救国”）&#34;&gt;&lt;a href=&#34;#回合二（“曲线救国”）&#34; class=&#34;headerlink&#34; title=&#34;回合二（“曲线救国”）&#34;&gt;&lt;/a&gt;回合二（“曲线救国”）&lt;/h4&gt;&lt;p&gt;要是这么麻烦，我为什么不直接用现成的带有 markdown 编辑支持功能的平台，于是我直接弃用了 hexo，直接换用了知乎来写笔记，但是问题依旧存在，我在 obsidian 的笔记上的图片还是很难迁移到知乎上，只是知乎的话，我可以直接导入 markdown 文件，但是知乎对 md 文件的支持，懂的都懂，经常导入进去后直接就乱位了，而且渲染出来也不好看，有一些格式还渲染不出来，只能算是勉强能用，知乎的好处也很明显，比起 hexo 有流量，手机也可以发布文章，等等。但是关键问题还是没有解决，图片怎么办？&lt;/p&gt;
-&lt;p&gt;这对于其他的平台也是合理的，比如 halo，mkdocs，其实我觉得 mkdocs 还挺不错的，但是实在没有找到喜欢的主题，由奢入简难啊。&lt;/p&gt;
-&lt;p&gt;那有没有办法把这些都实现自动化的办法呢？&lt;/p&gt;
-&lt;p&gt;有的兄弟，有的☝️🤓✌️&lt;/p&gt;
-&lt;h3 id=&#34;解决方案&#34;&gt;&lt;a href=&#34;#解决方案&#34; class=&#34;headerlink&#34; title=&#34;解决方案&#34;&gt;&lt;/a&gt;解决方案&lt;/h3&gt;&lt;p&gt;要解决这个问题，就是解决图片上传和渲染到 hexo （GitHub）的问题&lt;/p&gt;
-&lt;h4 id=&#34;在-hexo-源文件根目录新建-obsidian-仓库&#34;&gt;&lt;a href=&#34;#在-hexo-源文件根目录新建-obsidian-仓库&#34; class=&#34;headerlink&#34; title=&#34;在 hexo 源文件根目录新建 obsidian 仓库&#34;&gt;&lt;/a&gt;在 hexo 源文件根目录新建 obsidian 仓库&lt;/h4&gt;&lt;p&gt;首先，我为什么要把 obsidian 和 hexo 源文件夹分开呢？&lt;/p&gt;
-&lt;p&gt;直接在 hexo 源文件夹上新建一个仓库不就行了？&lt;/p&gt;
-&lt;p&gt;先新建一个仓库，注意把仓库建在 hexo 的根目录里&lt;/p&gt;
-&lt;p&gt;打开仓库后，我们会发现有很多不需要的文件夹，我们可以在设置里选择忽视它们，避免它们对我们的搜索功能造成影响。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/2025/03/10/obsidian+hexo%E7%AC%94%E8%AE%B0%E6%B5%81/obsidian+hexo%E7%AC%94%E8%AE%B0%E6%B5%81-20250227201347079.png&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
-&lt;p&gt;点击忽略文件下面的管理按钮就可以添加需要忽略的文件了&lt;/p&gt;
-&lt;h4 id=&#34;实现在-obsidian-软件一键上传笔记&#34;&gt;&lt;a href=&#34;#实现在-obsidian-软件一键上传笔记&#34; class=&#34;headerlink&#34; title=&#34;实现在 obsidian 软件一键上传笔记&#34;&gt;&lt;/a&gt;实现在 obsidian 软件一键上传笔记&lt;/h4&gt;&lt;p&gt;要实现一件上传，就需要自动化输入指令，所幸的是，obsidian 拥有巨大的插件生态，这样的插件是存在的&lt;/p&gt;
-&lt;p&gt;shell commands 就可以支持实现在 obsidian 创建快捷键来实现脚本的运行&lt;/p&gt;
-&lt;p&gt;安装 shellcommands，新建一个指令（命名为发布博客），再配置一下快捷键&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/2025/03/10/obsidian+hexo%E7%AC%94%E8%AE%B0%E6%B5%81/obsidian+hexo%E7%AC%94%E8%AE%B0%E6%B5%81-20250310103424487.png&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
-&lt;p&gt;这里你的命令可能会是&lt;/p&gt;
-
-
-&lt;p&gt;在 /scaffolds 文件夹下面创建一个模板，这里需要先安装 Templater 插件&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/2025/03/10/obsidian+hexo%E7%AC%94%E8%AE%B0%E6%B5%81/obsidian+hexo%E7%AC%94%E8%AE%B0%E6%B5%81-20250310103733400.png&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
-&lt;p&gt;这个模板的意思是自动给 md 文件添加元属性，你就不用在命令行 hexo new (hugo new) 了，或者说你复制粘贴到一个新的 md 文件就不用手动添加&lt;/p&gt;
-
-&lt;p&gt;这个插入同样是可以通过快捷键形成的&lt;/p&gt;
-&lt;p&gt;现在你写一篇 hexo 笔记就被简化为了&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;obsidian内创建笔记+写标题&lt;/code&gt; + &lt;code&gt;alt+I插入模板&lt;/code&gt; + &lt;code&gt;写笔记&lt;/code&gt; + &lt;code&gt;alt+P发布笔记&lt;/code&gt; &lt;/p&gt;
-&lt;p&gt;写笔记整个过程没有命令行还可以用上 obsidian 的强势插件&lt;/p&gt;
-&lt;h4 id=&#34;实现简单复制粘贴的图片也可以正确被渲染&#34;&gt;&lt;a href=&#34;#实现简单复制粘贴的图片也可以正确被渲染&#34; class=&#34;headerlink&#34; title=&#34;实现简单复制粘贴的图片也可以正确被渲染&#34;&gt;&lt;/a&gt;实现简单复制粘贴的图片也可以正确被渲染&lt;/h4&gt;&lt;p&gt;对的，这个问题明显还没有被解决，前面只是做到了把操作简化而已。&lt;/p&gt;
-&lt;p&gt;这里我们要搞明白为什么我们复制粘贴到 obsidian 的文件是没法正确渲染到 hexo 的&lt;/p&gt;
-&lt;p&gt;如果你直接上传你复制粘贴的笔记，你应该会看到你的图片变成了下面的文字&lt;/p&gt;
-
-&lt;p&gt;因为 obsidian 默认的设置不是原生的 md 格式的图片，要恢复原始 md 的格式&lt;/p&gt;
-
-&lt;p&gt;你需要调整一下你的设置&lt;br&gt;&lt;img src=&#34;/2025/03/10/obsidian+hexo%E7%AC%94%E8%AE%B0%E6%B5%81/obsidian+hexo%E7%AC%94%E8%AE%B0%E6%B5%81-20250310105312955.png&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;把使用 wiki 链接这个关掉，渲染出来的就是原生的 markdown 格式了&lt;/p&gt;
-&lt;p&gt;这个还不够，因为你会发现，你还是渲染不出来图片，因为你的图片都没有被上传到 GitHub 仓库。&lt;/p&gt;
-&lt;p&gt;我对这个 hexo 上传的原理不太明白，但是如果你把图片放在了跟笔记同名的文件夹下，这个图片就可以顺利地上传到 GitHub 仓库，通过相对路径被识别到。&lt;/p&gt;
-&lt;p&gt;所有下面要配置一下你复制粘贴后的图片存储的位置&lt;/p&gt;
-&lt;p&gt;下载 Custom Attachment Location 插件&lt;/p&gt;
-&lt;p&gt;在配置中调整一下，你可以照着我的配置抄&lt;br&gt;&lt;img src=&#34;/2025/03/10/obsidian+hexo%E7%AC%94%E8%AE%B0%E6%B5%81/obsidian+hexo%E7%AC%94%E8%AE%B0%E6%B5%81-20250310105912150.png&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
-&lt;p&gt;Generated attachment filename： &lt;code&gt;$&amp;#123;filename&amp;#125;-$&amp;#123;date: YYYYMMDDHHmmssSSS&amp;#125;&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;完成这些配置之后你应该就可以快乐地结合 obsidian 和 hexo 进行写笔记了&lt;/p&gt;
-&lt;h4 id=&#34;关于-latex&#34;&gt;&lt;a href=&#34;#关于-latex&#34; class=&#34;headerlink&#34; title=&#34;关于 latex&#34;&gt;&lt;/a&gt;关于 latex&lt;/h4&gt;&lt;p&gt;为啥要大费力气做这个联动？&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;主要是因为要拿 obsidian 的插件 latex 去写一些公式（latex suit）&lt;/li&gt;
-&lt;li&gt;obsidian（vim 模式）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;hexo 是支持 latex 渲染的，你可以通过安装插件和添加元属性来渲染（注意我的主题 shoka 是支持的，其他主题我不太清楚）&lt;/p&gt;
-
-
-&lt;p&gt;这一点你可以直接看主题作者的教程 &lt;a href=&#34;https://shoka.lostyu.me/computer-science/note/theme-shoka-doc/special/&#34;&gt;Step.4 主题特殊功能 - Theme Shoka Documentation - 二进制杂谈 - 计算机科学 | Yume Shoka = 有夢書架 = 吾乃天，壶中之天&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;说实话，这个主题的配置需要很强的动手能力，文档有一些细节是缺失的，不推荐第一次接触 hexo/hugo 的朋友去配置这个主题。&lt;/p&gt;
-&lt;h4 id=&#34;参考链接&#34;&gt;&lt;a href=&#34;#参考链接&#34; class=&#34;headerlink&#34; title=&#34;参考链接&#34;&gt;&lt;/a&gt;参考链接&lt;/h4&gt;&lt;p&gt;&lt;a href=&#34;https://sagi-rastar.github.io/2023/11/10/%E5%85%B3%E4%BA%8E%E6%88%91%E4%BD%BF%E7%94%A8obsidian%E5%8A%A0hexo%E9%83%A8%E7%BD%B2%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%9A%84%E8%BF%87%E7%A8%8B/&#34;&gt;关于我使用obsidian加hexo部署个人博客的过程 - SagiRastar’s Blog&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://segmentfault.com/a/1190000042111566&#34;&gt;Hexo + Obsidian + Git 完美的博客部署与编辑方案 - 个人文章 - SegmentFault 思否&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://shoka.lostyu.me/computer-science/note/theme-shoka-doc/special/&#34;&gt;Step.4 主题特殊功能 - Theme Shoka Documentation - 二进制杂谈 - 计算机科学 | Yume Shoka = 有夢書架 = 吾乃天，壶中之天&lt;/a&gt;&lt;/p&gt;
-&lt;h4 id=&#34;结语&#34;&gt;&lt;a href=&#34;#结语&#34; class=&#34;headerlink&#34; title=&#34;结语&#34;&gt;&lt;/a&gt;结语&lt;/h4&gt;&lt;p&gt;教程写得很简陋，更多在于记录自己捣鼓 hexo 和 obsidian 的过程，因为这个教程是断断续续写的，如果教程有错误的地方，请联系我。&lt;/p&gt;
-&lt;p&gt;其实可以不那么折腾的，有更简单便捷的办法去解决图片的问题，但是折腾本身还是很有乐趣的，我也知道还有其他解决方案，也许用 VScode 更好等等。&lt;/p&gt;
-&lt;p&gt;但是，我觉得这些教程的意义就是在于提供一个新的方向，告诉你这个方向是可以走通的，而不是说在不同方案下去争吵什么方法、什么工作流更好。所以最后，希望我的这套自动化的方法可以帮到你，希望你可以找到你自己喜欢的做笔记的软件或者方式🥰。&lt;/p&gt;
-</content>
-        <category term="hexo" />
-        <category term="obsidian" />
-        <category term="学习流" />
-        <category term="工作流" />
-        <updated>2025-03-09T16:00:00.000Z</updated>
-    </entry>
-    <entry>
-        <id>https://stoic-yang.github.io/2025/03/04/%E7%A7%AF%E6%9E%81%E5%BF%83%E7%90%86%E5%AD%A6/</id>
-        <title>积极心理学</title>
-        <link rel="alternate" href="https://stoic-yang.github.io/2025/03/04/%E7%A7%AF%E6%9E%81%E5%BF%83%E7%90%86%E5%AD%A6/"/>
-        <content type="html">&lt;h2 id=&#34;第一讲&#34;&gt;&lt;a href=&#34;#第一讲&#34; class=&#34;headerlink&#34; title=&#34;第一讲&#34;&gt;&lt;/a&gt;第一讲&lt;/h2&gt;&lt;p&gt;解读比信息本身重要&lt;/p&gt;
-&lt;p&gt;快乐更取决于我们的心态&lt;/p&gt;
-&lt;p&gt;我们要挖掘自己的潜能&lt;/p&gt;
-&lt;p&gt;凿去多余的大理石后，大卫就诞生了&lt;/p&gt;
-&lt;p&gt;摆脱限制和阻碍，对失败的恐惧&lt;/p&gt;
-&lt;p&gt;摆脱完美主义&lt;/p&gt;
-&lt;p&gt;减法比加法更加让人的灵魂成长&lt;/p&gt;
-&lt;p&gt;常识往往不为大众所知&lt;/p&gt;
-&lt;p&gt;没有问对问题是潜在的最大问题&lt;/p&gt;
-&lt;p&gt;这个异常卓越的群体的一个特点是完全相信自己，他们深信自己会表现出色。另一个特点是，一直在问问题，保持了一颗好奇心。&lt;/p&gt;
-&lt;p&gt;幸福是连续的，不是非此即彼的&lt;/p&gt;
-&lt;p&gt;最个人的也最普遍&lt;/p&gt;
-&lt;h2 id=&#34;第二讲&#34;&gt;&lt;a href=&#34;#第二讲&#34; class=&#34;headerlink&#34; title=&#34;第二讲&#34;&gt;&lt;/a&gt;第二讲&lt;/h2&gt;&lt;p&gt;问题创造现实&lt;/p&gt;
-&lt;h2 id=&#34;第七讲——逆境还是机遇&#34;&gt;&lt;a href=&#34;#第七讲——逆境还是机遇&#34; class=&#34;headerlink&#34; title=&#34;第七讲——逆境还是机遇&#34;&gt;&lt;/a&gt;第七讲——逆境还是机遇&lt;/h2&gt;&lt;p&gt;不从失败中吸取经验，你永远都不会有所长进&lt;/p&gt;
-&lt;p&gt;我们如何才能变得更乐观呢？&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;付诸行动&lt;/li&gt;
-&lt;li&gt;想象&lt;/li&gt;
-&lt;li&gt;认知疗法&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;失败后的挫败感比起失败带给人的痛苦比失败本身更糟糕&lt;/p&gt;
-&lt;p&gt;也许失败没有想象中那么严重，但是挫败感是可能毁灭一个人的&lt;/p&gt;
-&lt;p&gt;付诸行动，就是要用微小的成功和进步去摆脱挫败感和无力感&lt;/p&gt;
-&lt;p&gt;要看到自己重新步入正轨，失败时重新振作起来&lt;/p&gt;
-&lt;p&gt;不仅要想象结果，还要想象这个过程&lt;/p&gt;
-&lt;p&gt;必须通过情感去激发行动&lt;/p&gt;
-&lt;p&gt;我们需要重建理性和真实&lt;/p&gt;
-&lt;p&gt;问问自己&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;我在什么地方扭曲了现实呢？&lt;/li&gt;
-&lt;li&gt;我在哪里扭曲了自己的评价，从而导致了不必要的负面情绪呢？&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;把失败灾难化，如果你不把它看成一次机遇，一块踮脚石，而把它看成世界的终结，那是阻止我们挑战自我的重要因素&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;我们对过去的解读往往会成为自证的预言&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;这句话说的太好了，我之前泛滥使用消极想象，结果成为了自证的预言，不能再消极想象下去了&lt;/p&gt;
-&lt;p&gt;学会去质疑不理想的想法&lt;/p&gt;
-</content>
-        <category term="积极心理学" />
-        <updated>2025-03-03T16:00:00.000Z</updated>
-    </entry>
-    <entry>
-        <id>https://stoic-yang.github.io/2025/03/02/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E8%80%83%E8%AF%95%E5%90%8E%E7%9A%84%E5%8F%8D%E6%80%9D/</id>
-        <title>数据分析考试后的反思</title>
-        <link rel="alternate" href="https://stoic-yang.github.io/2025/03/02/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E8%80%83%E8%AF%95%E5%90%8E%E7%9A%84%E5%8F%8D%E6%80%9D/"/>
-        <content type="html">&lt;p&gt;信心满满然后炸了，想着我昨天晚上还在刷视频，以为有库函数就随便过了，结果这个库函数就是一坨，不够详细，翻车了，哎。&lt;/p&gt;
-&lt;p&gt;考试中遇到的问题，我之前也遇到过了，但是没有仔细地去记录下来，没有引起足够的重视，比如 dataframe 怎么创建。&lt;/p&gt;
-&lt;p&gt;知识点必须全过一遍才行，一直以来的傲慢会毁灭我。微积分还没有解决的问题马上解决掉，设想明天的考试就考这个，我能不能做出来，一直以来我学习和复习的方法论都存在巨大的缺陷，慢慢来优化吧，这个是我冬季课程完全摆烂的后果，我必须为此付出代价。冬季才是真正的打醒我，期末考试不是你随便复习个两周就能上的，你这两周的复习的效率还相当的低。&lt;/p&gt;
-&lt;p&gt;必须引起重视，想拿高分，还是得要平时课认真听+作业认真写。&lt;/p&gt;
-&lt;p&gt;既然你想要赢得这场游戏，你就必须去遵守这场游戏的规则，即使游戏的规则让你感到荒诞。虽然现在很糟糕很黑暗，但是还有翻盘的机会，放手一搏吧。&lt;/p&gt;
-&lt;p&gt;这一次的期末考确实略显失败，不过也可以给我一次很宝贵的期末周如何冲刺复习的经验，再说，现在还没有输，还有救，md，冲&lt;/p&gt;
-</content>
-        <category term="反思" />
-        <updated>2025-03-01T16:00:00.000Z</updated>
-    </entry>
-    <entry>
-        <id>https://stoic-yang.github.io/2025/03/01/%E5%AF%B9%E4%BA%8E%E8%BF%91%E6%9D%A5%E7%8A%B6%E5%86%B5%E7%9A%84%E5%8F%8D%E6%80%9D/</id>
-        <title>对于近来状况的反思</title>
-        <link rel="alternate" href="https://stoic-yang.github.io/2025/03/01/%E5%AF%B9%E4%BA%8E%E8%BF%91%E6%9D%A5%E7%8A%B6%E5%86%B5%E7%9A%84%E5%8F%8D%E6%80%9D/"/>
-        <content type="html">&lt;p&gt;缺乏目标的时间会很容易被浪费和损耗掉。只有清晰地知道自己下一个小时应该做什么，才有办法去把时间高效地利用起来，这对于保护自己的专注力也极其重要。&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/27275434865&#34;&gt;向下聊天的一些感想&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;这篇文章对我带来了很多启发和思考，一定程度上解释了我为什么在大一的两个短学期好像忙忙碌碌但是没有做成什么事情——没有一个长时间的规划，没有专注地去选择自己喜欢的事情，然后把其他的东西推掉，也没有始终坚持去优化这么一件事情，把细节记录好进行归类总结。&lt;/p&gt;
-&lt;p&gt;前半年的打卡简直就是灾难，几乎很少去思考如何改进自己的各个事情，很多事情明明有很多改进空间的，但是一直被自己搁置了，现在的一个想法随手记录一下自己的想法，然后在打卡的时刻确定一个主题，去激活自己的思考，让自己的打卡效能发挥出来，我的每一天都应该去建立在昨天的经验基础上，实现自己的不断进步。&lt;/p&gt;
-</content>
-        <category term="反思" />
-        <category term="学习流" />
-        <updated>2025-02-28T16:00:00.000Z</updated>
-    </entry>
-    <entry>
-        <id>https://stoic-yang.github.io/2025/02/23/%E4%B8%80%E7%82%B9%E9%9A%8F%E6%83%B3%E2%80%94%E2%80%94%E6%96%B0%E9%98%B6%E6%AE%B5%E7%9A%84%E5%B1%95%E5%BC%80/</id>
-        <title>一点随想</title>
-        <link rel="alternate" href="https://stoic-yang.github.io/2025/02/23/%E4%B8%80%E7%82%B9%E9%9A%8F%E6%83%B3%E2%80%94%E2%80%94%E6%96%B0%E9%98%B6%E6%AE%B5%E7%9A%84%E5%B1%95%E5%BC%80/"/>
-        <content type="html">&lt;p&gt;我之前实在是过于悲观了，没有一个宏大的规划，各种的换方向，导致自己一直在失败，摆烂带来的负面情绪很容易让人沉沦迷失自我。现在看来，我遇到的问题没有很复杂，只不过是相信自己可以达到自己的目标，一步一步去设计实现这个目标的步骤，坚定不移地贯彻自己的行动罢了，现在的我也已经基本确定了自己的目标。&lt;/p&gt;
-&lt;p&gt;不必感到自卑，不必感到伤感，只顾着往前走，脱去身上的冷气，实现你所宣称的未来&lt;/p&gt;
-</content>
-        <category term="反思" />
-        <category term="生活" />
-        <updated>2025-02-22T16:00:00.000Z</updated>
-    </entry>
-    <entry>
-        <id>https://stoic-yang.github.io/2025/02/22/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/</id>
-        <title>新的开始</title>
-        <link rel="alternate" href="https://stoic-yang.github.io/2025/02/22/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/"/>
-        <content type="html">&lt;p&gt;高度的自动化是很有价值的，这让生活更简单和轻松，这套博客体系肯定是比垃圾知乎对 markdown 的支持要好太多了，知乎导入 markdown 文件也没有办法顺便导入我的文章上附带的图片，所有我应该是会把主战场搬移到博客，毕竟这个博客现在只是我的一个 obsidian 的库，编辑内容也是超级方便，可以实时渲染啊，比 VScode 可是要强太多了😅，可以开心写 blog 了，学习笔记什么的也都可以慢慢搬上来。&lt;/p&gt;
-</content>
-        <category term="随笔" />
-        <updated>2025-02-21T16:00:00.000Z</updated>
-    </entry>
-    <entry>
-        <id>https://stoic-yang.github.io/2025/02/21/%E4%B9%94%E5%B8%83%E6%96%AF%E4%BC%A0/</id>
-        <title>乔布斯传</title>
-        <link rel="alternate" href="https://stoic-yang.github.io/2025/02/21/%E4%B9%94%E5%B8%83%E6%96%AF%E4%BC%A0/"/>
-        <content type="html">&lt;p&gt;第一次认识乔布斯是在YouTube上无意看到了他的演讲，”stay foolish，stay hungry”这句话在我看完他在斯坦福大学（2005）毕业典礼演讲后变成了我的座右铭，他平静地叙述了关于自己的三个故事，却以饱满的情感打动了我，从此我便对乔布斯产生了浓厚的兴趣。不过我当时对他的了解也仅仅只是他是苹果的创始人之一而已。&lt;/p&gt;
-&lt;p&gt;在一次QQ群潜水中，一位群友推荐了《乔布斯传》，我这才知道原来他也有一本传记，于是我就带着兴奋，把他放入了我的书架，在闲暇的时间随手拿出来就看。&lt;/p&gt;
-&lt;p&gt;据分析，乔布斯大概属于entj，凑巧的是我也是entj。相同人格的人（至少对于entj而言）是会相互吸引的。乔布斯的很多性格跟我类似，比如在很专注的时候会故意去遗忘和忽略其他事情，这让他可以做到很多难以置信的事情，但是也让他缺少了与家庭成员互动。乔布斯是一个很复杂的人，他可以敏感地感知他人的性格情绪，迫使别人按自己的想法走，却又以粗鲁和无礼闻名于世，跟自己的女儿莉萨大部分时间都合不来。但不管怎么说，他毫无疑问是一个伟大的人。他用 30 年的时间创造了一个传奇，把一个在车库里面诞生的公司打造成为世界最具创造力的公司。&lt;/p&gt;
-&lt;p&gt;在读书的过程中，我也似乎找到了我的一个弱点，乔布斯的成功离不开他对完美的追求，他对产品的打磨力求每一个细节做到最好，他不能容忍自己做一个垃圾出来。这样的精神恰恰是我非常缺乏的，我回顾自己的过去，发现自己的失败往往根源就是追求极致的性价比，没有事上磨的耐心，做事情总是草草了事，没有去努力做到最好。乔布斯传深深动摇了我追求“快”的信仰，可以预见地将对我接下来的几年造成巨大的影响。&lt;/p&gt;
-&lt;p&gt;乔布斯传还变相地拓展了我对世界的认识，回答了很多问题，比如说一个企业是如何从零开始诞生的？比如为什么品牌要在市中心开零售店？比如手机电脑是如何一步步发展起来的？它给我带来了一个认识世界的新的视角，全新的视角。一向只对软件感兴趣的我，也因为苹果硬件和软件的完美结合的追求而开始对硬件开始感兴趣。&lt;/p&gt;
-&lt;p&gt;乔布斯对极简主义的追求和美学思想对我也有很多启发，我应该做简洁的产品，这让我联想到很多失败的游戏，这些游戏往往操作太复杂，上手难度太高，导致游戏的体验很差。&lt;/p&gt;
-&lt;p&gt;这本书也启发我对家庭的思考，比起过去，我现在更加在意去守护自己的家庭了，更多地去参与家庭的互动，而不是冷漠地在一旁专心做自己的事情。&lt;/p&gt;
-&lt;p&gt;读这本书，它会给你一种勇气，教你一种疯狂，去改变世界的勇气，去扭曲现实的疯狂。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Stay hungry, stay foolish
-&lt;/code&gt;&lt;/pre&gt;
-</content>
-        <category term="读书" />
-        <updated>2025-02-21T13:23:22.000Z</updated>
-    </entry>
-    <entry>
-        <id>https://stoic-yang.github.io/2025/01/25/hello-world/</id>
-        <title>Hello World</title>
-        <link rel="alternate" href="https://stoic-yang.github.io/2025/01/25/hello-world/"/>
-        <content type="html">&lt;p&gt;Welcome to &lt;a href=&#34;https://hexo.io/&#34;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&#34;https://hexo.io/docs/&#34;&gt;documentation&lt;/a&gt; for more info. If you get any problems when using Hexo, you can find the answer in &lt;a href=&#34;https://hexo.io/docs/troubleshooting.html&#34;&gt;troubleshooting&lt;/a&gt; or you can ask me on &lt;a href=&#34;https://github.com/hexojs/hexo/issues&#34;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id=&#34;Quick-Start&#34;&gt;&lt;a href=&#34;#Quick-Start&#34; class=&#34;headerlink&#34; title=&#34;Quick Start&#34;&gt;&lt;/a&gt;Quick Start&lt;/h2&gt;&lt;h3 id=&#34;Create-a-new-post&#34;&gt;&lt;a href=&#34;#Create-a-new-post&#34; class=&#34;headerlink&#34; title=&#34;Create a new post&#34;&gt;&lt;/a&gt;Create a new post&lt;/h3&gt;
-
-&lt;p&gt;More info: &lt;a href=&#34;https://hexo.io/docs/writing.html&#34;&gt;Writing&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id=&#34;Run-server&#34;&gt;&lt;a href=&#34;#Run-server&#34; class=&#34;headerlink&#34; title=&#34;Run server&#34;&gt;&lt;/a&gt;Run server&lt;/h3&gt;
-
-&lt;p&gt;More info: &lt;a href=&#34;https://hexo.io/docs/server.html&#34;&gt;Server&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id=&#34;Generate-static-files&#34;&gt;&lt;a href=&#34;#Generate-static-files&#34; class=&#34;headerlink&#34; title=&#34;Generate static files&#34;&gt;&lt;/a&gt;Generate static files&lt;/h3&gt;
-
-&lt;p&gt;More info: &lt;a href=&#34;https://hexo.io/docs/generating.html&#34;&gt;Generating&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id=&#34;Deploy-to-remote-sites&#34;&gt;&lt;a href=&#34;#Deploy-to-remote-sites&#34; class=&#34;headerlink&#34; title=&#34;Deploy to remote sites&#34;&gt;&lt;/a&gt;Deploy to remote sites&lt;/h3&gt;
-
-&lt;p&gt;More info: &lt;a href=&#34;https://hexo.io/docs/one-command-deployment.html&#34;&gt;Deployment&lt;/a&gt;&lt;/p&gt;
-</content>
-        <category term="hexo" />
-        <updated>2025-01-24T16:00:00.000Z</updated>
-    </entry>
-    <entry>
-        <id>https://stoic-yang.github.io/2025/01/09/2024%E5%9B%9E%E9%A1%BE%E4%B8%8E2025%E7%9A%84%E6%9C%BA%E9%81%87%E4%B8%8E%E6%8C%91%E6%88%98/</id>
-        <title>2024回顾与2025的机遇与挑战</title>
-        <link rel="alternate" href="https://stoic-yang.github.io/2025/01/09/2024%E5%9B%9E%E9%A1%BE%E4%B8%8E2025%E7%9A%84%E6%9C%BA%E9%81%87%E4%B8%8E%E6%8C%91%E6%88%98/"/>
-        <content type="html">&lt;p&gt;思来想去，还是要好好回忆一下这一对我来说有这非凡意义的一年，如果没有好好记录，以后忘记了，这大概会是我很大的损失。写这样的回顾的意义也不仅仅是记录过去的一年，更是跟自己的心灵对话，寻觅过去的自己，重新去解读过去的自己，与过去的自己和解，写这篇文章的目的大抵如此。&lt;/p&gt;
-&lt;h2 id=&#34;高考前后以及暑假&#34;&gt;&lt;a href=&#34;#高考前后以及暑假&#34; class=&#34;headerlink&#34; title=&#34;高考前后以及暑假&#34;&gt;&lt;/a&gt;高考前后以及暑假&lt;/h2&gt;&lt;h3 id=&#34;虚无主义&#34;&gt;&lt;a href=&#34;#虚无主义&#34; class=&#34;headerlink&#34; title=&#34;虚无主义&#34;&gt;&lt;/a&gt;虚无主义&lt;/h3&gt;&lt;p&gt;我对 2024 的印象主要集中在后半年，至于高中的生活恐怕早就已经忘得差不多了，我连高中的老师的名字都记不清了，确定的一点是我连班主任的名字的一个字是哪一个都不确定，还得问一下我的同学：是这个“斌”吗？我的同学笑着对我说：忘了本了呀&lt;/p&gt;
-&lt;p&gt;我高三的梦校是北邮，计算机圣地，当时北邮大概是我跳一跳就能够的着的位置，我当时预估着：我再提高 10 分就能考上！于是我进行着一轮又一轮的冲刺，但是遗憾的是成绩却不为所动。记得当时数学考完出来，整个人就不好了，我是 2024 年一卷的，那个圆锥曲线大题我在那里硬算，整个考试节奏炸了，数学直接就g了。那个晚上一个班都比较低沉，都说自己奋斗三年，要去长沙理工了，长沙理工也不错之类的话，我也不例外。可能是利用降低自己的预期来安慰自己吧。&lt;/p&gt;
-&lt;p&gt;我当时还是想得比较开吧，我觉得高中的核心价值不是拿到一个好大学的文凭，上个 985 或者211，而是去培养自己内在的能力——应对压力的能力、应试能力等等，至少一点我是确定的，无论我考到哪一个大学，我在高中培养的核心的能力都不会丧失的，我没有因为没有上一个好大学而失去什么，而是意识到了什么才是经历高中体系后我获得的最有价值的东西。&lt;/p&gt;
-&lt;p&gt;当然没出分的时候也是感觉自己离北邮 10 分，出分后我研究了一下自己确实是离北邮 10 分，当时我是报了北邮的高校专项计划，所以其实有很有机会低分上北邮的（北邮的分真的好高），这里你也可以看出我不是什么好学校出身的。出分前，我坐在钢琴前弹奏call of silence的片段（我刚学钢琴），等了个六点整去打开查分界面，其实当时还是存在侥幸的，万一我排名高呢？事实证明，菜就是菜，仪式感不会给我多上几分的。看到排名心就凉透了，一直悲伤不知觉涌上心头，我拼劲全力都没办法走出自己的局限呢……&lt;/p&gt;
-&lt;p&gt;自此，原本只是苗头的虚无主义开始开花了，这是不是命中注定的？我现在的行为不是由过去决定的吗？由此推之，我的未来是早就已经决定好了的，我就是上不了北邮，我就是菜，而且我没有力量去改变我的命运。人心莫过于心死，我放纵自己玩了一个月，但是游戏越玩越没趣，直到后来，我打开游戏又关闭，下载完游戏又马上卸载，寻找和下载游戏本身比玩游戏刺激更大。那是一种煎熬，拥有无尽的时间和支持的设备，我却只是坐在电脑前发呆，我不知道我做什么有意义，我的人士毫无意义可言。一切都是注定的，这样的人生游戏有什么好玩的。&lt;/p&gt;
-&lt;p&gt;真的是讽刺，过去的我应该是幻想过这个暑假会多么快乐，那时的我却只是在电脑前发呆，毕竟心境不一样了，我回不去那个可以打打游戏就可以感受到快乐的人了。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;欲买桂花同载酒，终不似少年游&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h3 id=&#34;专业选择&#34;&gt;&lt;a href=&#34;#专业选择&#34; class=&#34;headerlink&#34; title=&#34;专业选择&#34;&gt;&lt;/a&gt;专业选择&lt;/h3&gt;&lt;p&gt;对我来说专业是远大于学校的，我是无法想象自己在一个大学学了 4 年不感兴趣的东西。当时的想法很单纯，传统产业已经要淘汰了，基础理论研究数学物理，不是我能学得明白的，剩下的医学，我不感兴趣，听说要背好多书，最后是选择了计算机。其实也想过去 985 转专业，但是我对自己没有信心，没转成不是就废了吗？现在我回看来，其实自己可以试试这条路的，只不过当时太没信心了，不觉得自己可以卷过大部分 985 佬。总之，我因为担心风险就是降学校title 而选择专业了。现在没啥后悔的，虽然高考考炸了，但是志愿填的还不错的。&lt;/p&gt;
-&lt;h3 id=&#34;学校选择&#34;&gt;&lt;a href=&#34;#学校选择&#34; class=&#34;headerlink&#34; title=&#34;学校选择&#34;&gt;&lt;/a&gt;学校选择&lt;/h3&gt;&lt;p&gt;我的去向的上海大学的理工三类。上大又称鼠（shu）大，以其独特的学校制度闻名，最让我感受深刻的一次是我在b 站动态发了一篇秋季学期总结，然后就被人盒了😭，用ip地址跟秋季学期就猜出我学校了。三学期制度，短小精悍😅，据说是要改为二学期制了，我认为制度是没有问题的，关键是制度跟学校的层次无法匹配，三学期制还是太超前了。对于学校而言不是一个好制度，对我来说，这个制度就很舒服，10 周的课，2 周考试周，考试越多假期越多，10 周的课加上不深的内容，课程考前突击拿高分也很简单。我整天都有大量的时间可以自由安排，可以做自己喜欢的或者有价值的事情。另外，上大不宵禁，没有什么奇奇怪怪的早晚自习，而且思政课几乎都是开卷的，不用考试前在那咔嚓咔嚓背书浪费时间。图书馆的位置也很充足，还有 24 小时自习室。好像有点扯远了，谁在意一个末流 211 的校园环境😅。&lt;/p&gt;
-&lt;h3 id=&#34;阿德勒心理学&#34;&gt;&lt;a href=&#34;#阿德勒心理学&#34; class=&#34;headerlink&#34; title=&#34;阿德勒心理学&#34;&gt;&lt;/a&gt;阿德勒心理学&lt;/h3&gt;&lt;p&gt;暑假的我也并不是什么都干，纯躺了，也许是太闲了吧，还是把高数学了好几章，然后也是接触了一下C语言，当时我的状态接近于积极的虚无主义（也许现在也是？不过我觉得不应该用什么主义去定义自己了），我仍然觉得自己还是可以去实现一些自己的价值的，无意之中接触到了《被讨厌的勇气》，这本书让我大受震撼，让我慢慢理解了很多东西。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;我的未来是由我对过去的自己的诠释决定的&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;阿德勒心理学一定程度上治疗了我的无力感，但是虚无主义并没有完全消失，在我低谷的时候，我仍然会听到恶魔的嘶吼，但是至少不会被决定论阻碍自己的前进了。&lt;/p&gt;
-&lt;h3 id=&#34;计算机启蒙——CS50&#34;&gt;&lt;a href=&#34;#计算机启蒙——CS50&#34; class=&#34;headerlink&#34; title=&#34;计算机启蒙——CS50&#34;&gt;&lt;/a&gt;计算机启蒙——CS50&lt;/h3&gt;&lt;p&gt;梦的开始，冲浪看到CSdiy，在别人的推荐下开始计算机的第一门课CS50，当时我配VScode的环境半天，真的是让我红温，好在CS50 有线上云环境，刚学计算机语言确实不用把精力放在配置环境上。David真的是非常有热情，如果你刚接触编程，无论你是否是计算机专业，我都推荐你从CS50 开始。看了 4 节课作业，没写作业，当时不懂怎么学，就傻看着课，整个暑假我其实没有很专注地在学，回头看这段时间，真的很想锤死自己，怎么可以这样浪费时间，怎么可以这么低效地学习😡。不过我早就和过去的自己和解了，当时的我活在当时的局限之中，在目光所及之处已经做到最好了。&lt;/p&gt;
-&lt;h2 id=&#34;大一&#34;&gt;&lt;a href=&#34;#大一&#34; class=&#34;headerlink&#34; title=&#34;大一&#34;&gt;&lt;/a&gt;大一&lt;/h2&gt;&lt;h3 id=&#34;秋季学期&#34;&gt;&lt;a href=&#34;#秋季学期&#34; class=&#34;headerlink&#34; title=&#34;秋季学期&#34;&gt;&lt;/a&gt;秋季学期&lt;/h3&gt;&lt;p&gt;我在 11 月份总结过一次，梳理过秋季的时间线&lt;/p&gt;
-&lt;h4 id=&#34;时间线&#34;&gt;&lt;a href=&#34;#时间线&#34; class=&#34;headerlink&#34; title=&#34;时间线&#34;&gt;&lt;/a&gt;时间线&lt;/h4&gt;&lt;p&gt;大一秋季有 10 周，考试周 2 周，节奏非常快，学校要求了提前一周到学校报到。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;-1~3 周&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;ol&gt;
-&lt;li&gt;熟悉学校环境，掌握了图书馆的正确打开方法&lt;/li&gt;
-&lt;li&gt;结合在暑假零散的看了一点CS50，把CS50 草率地结课了&lt;/li&gt;
-&lt;li&gt;搭建个人博客，用了三天，crying，意外提前学到git的使用&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;考点与题型&lt;/strong&gt;：简要指出题目考察的&lt;strong&gt;具体知识点（Knowledge Point）&lt;strong&gt;与&lt;/strong&gt;题型分类&lt;/strong&gt;；若存在易误用的简化公式，说明本题为何不适用。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;概念与原理讲解（关键，必须在解题之前）&lt;/strong&gt;：把本题涉及的每一个核心概念逐一讲清——给出&lt;strong&gt;严谨定义&lt;/strong&gt;、&lt;strong&gt;必要推导&lt;/strong&gt;与&lt;strong&gt;适用条件&lt;/strong&gt;。例如涉及 KKT 条件、β 方程时，先讲清它们是什么、从何而来、为什么本题能用，绝不默认学生已知。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;通用解题方法&lt;/strong&gt;：以一般化形式给出这类题的&lt;strong&gt;标准步骤&lt;/strong&gt;（先方法框架、后具体计算），让学生先理解整体思路。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;套用本题求解&lt;/strong&gt;：逐条对应上一步的通用步骤，用本题数据演示&lt;strong&gt;每一步如何执行&lt;/strong&gt;，每步推导有理有据；编程题须给出&lt;strong&gt;规范代码&lt;/strong&gt;并解释关键逻辑与复杂度。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;结果检验&lt;/strong&gt;：回代或以其他方式验证答案的合法性与自洽性。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;解答后引导（必须执行）&lt;/strong&gt;：&lt;/li&gt;
 &lt;/ol&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;4~7 周，&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;猜测痛点&lt;/strong&gt;：指出初学者在该知识点上常见的&lt;strong&gt;误区或易混淆概念&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;延伸提问&lt;/strong&gt;：提出 1–2 个能检验真正掌握程度的问题（例如：”若约束条件变为……，最优解将如何移动？”）。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;ol start=&#34;4&#34;&gt;
-&lt;li&gt;开CS61A和结课CS61A，由于有CS50 的基础，CS61A学得比较快&lt;del&gt;不扎实&lt;/del&gt;，而且跳过了不感兴趣的scheme部分&lt;/li&gt;
-&lt;li&gt;从钱图转战图本部，节约大量时间&lt;/li&gt;
-&lt;li&gt;开始使用时间日志，随后在打卡社打卡，对时间利用的感知提升了一个维度&lt;/li&gt;
-&lt;li&gt;开始使用win的快捷键，切换窗口等等，这个真的是效率革命&lt;/li&gt;
-&lt;/ol&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;8~12 周&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;ol start=&#34;8&#34;&gt;
-&lt;li&gt;开CS61B, 12 周结束前进度在gitlet。&lt;/li&gt;
-&lt;li&gt;提前学线代，进度矩阵&lt;/li&gt;
-&lt;li&gt;计划报名蓝桥杯和参加校内集训，&lt;del&gt;我怀疑学校在鼓励学生每人捐款 300 块，群里有超过 500 人，好像只有我一个Java选手???&lt;/del&gt;&lt;/li&gt;
-&lt;li&gt;计划报考华师大插班生软工，检索信息发现难度极大，自己准备太晚，风险太大，据知乎一位上岸人士称自己把 20 年的考研真题做完了，1800 做了三遍，个人认为这个兄弟可以直接考研了。但是我没有完全放弃，只是不打算all in，也许可以考前突击一下，博一个概率。&lt;/li&gt;
-&lt;li&gt;被英语考试薄纱+想考插班生，开始有计划地背单词。&lt;/li&gt;
-&lt;li&gt;搭建学习流，基本实现了无纸化学习，体系为obsidian (windows+ipad)+goodnotes (ipad)，翻译软件沙拉查词，实现了本地pdf划词翻译&lt;/li&gt;
-&lt;li&gt;重建个人博客网站&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h4 id=&#34;收获&#34;&gt;&lt;a href=&#34;#收获&#34; class=&#34;headerlink&#34; title=&#34;收获&#34;&gt;&lt;/a&gt;收获&lt;/h4&gt;&lt;ol&gt;
-&lt;li&gt;入门编程，oop，递归，链表，红黑树，哈希，git，ide&lt;/li&gt;
-&lt;li&gt;建立了相对完整的学习流，&lt;del&gt;大部分没用&lt;/del&gt;&lt;/li&gt;
-&lt;li&gt;学到了很多沟通的技能&lt;/li&gt;
-&lt;li&gt;提高了信息检索能力，&lt;del&gt;我之前没用过知乎，对不起&lt;/del&gt;，主要体现在搜索信息的途径和渠道被打开了，不会问chatgpt无果就问人了。&lt;/li&gt;
-&lt;li&gt;打造了学习生活体系，目前还在想办法压缩杂项时间，提高时间的利用率&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h4 id=&#34;遗憾&#34;&gt;&lt;a href=&#34;#遗憾&#34; class=&#34;headerlink&#34; title=&#34;遗憾&#34;&gt;&lt;/a&gt;遗憾&lt;/h4&gt;&lt;h6 id=&#34;学校方面&#34;&gt;&lt;a href=&#34;#学校方面&#34; class=&#34;headerlink&#34; title=&#34;学校方面&#34;&gt;&lt;/a&gt;学校方面&lt;/h6&gt;&lt;p&gt;英语学习没有在一开始就坚持，导致秋季英语考试爆炸，另外对于绩点的保持犹犹豫豫，现在绩点还没有出来，但是应该没有能够达到预期。水课的时间没有利用好，英语课大部分时间在发呆，思道法在后期才想到要在课上写代码。在考试层面，能明显感觉自己的卷面非常糟糕，这点要非常注意。只翘了一次课，还刚好被抓了，能翘的课没有翘，不过感觉如果不是教室环境不适合写代码，就可以不翘课。&lt;/p&gt;
-&lt;h6 id=&#34;自学方面&#34;&gt;&lt;a href=&#34;#自学方面&#34; class=&#34;headerlink&#34; title=&#34;自学方面&#34;&gt;&lt;/a&gt;自学方面&lt;/h6&gt;&lt;p&gt;在前八周看网文看得太多了，挤占了大量的空闲时间，学习CS61A太急，导致基础不扎实，其实根本不需要这么急，断CS61B的时间我也没有拿来复习功课，当然，这也是我当时的局限性，没有看清楚水课考试的本质，误判了期末学习的强度。总的来说，秋季是一个压力非常小的学期，唯一的难点在于微积分、C语言和英语，单变量微积分我暑假提前学完了，而C语言我学完了CS50，所以其实每天我都有大把的空闲时间，然而事实上每天平均学习计算机只有 3 个小时，这实在是太可惜了，而且至今我也不知道我没有时间记录的那段时期时间浪费到了哪里。&lt;/p&gt;
-&lt;h3 id=&#34;冬季学期&#34;&gt;&lt;a href=&#34;#冬季学期&#34; class=&#34;headerlink&#34; title=&#34;冬季学期&#34;&gt;&lt;/a&gt;冬季学期&lt;/h3&gt;&lt;p&gt;整体过得比较烂，相较于秋季，冬季比起秋季的确不适合学习，温度降低，维持一个健康稳定的生活作息很难，这个阶段我把 61b除了proj3 的东西基本收掉了，然后开了一会 61c, 因为我的全程导师让我去对接一个学校精神文明平台网站的开发，做这个网站的前端变成了我的任务，于是我转学JavaWeb，ssm技术栈，大概是前端基础+springWeb+mybatis+vue+mysql。这个是我的 &lt;a href=&#34;https://zhuanlan.zhihu.com/p/15573515972&#34;&gt;12 月总结&lt;/a&gt;，大概梳理了一下 12 月每天干了什么。&lt;/p&gt;
-&lt;p&gt;上面这些东西好像有点无聊，这是我之前写过的东西。&lt;/p&gt;
-&lt;h3 id=&#34;方向的迷茫&#34;&gt;&lt;a href=&#34;#方向的迷茫&#34; class=&#34;headerlink&#34; title=&#34;方向的迷茫&#34;&gt;&lt;/a&gt;方向的迷茫&lt;/h3&gt;&lt;p&gt;最开始我是坚定的保研党，想着猛刷绩点保研洗学历，后来接触到了学校的飞溯手册，了解了好多保研黑话。后面加入了 61abc群，在群友的熏陶下转向面向就业学习，想着光速找实习，进大厂打工。后面又感觉打工也没办法实现我的自由，对于找工的热情退却。看了几篇出国指南的文章，对于出国又有了憧憬，上大的出国的氛围也浓厚，出国较于保研更有优势，保研上好学校的难度大于出国去top高校的难度。考插班生也是想过的，中途打算考又打算放弃，到现在又打算去考，过程可谓跌宕起伏，而刚刚又看到学校的交流生项目，大三出国交换一年又是我憧憬的一个方向，我真的很想去国外看看，单纯的想去认识更多的人，去见更大的世界。如果去了多大，我是不是还可以去找maki？哈哈，平时真的很喜欢边听他的讲座边跑步。&lt;/p&gt;
-&lt;h3 id=&#34;个人博客&#34;&gt;&lt;a href=&#34;#个人博客&#34; class=&#34;headerlink&#34; title=&#34;个人博客&#34;&gt;&lt;/a&gt;个人博客&lt;/h3&gt;&lt;p&gt;第一次搭个人博客是在中秋节的那几天，真的很有趣，这个是受lemon爷的启发的，当时我无意翻到了lemon爷的博客，一下子就对怎么部署这样一个网站感兴趣了，于是动手用hugo搭了一个，后面不太喜欢这个主题和一些原因就弃用了这个博客，后面我的一个朋友说看了我的博客写的几篇文章，他感觉很有收获，问我为什么现在打不开这个网站了，我说我想把自己这些东西与现实的自己隔开，匿名上网。他有点失落，不过我也决定重新去写自己的博客。我真的被别人的博客影响很多，lemon爷的随笔给了我很多启发，前辈为后辈留下的经验是可以实实在在帮后人少走弯路的，或者激励后人变得更好，未来一天我也会变成学长，我也想留下一些有价值的东西供后人参考，去发散自己的光，那怕光很微弱。对于这点我真很佩服&lt;a href=&#34;https://space.bilibili.com/108753930?spm_id_from=333.999.0.0&#34;&gt;星爷&lt;/a&gt; , 如果你想入门CS61abc这几门课，快去关注星爷，也可以加入星爷的打卡社，虽然我摆烂没打卡了（逃）&lt;/p&gt;
-&lt;h3 id=&#34;信息流&#34;&gt;&lt;a href=&#34;#信息流&#34; class=&#34;headerlink&#34; title=&#34;信息流&#34;&gt;&lt;/a&gt;信息流&lt;/h3&gt;&lt;p&gt;我到了大学才发现自己原来也是一个喜欢折腾的人，平时摸鱼的时候大部分时间在捣鼓自己的学习体系，我这几天整理了一下我的信息流，大概是下面这个样子：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;原文的信息流配图暂未保留。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h3 id=&#34;小结&#34;&gt;&lt;a href=&#34;#小结&#34; class=&#34;headerlink&#34; title=&#34;小结&#34;&gt;&lt;/a&gt;小结&lt;/h3&gt;&lt;p&gt;大一总体来说没有什么学业的压力，大部分时间过得很惬意，写写代码，看看书，赶赶作业，偶尔熬夜，一天大概只上 2、3 节课，&lt;del&gt;冬季我把能翘的课都翘了&lt;/del&gt;，那种能够自由安排时间的感觉真的很爽啊，某种程度上其实我过上了高中憧憬的大学的生活。&lt;/p&gt;
-&lt;p&gt;虽然我每天的自由时间很多，但是每天在学习计算机的有效时间其实只有 4 个小时，这是一个比较让我难过的事情，不过我也一直在改进自己的学习流，在寒假这套相对完善的学习流应该就能够发挥用处了。还是得pushpush自己，一不注意的话大一就要溜走了啊😭，对我一个末流 211 的人而言，最大的筹码是时间，我现在能够幻想美好未来的凭借也是我大一的身份，而这个身份可是只有半年了。不能再像大一上这样摆烂了。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;stay hungry stay foolish&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;实际上我每天都浪费 4-6 个小时，如果我全身心投入到我要做的事情上会这么样？&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=wsNzAuYDgy0&#34;&gt;https://www.youtube.com/watch?v=wsNzAuYDgy0&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id=&#34;每日总结打卡&#34;&gt;&lt;a href=&#34;#每日总结打卡&#34; class=&#34;headerlink&#34; title=&#34;每日总结打卡&#34;&gt;&lt;/a&gt;每日总结打卡&lt;/h3&gt;&lt;p&gt;我已经成为一个彻彻底底的j人了，时间日志这个app已经深度融入了我的日常&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;原文的时间统计配图暂未保留。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;每天统计完时间之后，我会在obsidian写一下明天的计划，以及一天的反思碎碎念，这个习惯感觉已经变成我的一部分了。&lt;/p&gt;
-&lt;p&gt;我在大学大概是三点三线的生活，教学楼、图书馆、宿舍（笑）&lt;/p&gt;
-&lt;p&gt;我之前一直愿景自己可以在大学交到很厉害的朋友，然后跟他一起打比赛、交流技术，至少在大一上，我确实找不到可以跟我一起聊技术的朋友。大一下应该就会好很多，我也发现自己过去太封闭自己了，应该多主动去交流沟通的。导师的项目应该可以让我接触到一些很厉害的学长，这是一个认识更多优秀的人的好机会。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;你的心脏每秒钟都在跳动，那是你与死亡的搏斗&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;每天写下总结反思都是跟自己心灵的对话&lt;/p&gt;
-&lt;p&gt;打开ob写点东西，已经成为了我的一扇门&lt;/p&gt;
-&lt;p&gt;门外是嘈杂与世俗，门内是理性与平静&lt;/p&gt;
-&lt;h2 id=&#34;展望-2025&#34;&gt;&lt;a href=&#34;#展望-2025&#34; class=&#34;headerlink&#34; title=&#34;展望 2025&#34;&gt;&lt;/a&gt;展望 2025&lt;/h2&gt;&lt;h3 id=&#34;机遇与挑战并存&#34;&gt;&lt;a href=&#34;#机遇与挑战并存&#34; class=&#34;headerlink&#34; title=&#34;机遇与挑战并存&#34;&gt;&lt;/a&gt;机遇与挑战并存&lt;/h3&gt;&lt;p&gt;我现在也没有完全确定一个方向，现在的想法是先探索探索，多尝试尝试，大二再确定也不迟。2025 对我而言是机遇与挑战并存的一年&lt;/p&gt;
-&lt;h4 id=&#34;项目&#34;&gt;&lt;a href=&#34;#项目&#34; class=&#34;headerlink&#34; title=&#34;项目&#34;&gt;&lt;/a&gt;项目&lt;/h4&gt;&lt;p&gt;导师给我的任务是搓出一个网站的壳子，我的计划是学vue把这个壳子搓出来（前端），然后跟着信息办的人一起完善剩下的部分（不过我感觉我写的东西会被舍弃全部重写QAQ）&lt;/p&gt;
-&lt;p&gt;我能在寒假回去前写完这个前端网页吗？这是第一个挑战&lt;/p&gt;
-&lt;h4 id=&#34;插班生&#34;&gt;&lt;a href=&#34;#插班生&#34; class=&#34;headerlink&#34; title=&#34;插班生&#34;&gt;&lt;/a&gt;插班生&lt;/h4&gt;&lt;p&gt;不打算换专业，那么插班生值得考的位置也就只有华师大的软工，华师大的软工每年都竞争激烈，对于我一个半路才加入插班生考试队列的人来说，其实考上的概率微乎其微，不过华师大考的内容不多，我花点时间未必不可一战，借这个机会还可以push自己学英语，同时我又不是all in，考试没有压力，没考上也是赢，稳赢的。&lt;/p&gt;
-&lt;p&gt;插班生考试还跟考试周冲突了，难受，插班生考试是第二个挑战&lt;/p&gt;
-&lt;h4 id=&#34;交换生&#34;&gt;&lt;a href=&#34;#交换生&#34; class=&#34;headerlink&#34; title=&#34;交换生&#34;&gt;&lt;/a&gt;交换生&lt;/h4&gt;&lt;p&gt;上大有着浓厚的出国氛围，相较于一般的 211 有更多的国外交流的机会，免学费真诱人啊，我是真想去多大交换一年，不过这意味着我得在这一年拿到雅思 6.5😭，我试试吧，最后的去国外学习的机会了，毕竟去老美读研实在是没有这种财力。&lt;/p&gt;
-&lt;p&gt;雅思能不能出成绩，这是第二个挑战&lt;/p&gt;
-&lt;h4 id=&#34;计算机公开课学习&#34;&gt;&lt;a href=&#34;#计算机公开课学习&#34; class=&#34;headerlink&#34; title=&#34;计算机公开课学习&#34;&gt;&lt;/a&gt;计算机公开课学习&lt;/h4&gt;&lt;p&gt;我目前停留在 61c，黑马算计算机公开课吗🤔？寒假打算开data100，61c还得往后排，不太清楚data100 会写多久，我还是希望自己可以在大一下抽点时间去把计组和os学一下，把CSAPP，还有几本入门计组和系统的书看一下。&lt;/p&gt;
-&lt;p&gt;感觉寒假任务巨大，公开课和学业怎么平衡是一个挑战&lt;/p&gt;
-&lt;h4 id=&#34;科研？&#34;&gt;&lt;a href=&#34;#科研？&#34; class=&#34;headerlink&#34; title=&#34;科研？&#34;&gt;&lt;/a&gt;科研？&lt;/h4&gt;&lt;p&gt;科研对我来说还是很有神秘感，我想试试科研的感觉，如果读研的话确实得早点进组干活，我打算大二找找机会去实验室混混，嗯，问问群里的科研佬，群友真的是我最大的人脉😘&lt;/p&gt;
-&lt;p&gt;那么，怎么找到导师，怎么联系导师，这又是一个挑战&lt;/p&gt;
-&lt;h4 id=&#34;蓝桥杯&#34;&gt;&lt;a href=&#34;#蓝桥杯&#34; class=&#34;headerlink&#34; title=&#34;蓝桥杯&#34;&gt;&lt;/a&gt;蓝桥杯&lt;/h4&gt;&lt;p&gt;没时间，不打了，捐款 300，抱头痛哭&lt;/p&gt;
-&lt;h4 id=&#34;学业绩点&#34;&gt;&lt;a href=&#34;#学业绩点&#34; class=&#34;headerlink&#34; title=&#34;学业绩点&#34;&gt;&lt;/a&gt;学业绩点&lt;/h4&gt;&lt;p&gt;冬季微积分、线代、大物课，全部翘完了（我真的受不了学校课程的慢节奏），我翘的东西我课后也还没补，这个我确实是留到寒假去处理了，让寒假的我去操心吧（bushi），学校的考试倒是不难的，每天花费一个流去处理是够的，剩下两个流得去学计算机，空闲时间得用到anki背单词。真题在手上，不慌&lt;/p&gt;
-&lt;h4 id=&#34;实习？&#34;&gt;&lt;a href=&#34;#实习？&#34; class=&#34;headerlink&#34; title=&#34;实习？&#34;&gt;&lt;/a&gt;实习？&lt;/h4&gt;&lt;p&gt;这黑马课走下去，我感觉我下次寒假说不定可以去找找实习，暑假投投简历？苍穹外卖启动😅，写导师给的项目应该可以让我打通挺多技术栈。&lt;/p&gt;
-&lt;p&gt;先大胆想想，再看看是不是符合实际吧&lt;/p&gt;
-&lt;h4 id=&#34;2025-的愿景&#34;&gt;&lt;a href=&#34;#2025-的愿景&#34; class=&#34;headerlink&#34; title=&#34;2025 的愿景&#34;&gt;&lt;/a&gt;2025 的愿景&lt;/h4&gt;&lt;p&gt;其实是否实现上面的想法也没关系&lt;/p&gt;
-&lt;p&gt;我更希望自己少一分焦虑，多沉下心去思考和学习，做一个斯多葛主义者，找到内心的平静、理性和幸福，无论外界的环境和命运如何变化。&lt;/p&gt;
-</content>
-        <category term="总结" />
-        <updated>2025-01-09T13:55:31.000Z</updated>
-    </entry>
-    <entry>
-        <id>https://stoic-yang.github.io/2025/01/05/2025%E7%AC%AC%E4%B8%80%E5%91%A8%E5%91%A8%E7%BB%93/</id>
-        <title>2025第一周周结</title>
-        <link rel="alternate" href="https://stoic-yang.github.io/2025/01/05/2025%E7%AC%AC%E4%B8%80%E5%91%A8%E5%91%A8%E7%BB%93/"/>
-        <content type="html">&lt;h2 id=&#34;碎碎念（不重要，可以跳过）&#34;&gt;&lt;a href=&#34;#碎碎念（不重要，可以跳过）&#34; class=&#34;headerlink&#34; title=&#34;碎碎念（不重要，可以跳过）&#34;&gt;&lt;/a&gt;碎碎念（不重要，可以跳过）&lt;/h2&gt;&lt;p&gt;第一周就过得挺烂的，哈哈，不过已经调整过来了，元旦放假，打算休息一天，结果熬夜了，接着 2 天状态也是炸裂，搞的是我之前刚写完一篇关于如何避免娱乐性摆烂的文章，然后我还是没有抵抗力，心理暗示有很大关系。摆的那天在推人狼村之谜，这种轮回的剧本还是很戳我的，只是四周目感觉有点烂尾，总的来说也是非常优秀的剧本，亮点主要在男主上，双商极高，太会说话了，动摇了我以前固执的一些观念，&lt;del&gt;还让我想谈恋爱了&lt;/del&gt;，会说话的人真的有魅力呀，房实阳明（男主）跟村里人的对话都可以作为锻炼情商的教材了，有时间得好好练练口才了。太牛了，诶多man&lt;/p&gt;
-&lt;h2 id=&#34;信息蒸馏&#34;&gt;&lt;a href=&#34;#信息蒸馏&#34; class=&#34;headerlink&#34; title=&#34;信息蒸馏&#34;&gt;&lt;/a&gt;信息蒸馏&lt;/h2&gt;&lt;p&gt;其实我之前就接触过这个方法（或者说思想），只是当时没有意思到处理每天信息的重要性。我是一直被个性化推荐迫害的，经过几次摆烂后，我的b站首页已经是不堪入目了，知乎推荐也是，这样下去，我以后就很难接触到高质量的信息，每天被低质量的信息毁灭了。&lt;/p&gt;
-&lt;p&gt;一个好的办法，之前偶然刷到的，我突然想起来了————关注高质量的博主，然后顺着他们的关注和点赞去关注其他博主。&lt;/p&gt;
-&lt;p&gt;这一点在QQ群群聊消息上也是适用的，寻找群友推荐的优秀文章，然后关注作者，再关注作者关注的人，这可以快速扩大自己的高质量信息来源，而以后就再也不把自己暴露在个性化推荐上，只看自己关注的高质量博主的文章以及收藏夹，这样就是摆烂，看到的东西都是很有价值的，不会陷入到奶头乐的囚笼。&lt;/p&gt;
-&lt;p&gt;我今天就是开始实践这个方法，刷屏带来的收益显著的提高了，看到这样高质量的信息还不会像低质量的信息给我带来一堆负面影响————注意力下降，想玩游戏，累&lt;/p&gt;
-&lt;h2 id=&#34;娱乐方式的一个可能性平替方案&#34;&gt;&lt;a href=&#34;#娱乐方式的一个可能性平替方案&#34; class=&#34;headerlink&#34; title=&#34;娱乐方式的一个可能性平替方案&#34;&gt;&lt;/a&gt;娱乐方式的一个可能性平替方案&lt;/h2&gt;&lt;p&gt;另一个值得一提的是我似乎找到了娱乐化休息的平替————b站的公开课，我指的不是计算机公开课，而是哲学、经济学（比如博弈论）这类公开课，看这类公开课也可以达到休息的目的，而且可以学到很多有意思的东西，扩展我的知识面。&lt;/p&gt;
-&lt;h2 id=&#34;几个有意思的点&#34;&gt;&lt;a href=&#34;#几个有意思的点&#34; class=&#34;headerlink&#34; title=&#34;几个有意思的点&#34;&gt;&lt;/a&gt;几个有意思的点&lt;/h2&gt;&lt;p&gt;&lt;a href=&#34;https://ycn45b70r8yz.feishu.cn/wiki/Y8zCwSeVOiIzdWkW51YcKbI0nrf?fromScene=spaceOverview&#34;&gt;星爷的知识库&lt;/a&gt;看到几个很有意思的想法&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;时间表，是为了，让你有一个你想要的一天&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;如果需要和厉害的人争论一些东西，你需要去谨慎的组织你们的观点，盲目的争论很可能会被看起来很蠢&lt;/li&gt;
-&lt;li&gt;如果我全身心投入到我想要的事情上，我的生活会如何？&lt;/li&gt;
-&lt;li&gt;你的心脏每秒钟都在跳动，那是你与死亡的搏斗&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;Review&#34;&gt;&lt;a href=&#34;#Review&#34; class=&#34;headerlink&#34; title=&#34;Review&#34;&gt;&lt;/a&gt;Review&lt;/h2&gt;&lt;p&gt;JavaWeb接口开发&lt;br&gt;蒸馏信息流的一个方法&lt;br&gt;上手cline和cursor&lt;br&gt;了解deepseek接口的使用——给了沉浸式翻译&lt;/p&gt;
-&lt;h2 id=&#34;Reflection&#34;&gt;&lt;a href=&#34;#Reflection&#34; class=&#34;headerlink&#34; title=&#34;Reflection&#34;&gt;&lt;/a&gt;Reflection&lt;/h2&gt;&lt;p&gt;这周烂的时间很长，摆烂时间频繁而且长，没有学到很多东西，下周就会好很多&lt;/p&gt;
-&lt;p&gt;虽然我通过翘课给自己留下巨量的自由时间，但我每天浪费的时间非常多，多到让我无法统计，我浪费太多时间了，JavaWeb两周都没学完，太丢人了，接下来我会好好珍惜时间的😭&lt;/p&gt;
-&lt;p&gt;虽然过去一个月每天都在all in 计算机学习，但是实践看来，每天有效的学习时间也就 4 小时罢了，不如分时间弄学业，试试插班生什么的，争取保研吧，211 的title确实是不够用的（对我来说）&lt;/p&gt;
-&lt;h2 id=&#34;Planing&#34;&gt;&lt;a href=&#34;#Planing&#34; class=&#34;headerlink&#34; title=&#34;Planing&#34;&gt;&lt;/a&gt;Planing&lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;cline的出现改变了我原有的一些计划，让我意识到搓出项目的壳子也许并不是一件很难很费时的事情，也许我一天就能办到，现在我的目标是在下一周就把JavaWeb结课+搓出这个壳子&lt;/li&gt;
-&lt;li&gt;抽出一个流的时间处理学业问题&lt;/li&gt;
-&lt;li&gt;空余时间研究anki的用法，为以后背单词做准备，不背单词不能自定义处理单词本这一点就让我彻底放弃它了&lt;/li&gt;
-&lt;/ol&gt;
-</content>
-        <category term="周结" />
-        <updated>2025-01-05T15:37:42.000Z</updated>
-    </entry>
-    <entry>
-        <id>https://stoic-yang.github.io/2024/12/29/24%E5%B9%B4%E7%9A%84%E6%9C%80%E5%90%8E%E5%91%A8%E7%BB%93/</id>
-        <title>24年的最后周结</title>
-        <link rel="alternate" href="https://stoic-yang.github.io/2024/12/29/24%E5%B9%B4%E7%9A%84%E6%9C%80%E5%90%8E%E5%91%A8%E7%BB%93/"/>
-        <content type="html">&lt;h1 id=&#34;周结&#34;&gt;&lt;a href=&#34;#周结&#34; class=&#34;headerlink&#34; title=&#34;周结&#34;&gt;&lt;/a&gt;周结&lt;/h1&gt;&lt;h2 id=&#34;reflecting&#34;&gt;&lt;a href=&#34;#reflecting&#34; class=&#34;headerlink&#34; title=&#34;reflecting&#34;&gt;&lt;/a&gt;reflecting&lt;/h2&gt;&lt;p&gt;一周总有几次是烂的，比如昨天和前天晚上&lt;/p&gt;
-&lt;p&gt;心力经常是周期性的波动，有时会表现得非常悲观，有时又表现为盲目得乐观&lt;/p&gt;
-&lt;p&gt;三座大山：b站上瘾、刷屏上瘾、游戏上瘾&lt;/p&gt;
-&lt;p&gt;三座大山卷土重来了，缺少一个合理的有效的休息方法是我体系的一个硬伤&lt;/p&gt;
-&lt;p&gt;这周的摆烂出现的原因：修半天bug没修好，长时间学习却缺少正反馈，然后爆炸（其一）&lt;br&gt;					吃饭时刷游戏视频，勾起自己打游戏的欲望&lt;/p&gt;
-&lt;p&gt;长时间学习才是人的默认状态，如果一直都有持续的正反馈，我觉得是可以一直保持学习的，问题是如果干了太多“我认为没有用”的事情，或者学习的时候卡了，这个时候很可能就会出现摆烂的状况&lt;/p&gt;
-&lt;p&gt;强制休息是有效果的，把每天分成 3 个流，50min + 10min 很适合我，但是休息的时候是坚决不能碰手机的，不然流会被打断&lt;/p&gt;
-&lt;p&gt;严苛的时间规划实践上是不起作用的，更重要的是每一件事情完成后我接着要做什么，比如吃完饭第一件事是干什么，7-8 下课以后我做什么&lt;/p&gt;
-&lt;h2 id=&#34;warning&#34;&gt;&lt;a href=&#34;#warning&#34; class=&#34;headerlink&#34; title=&#34;warning&#34;&gt;&lt;/a&gt;warning&lt;/h2&gt;&lt;p&gt;为了学Javaweb，我这周学业完全停摆，这很严重，完全all in 自学风险是大到我不能接受的，必须强制自己每天分一个流去处理学业的问题&lt;/p&gt;
-&lt;h2 id=&#34;planning（放假前-11-号-基本模型）&#34;&gt;&lt;a href=&#34;#planning（放假前-11-号-基本模型）&#34; class=&#34;headerlink&#34; title=&#34;planning（放假前 11 号 + 基本模型）&#34;&gt;&lt;/a&gt;planning（放假前 11 号 + 基本模型）&lt;/h2&gt;&lt;p&gt;每天的时间要抓紧了，而且得拉高效率，争取每天完成 9 个小时的高效学习&lt;/p&gt;
-&lt;p&gt;任务重，时间紧啊&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 学完JavaWeb + 完成可以交差的模型&lt;/li&gt;
-&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 线代+微积分+大物（学完基础知识，达到可以刷真题的程度）&lt;ul&gt;
-&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 线代&lt;/li&gt;
-&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 微积分&lt;/li&gt;
-&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 大物&lt;/li&gt;
-&lt;/ul&gt;
+&lt;h3 id=&#34;输出风格要求&#34;&gt;&lt;a href=&#34;#输出风格要求&#34; class=&#34;headerlink&#34; title=&#34;输出风格要求&#34;&gt;&lt;/a&gt;输出风格要求&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;语言风格&lt;/strong&gt;：学术、客观、理性、严谨。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;排版格式&lt;/strong&gt;：使用清晰的 &lt;strong&gt;Markdown&lt;/strong&gt;；专业术语一律使用&lt;strong&gt;粗体&lt;/strong&gt;。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;数学公式（重点，务必遵守）&lt;/strong&gt;：&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;短公式、单个变量或行内表达式（如 r=s=4）&lt;strong&gt;一律使用行内公式&lt;/strong&gt; ，&lt;strong&gt;禁止&lt;/strong&gt;为其单独另起一行写成块级公式。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;对于使用的任何比较特殊的符号，都在进行解释，比如 r=4这种情况下就需要解释你用的 r 到底是什么数学含义&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;仅当公式较长、需多行对齐、或属于需要突出的&lt;strong&gt;关键结论/方程组&lt;/strong&gt;时，才使用块级公式。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;目的：杜绝大量短公式各占一行所造成的&lt;strong&gt;冗长、割裂、排版丑陋&lt;/strong&gt;。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;代码块&lt;/strong&gt;：须&lt;strong&gt;指定语言&lt;/strong&gt;（如 cpp）。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;仍然是接着爽翘课的两周，但是你翘了一定得出效果啊😭&lt;/p&gt;
-&lt;h2 id=&#34;harvesting&#34;&gt;&lt;a href=&#34;#harvesting&#34; class=&#34;headerlink&#34; title=&#34;harvesting&#34;&gt;&lt;/a&gt;harvesting&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;JavaWeb&lt;/strong&gt;&lt;br&gt;进度8/20&lt;br&gt;springBoot基础 + mybatis基础 + maven基础 + MySQL基础&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;随着模型的质量的提升，提示词当然也是需要做一些调整的&lt;/p&gt;
+&lt;p&gt;我自己是没有见过gpt做一些很奇怪的比喻，所以我在提示词里就没有特意去强调不要用比喻了&lt;/p&gt;
+&lt;p&gt;一些坑点，gpt网页版你没有办法直接复制粘贴到obsidian这类笔记软件上正确渲染数学公式，用的不是一套latex语法，不过有一些工具（浏览器插件）可以解决这个问题，比如这个，很好用，推荐给各位，不过就是感觉安装以后感觉网页变卡了一些，希望以后能做进一步的优化&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://zhaoliangbin42.github.io/ai-markdone/&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;关于为什么不用notebookml，美国大豆包，基模太差了，我觉得这个产品的定位很奇怪啊，我认为直接用codex或者cc都是可以达到相同的效果的，况且这个用的是gemini，到底还是模型太差了，我觉得不好用，直接上gpt网页版用这里的GPT去定制一个我觉得就ok了：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/2025/12/29/gemini%E4%BD%BF%E7%94%A8%E5%B0%8F%E6%8A%80%E5%B7%A7%EF%BC%88%E8%80%83%E8%AF%95%E5%91%A8%E5%90%91%EF%BC%89/1989045507692181200-07.png&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
+&lt;p&gt;跟gemini的gem一个意思&lt;/p&gt;
+&lt;p&gt;这里我也给出一个我复习用的GPT的链接：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://chatgpt.com/g/g-6a2f90e46178819186d3562c2ae2e438-kina&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;但我觉得单纯使用网页进行复习也已经有点弱后的意味了，其实更好的方案是本地就建立一个知识库，然后通过cc或者codex加上自己定制以及迭代skills进行复习，但是这个有一定的成本，因为得自己订阅或者花钱买api了，我自己也写了几个skill帮助我根据ppt、教材以及作业进行复习，如果大家感兴趣的话，我有时间就整理分享出来供大家参考&lt;/p&gt;
+&lt;p&gt;最后祝大家考试顺利，课课满绩^_^&lt;/p&gt;
 </content>
-        <category term="总结" />
-        <updated>2024-12-29T15:15:49.000Z</updated>
+        <updated>2025-12-29T11:02:16.000Z</updated>
     </entry>
     <entry>
-        <id>https://stoic-yang.github.io/2024/12/17/%E3%80%8A%E8%AF%B7%E5%81%9C%E6%AD%A2%E6%97%A0%E6%95%88%E7%A4%BE%E4%BA%A4%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</id>
-        <title>《请停止无效社交》读书笔记</title>
-        <link rel="alternate" href="https://stoic-yang.github.io/2024/12/17/%E3%80%8A%E8%AF%B7%E5%81%9C%E6%AD%A2%E6%97%A0%E6%95%88%E7%A4%BE%E4%BA%A4%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
-        <content type="html">&lt;p&gt;感觉挺商业化的一本书，不是很喜欢这种风格，不建议读，不过还是有几句话能让我学到东西。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;请记住：社交是因，关系是果，一定要学会主动为自己选择合适的圈层。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;blockquote&gt;
-&lt;p&gt;对不熟悉的人暴露自己的私密事，就会给对方带来不适感，这也是边界感不清晰的表现&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;外圆内方&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;外圆，与别人相处时要有很强的为他人考虑的能力&lt;/li&gt;
-&lt;li&gt;内方，你要知道自己要做一件什么事情&lt;/li&gt;
-&lt;/ul&gt;
+        <id>https://stoic-yang.github.io/2025/11/26/ABC428/</id>
+        <title>ABC428</title>
+        <link rel="alternate" href="https://stoic-yang.github.io/2025/11/26/ABC428/"/>
+        <content type="html">&lt;h3 id=&#34;C&#34;&gt;&lt;a href=&#34;#C&#34; class=&#34;headerlink&#34; title=&#34;C&#34;&gt;&lt;/a&gt;C&lt;/h3&gt;&lt;p&gt;&lt;a href=&#34;https://atcoder.jp/contests/abc428/tasks/abc428_c&#34;&gt;https://atcoder.jp/contests/abc428/tasks/abc428_c&lt;/a&gt; #前缀和 #括号匹配&lt;/p&gt;
+&lt;p&gt;合法括号的处理办法：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;（&lt;/code&gt; &lt;code&gt;）&lt;/code&gt; 括号的数量要相等&lt;/li&gt;
+&lt;li&gt;序列中的&lt;code&gt;(&lt;/code&gt;的数量一定要大于等于 &lt;code&gt;)&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;这可以把括号抽象为数字，&lt;code&gt;(&lt;/code&gt; 代表 1， &lt;code&gt;)&lt;/code&gt; 代表 -1&lt;/p&gt;
+&lt;p&gt;这样，一个合法的括号就可以用下面的数学语言来表达&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;和为 0&lt;/li&gt;
+&lt;li&gt;过程中前缀和大于等于 0&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;所以我们在处理序列的时候维护两个值即可，一个是最小前缀和，另一个是当前前缀和&lt;/p&gt;
+&lt;h3 id=&#34;D&#34;&gt;&lt;a href=&#34;#D&#34; class=&#34;headerlink&#34; title=&#34;D&#34;&gt;&lt;/a&gt;D&lt;/h3&gt;&lt;p&gt;&lt;a href=&#34;https://atcoder.jp/contests/abc428/tasks/abc428_d&#34;&gt;https://atcoder.jp/contests/abc428/tasks/abc428_d&lt;/a&gt; #数论 #十进制拼接 #前缀和 #logn&lt;/p&gt;
+&lt;p&gt;Let z be the string obtained by interpreting x,y in decimal notation as strings and concatenating them in this order. Let f(x,y) be the value when z is interpreted as an integer in decimal notation.&lt;/p&gt;
+&lt;p&gt;$f(3, 14)=314$&lt;/p&gt;
+&lt;p&gt;类似这样的拼接，用字符串进行转化非常麻烦，可以直接用 int 表示，把 $y$ 的十进制位数设为 $d$&lt;/p&gt;
+&lt;p&gt;那么就有&lt;/p&gt;
+&lt;p&gt;$f(x, y)=x\times 10^d + y$&lt;/p&gt;
+&lt;p&gt;这个表示同时还可以解决一个问题，也就是上下限区间的问题，我们可以通过这个直接计算出所有连续的可能的取值的上下限，不仅如此，这个区间的我们可以通过枚举 d 来获得，而 d 的取值范围非常小&lt;/p&gt;
+&lt;p&gt;这里还有一个比较显然的小结论，也就是，在区间 l~r 中，到底有多少的完全平方数？ 答案是 $\sqrt{ r } - \sqrt{ l -1 }$ #数学小知识&lt;/p&gt;
+
+
+&lt;h3 id=&#34;E&#34;&gt;&lt;a href=&#34;#E&#34; class=&#34;headerlink&#34; title=&#34;E&#34;&gt;&lt;/a&gt;E&lt;/h3&gt;&lt;p&gt;&lt;a href=&#34;https://atcoder.jp/contests/abc428/tasks/abc428_e&#34;&gt;https://atcoder.jp/contests/abc428/tasks/abc428_e&lt;/a&gt; #树的直径 #bfs #树 #最长路径&lt;/p&gt;
+&lt;p&gt;这里有一个小结论，在一个树形结构中，对于任意节点 $u$，距离它最远的节点 $v$，一定满足 $v$ 是树直径的两个端点之一&lt;/p&gt;
+&lt;p&gt;所以，对于树上每一个点，离这个点最远的点一定是树的直径的两个点之间的一个&lt;/p&gt;
+&lt;p&gt;那么，我们可以先找出树的直径的两个端点，再计算每一个点到这两个点的距离，最后把去这两个距离中的最大值，这个值就是我们需要的最大距离，对应的点就是符合题意的点&lt;/p&gt;
+&lt;p&gt;找这个两个点 x，y 可以通过 bfs 来实现&lt;/p&gt;
+&lt;p&gt;先对任意一个点进行 bfs，找到 x，然后再对 x bfs 找到 y，再对 y bfs，即可获得 x 和 y 到任意一个点的距离，最后遍历输出答案即可&lt;/p&gt;
+
 </content>
-        <category term="读书" />
-        <updated>2024-12-17T15:44:20.000Z</updated>
+        <updated>2025-11-26T07:46:37.000Z</updated>
+    </entry>
+    <entry>
+        <id>https://stoic-yang.github.io/2025/11/26/CF1063/</id>
+        <title>CF1063</title>
+        <link rel="alternate" href="https://stoic-yang.github.io/2025/11/26/CF1063/"/>
+        <content type="html">&lt;h3 id=&#34;B&#34;&gt;&lt;a href=&#34;#B&#34; class=&#34;headerlink&#34; title=&#34;B&#34;&gt;&lt;/a&gt;B&lt;/h3&gt;&lt;p&gt;&lt;a href=&#34;https://codeforces.com/contest/2163/problem/B&#34;&gt;https://codeforces.com/contest/2163/problem/B&lt;/a&gt; #思维题 #分类讨论 #观察 #构造&lt;/p&gt;
+&lt;p&gt;首先是题面一定要读仔细，漏读条件就会导致大量时间的浪费，在这道题就是后面才看到 $x_{i}=0$ 的时候，$s_{i}$ 可以是任何值&lt;/p&gt;
+&lt;p&gt;其次要注意观察数据范围，题面先是提醒最多五次操作，又强调你不必要用最少次数去做，其实意思已经非常明显了，那题面就是明着告诉你，你现在要构造一个 5 次的操作，让所有的情况下，这个操作都可以符合条件&lt;/p&gt;
+&lt;p&gt;要这样其实就是要把 s 几乎全为 1，因为根据规则不难看出，边界不可能为 1，1 和 n 所在的下标也不可能为 1，这些地方如果为 1，就直接输出-1&lt;/p&gt;
+&lt;p&gt;那么考虑怎么样才能让一次操作尽可能地多地让 0 变为 1，也就是选择最小值和最大值，所以我们注意到 1 和 n 两个特殊的值&lt;/p&gt;
+&lt;p&gt;![[Pasted image 20251126141716.png]]&lt;/p&gt;
+&lt;p&gt;这样画就有了，可以做到所有节点以外都为 1&lt;/p&gt;
+
+
+&lt;h3 id=&#34;C&#34;&gt;&lt;a href=&#34;#C&#34; class=&#34;headerlink&#34; title=&#34;C&#34;&gt;&lt;/a&gt;C&lt;/h3&gt;&lt;p&gt;&lt;a href=&#34;https://codeforces.com/contest/2163/problem/C&#34;&gt;https://codeforces.com/contest/2163/problem/C&lt;/a&gt; #前缀和 #后缀和 #合并区间 #去重&lt;/p&gt;
+&lt;p&gt;这道题主要卡我的点在于如何去重&lt;/p&gt;
+&lt;p&gt;不难注意到，我们实际上只有 n 条不同的路，对于每一条路我们都可以得到最小的区间，但这里面存在重合，那么怎么去重呢？&lt;/p&gt;
+&lt;p&gt;我们可以先获得每一条路的最小区间，所有满足条件的区间需要至少满足至少包括这些区间的一个&lt;/p&gt;
+&lt;p&gt;我们先假定以某一个 l 点出发，只要找到满足题意的最小的 R，再遍历一遍所有的 l 点，把满足条件的数量相加就是答案了&lt;/p&gt;
+&lt;p&gt;那么怎么找出满足题意的最小 R 呢？&lt;/p&gt;
+&lt;p&gt;这里需要用后缀最小值来实现&lt;/p&gt;
+
+
+
+
+
+</content>
+        <updated>2025-11-26T07:23:57.000Z</updated>
+    </entry>
+    <entry>
+        <id>https://stoic-yang.github.io/2025/11/24/2025%E5%B9%B411%E6%9C%8824%E6%97%A5%E2%80%94%E2%80%94ICPC%E4%B8%8A%E6%B5%B7%E7%AB%99%E5%BF%97%E6%84%BF%E8%80%85/</id>
+        <title>2025年11月24日——ICPC上海站志愿者</title>
+        <link rel="alternate" href="https://stoic-yang.github.io/2025/11/24/2025%E5%B9%B411%E6%9C%8824%E6%97%A5%E2%80%94%E2%80%94ICPC%E4%B8%8A%E6%B5%B7%E7%AB%99%E5%BF%97%E6%84%BF%E8%80%85/"/>
+        <content type="html">&lt;p&gt;闲下来自然而然去做的事情，就是你真正想做的事情&lt;/p&gt;
+&lt;p&gt;对我而言，这样的事情是长文本阅读和长文本写作&lt;/p&gt;
+&lt;p&gt;我最喜欢的是，在一个无人打扰的地方，听着Lofi，把自己想的事情一件件摊开，&lt;strong&gt;写下来，讲给自己&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;不过我的故事可能没有其他人那么有趣，我的文笔也不太好，不过时错哥说多沉淀就能像他一样文采&lt;/p&gt;
+&lt;p&gt;但我每天不是在忙就是在摆烂，没有抽出什么时间阅读，可能永远也达不到时错哥&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.zhihu.com/people/d0ff4530c8c2f77b78b4e08b1a8dfc1f&#34;&gt;@timeErrors&lt;/a&gt;&lt;/p&gt;
+</content>
+        <updated>2025-11-24T15:00:18.000Z</updated>
+    </entry>
+    <entry>
+        <id>https://stoic-yang.github.io/2025/11/16/2025%E5%B9%B411%E6%9C%8816%E6%97%A5%E2%80%94%E2%80%94%E9%93%A9%E7%BE%BD%E5%8D%97%E4%BA%AC%EF%BC%8C%E4%BA%94%E5%AD%A6%E6%9C%9F%E7%8E%8B%E6%9C%9D/</id>
+        <title>2025年11月16日——铩羽南京，五学期王朝</title>
+        <link rel="alternate" href="https://stoic-yang.github.io/2025/11/16/2025%E5%B9%B411%E6%9C%8816%E6%97%A5%E2%80%94%E2%80%94%E9%93%A9%E7%BE%BD%E5%8D%97%E4%BA%AC%EF%BC%8C%E4%BA%94%E5%AD%A6%E6%9C%9F%E7%8E%8B%E6%9C%9D/"/>
+        <content type="html">&lt;p&gt;如果你看到我周记突然毫无征兆地停更了，那大概率是我这段时间没有精力写这个&lt;/p&gt;
+&lt;p&gt;上周去打南京站了，南京站的体验还是不错的&lt;/p&gt;
+&lt;p&gt;因为南航的名字太长了，所以我报高考志愿的时候以为南航是野鸡学校，后面才知道是 211 顶流的学校，经费百亿，南航校园真的好看，没有 SHU 那种死板的感觉，而且路是柏油路，好吧打住，懒得喷，就南航校内有麦当劳，SHU 已经输了。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/2025/11/16/2025%E5%B9%B411%E6%9C%8816%E6%97%A5%E2%80%94%E2%80%94%E9%93%A9%E7%BE%BD%E5%8D%97%E4%BA%AC%EF%BC%8C%E4%BA%94%E5%AD%A6%E6%9C%9F%E7%8E%8B%E6%9C%9D/1973508685620871358-01.jpg&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
+&lt;p&gt;热身赛打完，一队人对明天的比赛还是很有信心的，吃晚饭的时候遇到了蒋老师，兴奋地跑上去要了一张合照，顿时觉得今天运气不错，感觉明天应该运气也会非常好。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/2025/11/16/2025%E5%B9%B411%E6%9C%8816%E6%97%A5%E2%80%94%E2%80%94%E9%93%A9%E7%BE%BD%E5%8D%97%E4%BA%AC%EF%BC%8C%E4%BA%94%E5%AD%A6%E6%9C%9F%E7%8E%8B%E6%9C%9D/1973508685620871358-02.jpg&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
+&lt;p&gt;回酒店后，VP了一把 div 2，发现手速比我一个月前还要慢了，一个简单的逻辑写的又臭又长，写完还需要调半天，突然感觉到非常危险，因为下一周就要期中了，所以第七周大部分时间我都在赶期中要交的报告，五学期真王朝了。结果就是第七周我的训练量非常少，开学后其实我没能维持一个好的训练状态，在 VP 真题后，很多时候连铜牌题都没有补完，然而如果要奔着铜牌去，其实银牌题也是应该争取补完的。&lt;/p&gt;
+&lt;p&gt;第二天的比赛，我先是上机器把各种我们需要的 ide 打开，新建文件夹，打上必要的头文件，不过我的一个队友是教练临时组给我的，他的码风简直就是一坨，完全是只有他自己能看懂自己的代码，而且还只会用 codeblocks，甚至不会用 VScode，而且由于队伍里他学的时间最长，实力最强，加上他不愿意改自己的习惯，我也喊不动，我总不能为了配合他扔掉 VScode 不用吧…，所以队伍是完全割裂的，做完签到，队友去开 F 题了，我跟榜，想出了 K ，但看很多人 WA 不少，但还是提议先做 K，但队友在疯狂调试 F，不愿意让机子，大概一个多小时过去了，然后我们 K 题还是一点没写，死命劝说写 K，我说我来写 K，队友不愿意让机子，不理我（我是队长），直接开写 K，交了一发 WA 了，我估了一下觉得就是没有 trick，纯粹就是他逻辑写错了，于是让打印代码，我帮他调一下（当时他直接不管 K，回去调 F 去了，草我急死了），队友先是生气，觉得我们在打扰他调试 F，但打印个代码完全就不花多少时间…，后面说了 10 分钟打出来了，我又发现自己完全不懂他代码，于是放弃看他的代码，直接开始埋头自己造数据，造了一堆样例，终于对拍成功了，发现是他 if 写的是车的 x 或车的 y，实际上应该是车的 x 和车的 y（我去，我这时候知道我的队友不懂象棋，这题真该我来写的，我一开始的思路就是对的），我没造出这个，我们队伍就可以只有一道题了…&lt;/p&gt;
+&lt;p&gt;出完了 K 后，F 题还是没有一点进制，其他题看了一下也没法做，于是直接罚坐了，然后队友承认应该让我来写 K 的，不过已经无所谓了，即使 K 写的快，我们也开不出第三题，积累太弱了。&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;strong&gt;铩羽而归&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;在回去的高铁上，我心情非常低落&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;一种突然的幻灭感&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;但又无可奈何&lt;/p&gt;
+&lt;p&gt;只感觉到很悲伤，但说不出来&lt;/p&gt;
+&lt;p&gt;感觉自己很累很累&lt;/p&gt;
+&lt;p&gt;原本打算在高铁上背第二天英语考试的稿子的&lt;/p&gt;
+&lt;p&gt;不过身体完全没法听使唤&lt;/p&gt;
+&lt;p&gt;只能呆呆地看着窗外无边的黑暗&lt;/p&gt;
+&lt;p&gt;周一两门考试，周四两门考试，周六离散考试，两篇论文没写&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;好压抑&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果没有加缪，也许我就自杀了&lt;/p&gt;
+&lt;p&gt;社会越发达，剥削就越隐蔽越彻底&lt;/p&gt;
+&lt;p&gt;我们是被时代透支得最彻底的一代，不仅被迫交出了原本鲜活的&lt;strong&gt;岁月与韶华&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;我们先是为了争夺生存资源每天殚精竭虑，而剩下微量的时间被大量情绪化、低价值的信息占据&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;麻木无力&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;我感到一种深入骨髓、无处安放的悲凉&lt;/strong&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;如果你真的跟我当时一样，那应该是太累了，一般来说好好睡一觉就好了&lt;/p&gt;
+&lt;p&gt;把自己压力太久，会把自己压力坏的，一段时候之后总会需要休息休息&lt;/p&gt;
+&lt;p&gt;空想没法解决任何问题&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;在保有理智的情况下，应该去思考如何解决问题，而不是胡思乱想增加自己的问题&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;不要停止思考，要不断地去想&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;打完 icpc 后感慨自己看似选择很多，其实已经没有什么选择了，大一的试错期已经结束，到现在的阶段就必须去明确自己的方向了，而无论是什么方向，自己的起步都比一开始就耕耘这个方向的人差距很大，几乎无法追赶，哎，但能够很早就确定自己方向而且坚持下去对我来说是不太可能的，一个零基础的人，是避不开踩上一大堆坑的。打完 icpc 的时候，我觉得我可能浪费了 5 个月的时间学算法，不过想来，如果我暑假没有去集训队，那么我的暑假应该就是在家里摆烂了，这五个月不学算法，我也可能没法好好利用。所以也不必太苛责自己五个月什么都没有捞到了，算法苦手是也。&lt;/p&gt;
+&lt;p&gt;身边专一专注的人，在这个时间点多多少少都有国奖了，或者绩点超级高，还是感觉自己保研有不少的压力了，但有感觉到这段时间我的状态在慢慢变好，没有算法训练的压力以后，我多了不少可以慎独的时间，每天开始写复盘后，人的精神状态都不一样了，接下来的计划是写 CS189，完成一下科研的入门，计划在一个月内完成&lt;/p&gt;
+</content>
+        <updated>2025-11-16T13:57:38.000Z</updated>
+    </entry>
+    <entry>
+        <id>https://stoic-yang.github.io/2025/10/26/Fall%20week5%20%E5%91%A8%E8%AE%B0/</id>
+        <title>Fall week5 周记</title>
+        <link rel="alternate" href="https://stoic-yang.github.io/2025/10/26/Fall%20week5%20%E5%91%A8%E8%AE%B0/"/>
+        <content type="html">&lt;p&gt;不是我喜欢的周记，直接不写（bushi）&lt;/p&gt;
+&lt;p&gt;这周被一门作业的DDL压制了，还打了一场roboCode比赛，周六摆烂休息，在算法学习的进度上几乎为0，周日比赛lsy狠狠C，但是我和hab完全开不了一点，感觉对不起lsy的努力，下周会努力加训的QWQ&lt;/p&gt;
+&lt;p&gt;也许状态不可避免的会存在起伏，我能做到的也只是缩短状态调整的时间&lt;/p&gt;
+&lt;p&gt;失败也许会贯穿人生的始终，但平静坚定地前进是人类勇气的赞歌&lt;/p&gt;
+</content>
+        <updated>2025-10-26T14:46:29.000Z</updated>
+    </entry>
+    <entry>
+        <id>https://stoic-yang.github.io/2025/10/19/Fall%20week4%20%E5%91%A8%E8%AE%B0/</id>
+        <title>Fall week4 周记</title>
+        <link rel="alternate" href="https://stoic-yang.github.io/2025/10/19/Fall%20week4%20%E5%91%A8%E8%AE%B0/"/>
+        <content type="html">&lt;p&gt;这周的心情处于对拿铜有希望和心生绝望之间&lt;/p&gt;
+&lt;p&gt;绝望的时候会对队友说，自己无论拿不拿的到牌子都退役了&lt;/p&gt;
+&lt;p&gt;这周过的很烂，周末非常摆，有一大段的时间burnout了，找了找原因，主要是有几场VP爆零了，对我的士气打击非常大，而且有几个DDL把我压的很惨，一下子就burnout了，也没有能够很快恢复过来&lt;/p&gt;
+&lt;p&gt;而且突然想到自己的绩点非常的容易爆炸。。。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;我真有可能给自己一个学期玩死的&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;所以严肃作出以下要求&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;上课一定要认真听，作业一定要认真写，写完一定要认真对答案&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;睡觉前一定要给第二天做好计划&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;一定要早睡早起&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;作业一定要提前写&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;这周，这周，没啥好说的，跟队友的磨合不是很顺利，有一个天降的队友，比较孤僻内敛，然后又比较执拗，我也没法做到共情他，希望这周可以练好配合&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;和朋友聊天真的很好地释放了我的压力，真的非常感谢一直以来愿意听我说垃圾话的朋友，还是想要维持一个一天一场区域赛的节奏，下周试试维持一下，写作业每天大概抽出2个小时也就够了&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;原谅我这糟糕的周记，我现在确实没有精力去让周记更加可读了，可能要等南京站结束以后才能够写点有营养的东西上来了，虽然大概率是打铁，可能分享的也是无效经验，再说吧&lt;/strong&gt;&lt;/p&gt;
+</content>
+        <updated>2025-10-19T15:03:56.000Z</updated>
+    </entry>
+    <entry>
+        <id>https://stoic-yang.github.io/2025/10/12/%E4%B8%80%E7%82%B9%E7%BB%8F%E9%AA%8C%E4%B8%8E%E6%80%9D%E8%80%83/</id>
+        <title>一点经验与思考</title>
+        <link rel="alternate" href="https://stoic-yang.github.io/2025/10/12/%E4%B8%80%E7%82%B9%E7%BB%8F%E9%AA%8C%E4%B8%8E%E6%80%9D%E8%80%83/"/>
+        <content type="html">&lt;p&gt;晚上有了半小时的空闲，再写一点&lt;/p&gt;
+&lt;p&gt;我从冬季以来，就开始了长时间的与自律的拉锯战，从用时间日志和代办事项去控制自己，到现在的不需要刻意要求自己，身体自然而然地去做一些事情。从持续的情绪低迷，到现在的情绪高昂，从以前的精力不集中，低效学习，到现在精力集中和高效学习。对于如何实现自律，还是有了一点自己的想法和思考。&lt;/p&gt;
+&lt;p&gt;首先是，如何让自己拥有更多的可控和能够全集中的时间。这里我给出一些建议：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;戒掉垃圾短视频，垃圾短视频会疯狂挤占你的碎片时间，污染你的大脑，碎片时间里应该让大脑保持清醒，要为了下一个大时间段（学习流）做准备，碎片时间可以拿来想这么些事情：接下来做什么（写作业？）、怎么做（使用什么工具，要达到什么效果，怎么训练，什么时候做），把这些东西想清楚，把做一件事情模糊点想清楚，那么这么一件事情发生的可能就会比较大。垃圾短视频有成瘾性，一方面损耗自己本身就不多的精力，另一方面，刷短视频这一个状态转移到学习（工作）这样的状态的阻力是很大的，而且短视频真没啥有意思的，纯纯奶头乐。&lt;/li&gt;
+&lt;li&gt;怎么戒掉短视频，我本身是有一段时间短视频上瘾的，首先为什么有短视频瘾？因为你有很多碎片时间，但是你又不知道要做什么，所以开始看短视频了，所以你需要找一件事情去替代你先刷短视频的生态，比如说刷知乎看经验贴、补题看题解、回复必要的消息、写总结写复盘写思考（也许写到知乎上）、对接下来的大段时间进行规划，虽然知乎确实也有很多垃圾的信息，但是比起视频来说看文字（社会评论、经验贴、论文分享）没有那么容易上瘾，通常来说可以产生更大的价值&lt;/li&gt;
+&lt;li&gt;在打算长时间做一件事情的时候，比如写离散作业，这个时候应该打开手机的免干扰模式，不要去回复微信或者QQ的消息，这会打断你的思考和节奏，导致你效率低下，甚至可能让你自己中断写作业这件事情，当然，你应该在打开免干扰之前确保这段时间里你大概率不会有其他更加重要的事情需要做&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;打CF去了，有时间再写&lt;/p&gt;
+</content>
+        <updated>2025-10-12T14:29:08.000Z</updated>
+    </entry>
+    <entry>
+        <id>https://stoic-yang.github.io/2025/10/12/CF%201057/</id>
+        <title>CF 1057</title>
+        <link rel="alternate" href="https://stoic-yang.github.io/2025/10/12/CF%201057/"/>
+        <content type="html">&lt;h3 id=&#34;A&#34;&gt;&lt;a href=&#34;#A&#34; class=&#34;headerlink&#34; title=&#34;A&#34;&gt;&lt;/a&gt;A&lt;/h3&gt;&lt;p&gt;#思维&lt;/p&gt;
+&lt;p&gt;我是 sb，潜意识以为只可以循环遍历一次，但是最后观察样例发现可以无限循环，那其实只需要统计有多少个不同的数就可以了，用 set 实现即可&lt;/p&gt;
+&lt;h3 id=&#34;B&#34;&gt;&lt;a href=&#34;#B&#34; class=&#34;headerlink&#34; title=&#34;B&#34;&gt;&lt;/a&gt;B&lt;/h3&gt;&lt;p&gt;#思维&lt;/p&gt;
+&lt;p&gt;观察规律，把 xyz 并排拆成 2 进制看，注意到同一位上如果有两个数为 1，那么第三个数应该也为 1，所以把同一位的数相加，如果等于 2，那么就是不可能的&lt;/p&gt;
+&lt;h3 id=&#34;解题小技巧&#34;&gt;&lt;a href=&#34;#解题小技巧&#34; class=&#34;headerlink&#34; title=&#34;解题小技巧&#34;&gt;&lt;/a&gt;解题小技巧&lt;/h3&gt;
+
+&lt;h3 id=&#34;C&#34;&gt;&lt;a href=&#34;#C&#34; class=&#34;headerlink&#34; title=&#34;C&#34;&gt;&lt;/a&gt;C&lt;/h3&gt;&lt;p&gt;#模拟 #几何&lt;/p&gt;
+&lt;p&gt;很容易注意到偶数个一定要贪心用掉，其他的单个棍子保留，然后判断是否可以使用， 有一个坑点就是没有判断单个棍子的长度是否长于其他棍子的总长&lt;/p&gt;
+&lt;hr&gt;
+
+
+&lt;h2 id=&#34;D&#34;&gt;&lt;a href=&#34;#D&#34; class=&#34;headerlink&#34; title=&#34;D&#34;&gt;&lt;/a&gt;D&lt;/h2&gt;&lt;p&gt;&lt;a href=&#34;https://codeforces.com/contest/2153/problem/D&#34;&gt;https://codeforces.com/contest/2153/problem/D&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;#DP #线性DP #分块&lt;/p&gt;
+&lt;p&gt;启发性的循环写法：用一次遍历把相邻两个数进行交换&lt;/p&gt;
+
+
+&lt;p&gt;分块的思想：要使得差值最小，那么就要把数组分为 3 个数或者 2 个数一个小组，每个小组计算，再累加到答案上，那么题目就转化为了一个选或者不选的问题，于是就想到了使用 DP 计算，对于每一个下标 i，i 可能是和前面两个数一组，也可能是和前面一个数一组，线性 DP，可以通过O（n）的时间复杂度得到答案&lt;/p&gt;
+
+</content>
+        <updated>2025-10-12T12:19:20.000Z</updated>
     </entry>
 </feed>

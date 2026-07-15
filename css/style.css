@@ -1,8 +1,8 @@
 :root {
   color-scheme: light;
-  --font-sans: "Segoe UI Variable Text", "Inter", "SF Pro Text", "PingFang SC",
-    "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-  --font-display: ui-serif, Georgia, "Noto Serif SC", "Source Han Serif SC",
+  --font-body: "Source Serif 4", "Noto Serif SC", "Source Han Serif SC",
+    "Songti SC", STSong, serif;
+  --font-display: "Source Serif 4", "Noto Serif SC", "Source Han Serif SC",
     "Songti SC", STSong, serif;
   --font-mono: "SFMono-Regular", "Cascadia Code", Consolas, "Liberation Mono",
     monospace;
@@ -24,7 +24,7 @@
   --shadow-lifted: 0 24px 70px rgba(48, 49, 72, 0.12);
   --pointer-x: 72vw;
   --pointer-y: 20vh;
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: 16px;
   line-height: 1.78;
   color: var(--ink);
@@ -207,16 +207,6 @@ a:focus-visible {
   text-decoration: none;
 }
 
-.site-title::after {
-  width: 0.36em;
-  height: 0.36em;
-  margin-left: 0.18em;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 0 4px rgba(98, 104, 217, 0.1);
-  content: "";
-}
-
 .site-nav {
   display: flex;
   align-items: center;
@@ -243,45 +233,6 @@ main.container {
   padding-block: 76px 108px;
 }
 
-.site-intro {
-  position: relative;
-  overflow: hidden;
-  margin-bottom: 38px;
-  padding: clamp(34px, 6vw, 52px);
-  border: 1px solid rgba(255, 255, 255, 0.86);
-  border-radius: 28px;
-  background:
-    linear-gradient(120deg, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.58)),
-    var(--paper);
-  box-shadow: var(--shadow-lifted);
-}
-
-.site-intro::before {
-  position: absolute;
-  width: 180px;
-  height: 180px;
-  top: -92px;
-  right: -38px;
-  border: 1px solid rgba(98, 104, 217, 0.19);
-  border-radius: 50%;
-  box-shadow:
-    0 0 0 30px rgba(98, 104, 217, 0.035),
-    0 0 0 62px rgba(123, 211, 224, 0.025);
-  content: "";
-}
-
-.site-intro::after {
-  position: absolute;
-  width: 72px;
-  height: 3px;
-  left: clamp(34px, 6vw, 52px);
-  bottom: 0;
-  border-radius: 99px 99px 0 0;
-  background: linear-gradient(90deg, var(--accent), #79cbd8);
-  content: "";
-}
-
-.site-intro h1,
 .page-header h1,
 .post-header h1 {
   margin: 0;
@@ -290,13 +241,6 @@ main.container {
   font-weight: 700;
   line-height: 1.14;
   letter-spacing: -0.045em;
-}
-
-.site-intro p {
-  max-width: 32rem;
-  margin: 14px 0 0;
-  color: var(--muted);
-  font-size: 1.02rem;
 }
 
 .post-list {
@@ -683,10 +627,6 @@ main.container {
   justify-content: space-between;
 }
 
-.site-footer a {
-  color: var(--accent-deep);
-}
-
 @media (max-width: 640px) {
   .container {
     width: min(100% - 28px, 820px);
@@ -723,17 +663,6 @@ main.container {
     padding-block: 45px 72px;
   }
 
-  .site-intro {
-    margin-bottom: 28px;
-    padding: 30px 25px 32px;
-    border-radius: 21px;
-  }
-
-  .site-intro::after {
-    left: 25px;
-  }
-
-  .site-intro h1,
   .page-header h1,
   .post-header h1 {
     font-size: clamp(2rem, 11vw, 2.8rem);

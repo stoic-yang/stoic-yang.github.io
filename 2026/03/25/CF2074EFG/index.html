@@ -1,0 +1,99 @@
+
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CF2074EFG · keynary</title>
+  <meta name="description" content="stay hungry, stay foolish">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#f6f5f2">
+  <link rel="icon" href="/images/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&amp;display=swap" rel="stylesheet">
+  
+    <link rel="alternate" type="application/atom+xml" title="keynary" href="/atom.xml">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body class="site-shell">
+  <div class="ambient-background" aria-hidden="true">
+    <span class="ambient-glow ambient-glow--pointer"></span>
+    <span class="ambient-glow ambient-glow--blue"></span>
+    <span class="ambient-glow ambient-glow--warm"></span>
+  </div>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="site-title" href="/">keynary</a>
+      <nav class="site-nav" aria-label="主导航">
+        
+          <a href="/">首页</a>
+        
+          <a href="/archives/">归档</a>
+        
+          <a href="/about/">关于</a>
+        
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <article class="post">
+  <header class="post-header">
+    <time datetime="2026-03-25T15:50:25.000Z">2026-03-25</time>
+    <h1>CF2074EFG</h1>
+  </header>
+
+  <div class="post-content">
+    <p>大概率只有自己能看懂的题解，只是简单记录一下</p>
+<h3 id="CF2074E"><a href="#CF2074E" class="headerlink" title="CF2074E"></a>CF2074E</h3><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/write#%E9%9A%8F%E6%9C%BA%E5%8C%96">#随机化</a> <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/write#%E9%9A%8F%E6%9C%BA%E6%95%B0%E7%94%9F%E6%88%90">#随机数生成</a><br>生成随机数的代码： mt19937 rng(clock() + time(0));</p>
+
+
+<h3 id="CF2074F"><a href="#CF2074F" class="headerlink" title="CF2074F"></a>CF2074F</h3><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/write#%E7%BA%BF%E6%AE%B5%E6%A0%91">#线段树</a> <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/write#%E4%BA%8C%E5%88%86">#二分</a> <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/write#%E5%88%86%E5%9D%97">#分块</a> <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/write#%E6%9A%B4%E5%8A%9B">#暴力</a><br>题意：给你一个 a\times b 的矩形，你需要用边长为 2^k 的正方形覆盖它，问最少用多少个正方形可以恰好覆盖<br>思路：把 a\times b 的矩阵拆分成两个维度来看，把 a 和 b 分别拆分成一堆 2^k 长度的段，然后枚举 x 和 y 上所有拆分出来的段，计算答案即可，这里切分需要用到线段树的思想</p>
+
+
+<h3 id="CF2074G"><a href="#CF2074G" class="headerlink" title="CF2074G"></a>CF2074G</h3><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/write#%E5%A4%9A%E8%BE%B9%E5%BD%A2DP">#多边形DP</a> <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/write#%E5%8C%BA%E9%97%B4DP">#区间DP</a> <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/write#%E5%A4%84%E7%90%86%E7%8E%AF%E5%BD%A2">#处理环形</a><br>题意：给你一个多边形，你可以选择三个顶点，并且得到三个顶点乘积的值，目标是最大化得到的值，但是你不能选择三个顶点形成的三角形与先前的三角形重叠</p>
+<p>思路：考虑区间 DP，在 [0,n-1] 区间内做 DP，我们需要枚举每一个区间中的一个点，作为 l,r 以外的第三点 k 去构成一个三角形。选中点后，区间就可以被拆成两个区间 [l + 1,k] 和 [k + 1, r] ，这里就可以引出状态转移方程：</p>
+<p>dp[L,R]=max(dp[L,k-1]+dp[k+1][R]+score(L,R,K), dp[L,R])</p>
+<p>区间 DP 的套路：<br>我们要得到一个长区间的值，就需要先计算出所有小区间的值，在 for 循环中怎么去实现呢？</p>
+
+
+<p>最终的答案就是 dp[0][n - 1]</p>
+
+
+  </div>
+
+  
+</article>
+
+<nav class="post-navigation" aria-label="文章导航">
+  
+    <a href="/2026/04/13/%E5%A4%A7%E4%BA%8C%E8%A2%AB%E9%A2%84%E5%88%B6%E8%BF%9B%E8%AF%BE%E9%A2%98%E7%BB%84%E6%89%93%E5%B7%A5%E6%98%AF%E4%BB%80%E4%B9%88%E4%BD%93%E9%AA%8C%EF%BC%883%EF%BC%89/">
+      <span>上一篇</span>
+      <strong>大二被预制进课题组打工是什么体验（3）</strong>
+    </a>
+  
+  
+    <a href="/2026/03/16/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%9AMultimodalHD/">
+      <span>下一篇</span>
+      <strong>论文阅读：MultimodalHD</strong>
+    </a>
+  
+</nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© 2026 keynary</span>
+    </div>
+  </footer>
+  
+<script src="/js/ambient.js"></script>
+
+</body>
+</html>
