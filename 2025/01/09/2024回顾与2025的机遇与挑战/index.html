@@ -4,10 +4,47 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    (function () {
+      var stored = null;
+      try { stored = localStorage.getItem('ink-theme'); } catch (e) {}
+      var media = window.matchMedia('(prefers-color-scheme: dark)');
+      var theme = stored === 'light' || stored === 'dark'
+        ? stored
+        : (media.matches ? 'dark' : 'light');
+      var root = document.documentElement;
+      root.setAttribute('data-theme', theme);
+      if (!stored && media.addEventListener) {
+        media.addEventListener('change', function (event) {
+          root.setAttribute('data-theme', event.matches ? 'dark' : 'light');
+          var meta = document.getElementById('meta-theme-color');
+          if (meta) meta.content = event.matches ? '#141519' : '#f6f5f2';
+        });
+      }
+      document.addEventListener('DOMContentLoaded', function () {
+        var meta = document.getElementById('meta-theme-color');
+        if (meta && root.getAttribute('data-theme') === 'dark') meta.content = '#141519';
+      });
+    })();
+  </script>
   <title>2024回顾与2025的机遇与挑战 · keynary</title>
-  <meta name="description" content="stay hungry, stay foolish">
-  <meta name="color-scheme" content="light">
-  <meta name="theme-color" content="#f6f5f2">
+  <meta name="description" content="思来想去，还是要好好回忆一下这一对我来说有这非凡意义的一年，如果没有好好记录，以后忘记了，这大概会是我很大的损失。写这样的回顾的意义也不仅仅是记录过去的一年，更是跟自己的心灵对话，寻觅过去的自己，重新去解读过去的自己，与过去的自己和解，写这篇文章的目的大抵如此。 高考前后以及暑假虚无主义我对 2024 的印象主要...">
+  <meta name="author" content="keynary">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f6f5f2" id="meta-theme-color">
+  <link rel="canonical" href="https://stoic-yang.github.io/2025/01/09/2024%E5%9B%9E%E9%A1%BE%E4%B8%8E2025%E7%9A%84%E6%9C%BA%E9%81%87%E4%B8%8E%E6%8C%91%E6%88%98/">
+  <meta property="og:site_name" content="keynary">
+  <meta property="og:title" content="2024回顾与2025的机遇与挑战">
+  <meta property="og:description" content="思来想去，还是要好好回忆一下这一对我来说有这非凡意义的一年，如果没有好好记录，以后忘记了，这大概会是我很大的损失。写这样的回顾的意义也不仅仅是记录过去的一年，更是跟自己的心灵对话，寻觅过去的自己，重新去解读过去的自己，与过去的自己和解，写这篇文章的目的大抵如此。 高考前后以及暑假虚无主义我对 2024 的印象主要...">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://stoic-yang.github.io/2025/01/09/2024%E5%9B%9E%E9%A1%BE%E4%B8%8E2025%E7%9A%84%E6%9C%BA%E9%81%87%E4%B8%8E%E6%8C%91%E6%88%98/">
+  <meta property="og:locale" content="zh_CN">
+  
+    <meta name="twitter:card" content="summary">
+  
+  
+    <meta property="article:published_time" content="2025-01-09T13:55:31.000Z">
+  
   <link rel="icon" href="/images/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,10 +53,13 @@
     <link rel="alternate" type="application/atom+xml" title="keynary" href="/atom.xml">
   
   
+  
 <link rel="stylesheet" href="/css/style.css">
 
 <meta name="generator" content="Hexo 7.3.0"></head>
 <body class="site-shell">
+  <a class="skip-link" href="#main">跳到正文</a>
+
   <div class="ambient-background" aria-hidden="true">
     <span class="ambient-glow ambient-glow--pointer"></span>
     <span class="ambient-glow ambient-glow--blue"></span>
@@ -29,24 +69,57 @@
   <header class="site-header">
     <div class="container header-inner">
       <a class="site-title" href="/">keynary</a>
-      <nav class="site-nav" aria-label="主导航">
-        
-          <a href="/">首页</a>
-        
-          <a href="/archives/">归档</a>
-        
-          <a href="/about/">关于</a>
-        
-      </nav>
+      <div class="header-tools">
+        <nav class="site-nav" aria-label="主导航">
+          
+            <a href="/">首页</a>
+          
+            <a href="/archives/">归档</a>
+          
+            <a href="/about/">关于</a>
+          
+        </nav>
+        <button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式">
+          <svg class="icon-sun" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <circle cx="12" cy="12" r="4.4"></circle>
+            <path d="M12 2.8v2.2M12 19v2.2M2.8 12h2.2M19 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6"></path>
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.4 14.2A8.6 8.6 0 0 1 9.8 3.6a8.6 8.6 0 1 0 10.6 10.6Z"></path>
+          </svg>
+        </button>
+      </div>
     </div>
   </header>
 
-  <main class="container">
-    <article class="post">
+  <main class="container" id="main">
+    
+<article class="post">
   <header class="post-header">
-    <time datetime="2025-01-09T13:55:31.000Z">2025-01-09</time>
+    <div class="post-meta">
+      <time datetime="2025-01-09T13:55:31.000Z">2025-01-09</time>
+      <span class="meta-sep" aria-hidden="true">·</span>
+      <span>约 6.5k 字</span>
+      <span class="meta-sep" aria-hidden="true">·</span>
+      <span>16 分钟</span>
+      
+        <span class="meta-sep" aria-hidden="true">·</span>
+        
+          <a class="meta-category" href="/categories/summary/">summary</a>
+        
+      
+    </div>
     <h1>2024回顾与2025的机遇与挑战</h1>
   </header>
+
+  
+    <nav class="post-toc" aria-label="本文目录">
+      <details class="toc-card">
+        <summary>目录</summary>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%AB%98%E8%80%83%E5%89%8D%E5%90%8E%E4%BB%A5%E5%8F%8A%E6%9A%91%E5%81%87"><span class="toc-text">高考前后以及暑假</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%99%9A%E6%97%A0%E4%B8%BB%E4%B9%89"><span class="toc-text">虚无主义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%93%E4%B8%9A%E9%80%89%E6%8B%A9"><span class="toc-text">专业选择</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%A6%E6%A0%A1%E9%80%89%E6%8B%A9"><span class="toc-text">学校选择</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%BF%E5%BE%B7%E5%8B%92%E5%BF%83%E7%90%86%E5%AD%A6"><span class="toc-text">阿德勒心理学</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%90%AF%E8%92%99%E2%80%94%E2%80%94CS50"><span class="toc-text">计算机启蒙——CS50</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%A7%E4%B8%80"><span class="toc-text">大一</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A7%8B%E5%AD%A3%E5%AD%A6%E6%9C%9F"><span class="toc-text">秋季学期</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%AC%E5%AD%A3%E5%AD%A6%E6%9C%9F"><span class="toc-text">冬季学期</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E5%90%91%E7%9A%84%E8%BF%B7%E8%8C%AB"><span class="toc-text">方向的迷茫</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2"><span class="toc-text">个人博客</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%A1%E6%81%AF%E6%B5%81"><span class="toc-text">信息流</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-text">小结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AF%8F%E6%97%A5%E6%80%BB%E7%BB%93%E6%89%93%E5%8D%A1"><span class="toc-text">每日总结打卡</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B1%95%E6%9C%9B-2025"><span class="toc-text">展望 2025</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%BA%E9%81%87%E4%B8%8E%E6%8C%91%E6%88%98%E5%B9%B6%E5%AD%98"><span class="toc-text">机遇与挑战并存</span></a></li></ol></li></ol>
+      </details>
+    </nav>
+  
 
   <div class="post-content">
     <p>思来想去，还是要好好回忆一下这一对我来说有这非凡意义的一年，如果没有好好记录，以后忘记了，这大概会是我很大的损失。写这样的回顾的意义也不仅仅是记录过去的一年，更是跟自己的心灵对话，寻觅过去的自己，重新去解读过去的自己，与过去的自己和解，写这篇文章的目的大抵如此。</p>
@@ -195,12 +268,29 @@
   </main>
 
   <footer class="site-footer">
-    <div class="container">
+    <div class="container footer-inner">
       <span>© 2026 keynary</span>
+      <nav class="footer-links" aria-label="页脚链接">
+        
+          <a href="/atom.xml">RSS</a>
+        
+        
+          <a href="https://github.com/stoic-yang" rel="me noopener" target="_blank">GitHub</a>
+        
+      </nav>
     </div>
   </footer>
+
+  <button class="back-top" type="button" aria-label="回到顶部" title="回到顶部" hidden>
+    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 19V5M5.5 11.5 12 5l6.5 6.5"></path>
+    </svg>
+  </button>
+
   
 <script src="/js/ambient.js"></script>
 
+  <script defer src="/js/main.js"></script>
+  
 </body>
 </html>

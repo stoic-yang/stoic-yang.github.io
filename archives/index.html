@@ -4,10 +4,45 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>keynary</title>
+  <script>
+    (function () {
+      var stored = null;
+      try { stored = localStorage.getItem('ink-theme'); } catch (e) {}
+      var media = window.matchMedia('(prefers-color-scheme: dark)');
+      var theme = stored === 'light' || stored === 'dark'
+        ? stored
+        : (media.matches ? 'dark' : 'light');
+      var root = document.documentElement;
+      root.setAttribute('data-theme', theme);
+      if (!stored && media.addEventListener) {
+        media.addEventListener('change', function (event) {
+          root.setAttribute('data-theme', event.matches ? 'dark' : 'light');
+          var meta = document.getElementById('meta-theme-color');
+          if (meta) meta.content = event.matches ? '#141519' : '#f6f5f2';
+        });
+      }
+      document.addEventListener('DOMContentLoaded', function () {
+        var meta = document.getElementById('meta-theme-color');
+        if (meta && root.getAttribute('data-theme') === 'dark') meta.content = '#141519';
+      });
+    })();
+  </script>
+  <title>归档 · keynary</title>
   <meta name="description" content="stay hungry, stay foolish">
-  <meta name="color-scheme" content="light">
-  <meta name="theme-color" content="#f6f5f2">
+  <meta name="author" content="keynary">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f6f5f2" id="meta-theme-color">
+  <link rel="canonical" href="https://stoic-yang.github.io/archives/">
+  <meta property="og:site_name" content="keynary">
+  <meta property="og:title" content="归档">
+  <meta property="og:description" content="stay hungry, stay foolish">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://stoic-yang.github.io/archives/">
+  <meta property="og:locale" content="zh_CN">
+  
+    <meta name="twitter:card" content="summary">
+  
+  
   <link rel="icon" href="/images/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,10 +51,13 @@
     <link rel="alternate" type="application/atom+xml" title="keynary" href="/atom.xml">
   
   
+  
 <link rel="stylesheet" href="/css/style.css">
 
 <meta name="generator" content="Hexo 7.3.0"></head>
 <body class="site-shell">
+  <a class="skip-link" href="#main">跳到正文</a>
+
   <div class="ambient-background" aria-hidden="true">
     <span class="ambient-glow ambient-glow--pointer"></span>
     <span class="ambient-glow ambient-glow--blue"></span>
@@ -29,103 +67,690 @@
   <header class="site-header">
     <div class="container header-inner">
       <a class="site-title" href="/">keynary</a>
-      <nav class="site-nav" aria-label="主导航">
-        
-          <a href="/">首页</a>
-        
-          <a href="/archives/">归档</a>
-        
-          <a href="/about/">关于</a>
-        
-      </nav>
+      <div class="header-tools">
+        <nav class="site-nav" aria-label="主导航">
+          
+            <a href="/">首页</a>
+          
+            <a href="/archives/" aria-current="page">归档</a>
+          
+            <a href="/about/">关于</a>
+          
+        </nav>
+        <button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式">
+          <svg class="icon-sun" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <circle cx="12" cy="12" r="4.4"></circle>
+            <path d="M12 2.8v2.2M12 19v2.2M2.8 12h2.2M19 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6"></path>
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.4 14.2A8.6 8.6 0 0 1 9.8 3.6a8.6 8.6 0 1 0 10.6 10.6Z"></path>
+          </svg>
+        </button>
+      </div>
     </div>
   </header>
 
-  <main class="container">
+  <main class="container" id="main">
     
-<header class="page-header">
-  <h1>归档</h1>
-</header>
 
-<section class="archive-list">
-  
-    
-      <h2>2026</h2>
-    
-    <article>
-      <time datetime="2026-05-18T10:36:36.000Z">05-18</time>
-      <a href="/2026/05/18/CS231n%20Softmax%20%E5%88%86%E7%B1%BB%E5%99%A8%E4%B8%8E%E4%BA%A4%E5%8F%89%E7%86%B5%E6%A2%AF%E5%BA%A6%EF%BC%881%EF%BC%89/">CS231n Softmax 分类器与交叉熵梯度（1）</a>
-    </article>
-  
-    
-    <article>
-      <time datetime="2026-04-13T14:32:37.000Z">04-13</time>
-      <a href="/2026/04/13/%E5%A4%A7%E4%BA%8C%E8%A2%AB%E9%A2%84%E5%88%B6%E8%BF%9B%E8%AF%BE%E9%A2%98%E7%BB%84%E6%89%93%E5%B7%A5%E6%98%AF%E4%BB%80%E4%B9%88%E4%BD%93%E9%AA%8C%EF%BC%883%EF%BC%89/">大二被预制进课题组打工是什么体验（3）</a>
-    </article>
-  
-    
-    <article>
-      <time datetime="2026-03-25T15:50:25.000Z">03-25</time>
-      <a href="/2026/03/25/CF2074EFG/">CF2074EFG</a>
-    </article>
-  
-    
-    <article>
-      <time datetime="2026-03-16T12:32:41.000Z">03-16</time>
-      <a href="/2026/03/16/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%9AMultimodalHD/">论文阅读：MultimodalHD</a>
-    </article>
-  
-    
-    <article>
-      <time datetime="2026-03-13T11:27:42.000Z">03-13</time>
-      <a href="/2026/03/13/ActivityWatch%E8%87%AA%E5%8A%A8%E5%8C%96%E6%97%B6%E9%97%B4%E8%AE%B0%E5%BD%95%E4%BD%93%E7%B3%BB/">ActivityWatch自动化时间记录体系</a>
-    </article>
-  
-    
-    <article>
-      <time datetime="2026-03-13T05:21:25.000Z">03-13</time>
-      <a href="/2026/03/13/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0%EF%BC%9AFedMultimodal%EF%BC%9AA%20Benchmark%20For%20Multimodal%20Federated%20Learning/">论文阅读与复现：FedMultimodal:A Benchmark For Multimodal Federated Learning</a>
-    </article>
-  
-    
-    <article>
-      <time datetime="2026-03-04T14:44:38.000Z">03-04</time>
-      <a href="/2026/03/04/oj_dashboard%E2%80%94%E2%80%94%E8%81%9A%E5%90%88Codeforces%E3%80%81atcoder%E3%80%81leetcode%E6%8F%90%E4%BA%A4%E8%AE%B0%E5%BD%95%E5%BD%A2%E6%88%90%E7%83%AD%E5%8A%9B%E5%9B%BE%E7%9A%84%E5%B7%A5%E5%85%B7/">oj_dashboard——聚合Codeforces、atcoder、leetcode提交记录形成热力图的工具</a>
-    </article>
-  
-    
-    <article>
-      <time datetime="2026-02-22T10:19:56.000Z">02-22</time>
-      <a href="/2026/02/22/%E5%A4%A7%E4%BA%8C%E8%A2%AB%E9%A2%84%E5%88%B6%E8%BF%9B%E5%AD%A6%E6%A0%A1%E8%AF%BE%E9%A2%98%E7%BB%84%E6%89%93%E5%B7%A5%E6%98%AF%E4%BB%80%E4%B9%88%E4%BD%93%E9%AA%8C%EF%BC%882%EF%BC%89/">大二被预制进学校课题组打工是什么体验（2）</a>
-    </article>
-  
-    
-    <article>
-      <time datetime="2026-02-22T05:21:55.000Z">02-22</time>
-      <a href="/2026/02/22/%E5%A4%A7%E4%BA%8C%E8%A2%AB%E9%A2%84%E5%88%B6%E8%BF%9B%E5%AD%A6%E6%A0%A1%E8%AF%BE%E9%A2%98%E7%BB%84%E6%89%93%E5%B7%A5%E6%98%AF%E4%BB%80%E4%B9%88%E4%BD%93%E9%AA%8C(1)/">大二被预制进学校课题组打工是什么体验(1)</a>
-    </article>
-  
-    
-    <article>
-      <time datetime="2026-02-05T14:12:17.000Z">02-05</time>
-      <a href="/2026/02/05/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84Mac%E7%94%B5%E8%84%91%E9%85%8D%E7%BD%AE%EF%BC%8C%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90%EF%BC%8C%E6%97%A0%E7%97%9Bwin%E8%BD%ACmac/">从零开始的Mac电脑配置，软件推荐，无痛win转mac</a>
-    </article>
-  
-</section>
 
-<nav class="pagination" aria-label="分页">
-  <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/9/">9</a><a class="extend next" rel="next" href="/archives/page/2/">→</a>
-</nav>
+  
+
+  <header class="page-header">
+    <h1>归档</h1>
+    <p class="archive-total">共 87 篇 · 2024 – 2026</p>
+  </header>
+
+  
+    <nav class="archive-nav" aria-label="按年份检索">
+      
+        <a href="#y2026">
+          <span class="nav-year">2026</span>
+          <span class="nav-count">10</span>
+        </a>
+      
+        <a href="#y2025">
+          <span class="nav-year">2025</span>
+          <span class="nav-count">61</span>
+        </a>
+      
+        <a href="#y2024">
+          <span class="nav-year">2024</span>
+          <span class="nav-count">16</span>
+        </a>
+      
+    </nav>
+  
+
+  <div class="archive-timeline">
+    
+      <section class="archive-year" id="y2026" data-year="2026">
+        <h2>
+          <span class="year-label">2026</span>
+          <span class="year-count">10 篇</span>
+        </h2>
+        <ol class="year-posts">
+          
+            <li>
+              <time datetime="2026-05-18T10:36:36.000Z">05-18</time>
+              <a href="/2026/05/18/CS231n%20Softmax%20%E5%88%86%E7%B1%BB%E5%99%A8%E4%B8%8E%E4%BA%A4%E5%8F%89%E7%86%B5%E6%A2%AF%E5%BA%A6%EF%BC%881%EF%BC%89/">CS231n Softmax 分类器与交叉熵梯度（1）</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2026-04-13T14:32:37.000Z">04-13</time>
+              <a href="/2026/04/13/%E5%A4%A7%E4%BA%8C%E8%A2%AB%E9%A2%84%E5%88%B6%E8%BF%9B%E8%AF%BE%E9%A2%98%E7%BB%84%E6%89%93%E5%B7%A5%E6%98%AF%E4%BB%80%E4%B9%88%E4%BD%93%E9%AA%8C%EF%BC%883%EF%BC%89/">大二被预制进课题组打工是什么体验（3）</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2026-03-25T15:50:25.000Z">03-25</time>
+              <a href="/2026/03/25/CF2074EFG/">CF2074EFG</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2026-03-16T12:32:41.000Z">03-16</time>
+              <a href="/2026/03/16/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%9AMultimodalHD/">论文阅读：MultimodalHD</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2026-03-13T11:27:42.000Z">03-13</time>
+              <a href="/2026/03/13/ActivityWatch%E8%87%AA%E5%8A%A8%E5%8C%96%E6%97%B6%E9%97%B4%E8%AE%B0%E5%BD%95%E4%BD%93%E7%B3%BB/">ActivityWatch自动化时间记录体系</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2026-03-13T05:21:25.000Z">03-13</time>
+              <a href="/2026/03/13/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0%EF%BC%9AFedMultimodal%EF%BC%9AA%20Benchmark%20For%20Multimodal%20Federated%20Learning/">论文阅读与复现：FedMultimodal:A Benchmark For Multimodal Federated Learning</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2026-03-04T14:44:38.000Z">03-04</time>
+              <a href="/2026/03/04/oj_dashboard%E2%80%94%E2%80%94%E8%81%9A%E5%90%88Codeforces%E3%80%81atcoder%E3%80%81leetcode%E6%8F%90%E4%BA%A4%E8%AE%B0%E5%BD%95%E5%BD%A2%E6%88%90%E7%83%AD%E5%8A%9B%E5%9B%BE%E7%9A%84%E5%B7%A5%E5%85%B7/">oj_dashboard——聚合Codeforces、atcoder、leetcode提交记录形成热力图的工具</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2026-02-22T10:19:56.000Z">02-22</time>
+              <a href="/2026/02/22/%E5%A4%A7%E4%BA%8C%E8%A2%AB%E9%A2%84%E5%88%B6%E8%BF%9B%E5%AD%A6%E6%A0%A1%E8%AF%BE%E9%A2%98%E7%BB%84%E6%89%93%E5%B7%A5%E6%98%AF%E4%BB%80%E4%B9%88%E4%BD%93%E9%AA%8C%EF%BC%882%EF%BC%89/">大二被预制进学校课题组打工是什么体验（2）</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2026-02-22T05:21:55.000Z">02-22</time>
+              <a href="/2026/02/22/%E5%A4%A7%E4%BA%8C%E8%A2%AB%E9%A2%84%E5%88%B6%E8%BF%9B%E5%AD%A6%E6%A0%A1%E8%AF%BE%E9%A2%98%E7%BB%84%E6%89%93%E5%B7%A5%E6%98%AF%E4%BB%80%E4%B9%88%E4%BD%93%E9%AA%8C(1)/">大二被预制进学校课题组打工是什么体验(1)</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2026-02-05T14:12:17.000Z">02-05</time>
+              <a href="/2026/02/05/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84Mac%E7%94%B5%E8%84%91%E9%85%8D%E7%BD%AE%EF%BC%8C%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90%EF%BC%8C%E6%97%A0%E7%97%9Bwin%E8%BD%ACmac/">从零开始的Mac电脑配置，软件推荐，无痛win转mac</a>
+              
+            </li>
+          
+        </ol>
+      </section>
+    
+      <section class="archive-year" id="y2025" data-year="2025">
+        <h2>
+          <span class="year-label">2025</span>
+          <span class="year-count">61 篇</span>
+        </h2>
+        <ol class="year-posts">
+          
+            <li>
+              <time datetime="2025-12-30T16:00:00.000Z">12-31</time>
+              <a href="/2025/12/31/2025.12.31/">2025.12.31</a>
+              
+                <span class="row-category">随笔</span>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-12-29T11:02:16.000Z">12-29</time>
+              <a href="/2025/12/29/gemini%E4%BD%BF%E7%94%A8%E5%B0%8F%E6%8A%80%E5%B7%A7%EF%BC%88%E8%80%83%E8%AF%95%E5%91%A8%E5%90%91%EF%BC%89/">gemini使用小技巧（考试周向）</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-11-26T07:46:37.000Z">11-26</time>
+              <a href="/2025/11/26/ABC428/">ABC428</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-11-26T07:23:57.000Z">11-26</time>
+              <a href="/2025/11/26/CF1063/">CF1063</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-11-24T15:00:18.000Z">11-24</time>
+              <a href="/2025/11/24/2025%E5%B9%B411%E6%9C%8824%E6%97%A5%E2%80%94%E2%80%94ICPC%E4%B8%8A%E6%B5%B7%E7%AB%99%E5%BF%97%E6%84%BF%E8%80%85/">2025年11月24日——ICPC上海站志愿者</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-11-16T13:57:38.000Z">11-16</time>
+              <a href="/2025/11/16/2025%E5%B9%B411%E6%9C%8816%E6%97%A5%E2%80%94%E2%80%94%E9%93%A9%E7%BE%BD%E5%8D%97%E4%BA%AC%EF%BC%8C%E4%BA%94%E5%AD%A6%E6%9C%9F%E7%8E%8B%E6%9C%9D/">2025年11月16日——铩羽南京，五学期王朝</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-10-26T14:46:29.000Z">10-26</time>
+              <a href="/2025/10/26/Fall%20week5%20%E5%91%A8%E8%AE%B0/">Fall week5 周记</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-10-19T15:03:56.000Z">10-19</time>
+              <a href="/2025/10/19/Fall%20week4%20%E5%91%A8%E8%AE%B0/">Fall week4 周记</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-10-12T14:29:08.000Z">10-12</time>
+              <a href="/2025/10/12/%E4%B8%80%E7%82%B9%E7%BB%8F%E9%AA%8C%E4%B8%8E%E6%80%9D%E8%80%83/">一点经验与思考</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-10-12T12:19:20.000Z">10-12</time>
+              <a href="/2025/10/12/CF%201057/">CF 1057</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-10-12T12:17:56.000Z">10-12</time>
+              <a href="/2025/10/12/2022%20ICPC%20%E8%A5%BF%E5%AE%89/">2022 ICPC 西安</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-10-12T01:27:23.000Z">10-12</time>
+              <a href="/2025/10/12/%E5%9B%BD%E5%BA%86%E5%89%8D%E5%90%8E%E4%B8%A4%E5%91%A8%E5%91%A8%E6%8A%A5%EF%BC%8810.1-10.12%EF%BC%89/">国庆前后两周周报（10.1-10.12）</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-10-09T05:06:09.000Z">10-09</time>
+              <a href="/2025/10/09/2022%20iCPC%20%E6%B2%88%E9%98%B3/">2022 iCPC 沈阳</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-10-05T13:02:15.000Z">10-05</time>
+              <a href="/2025/10/05/CS189%20(2)%20discussion%201%20Pandas%20Review/">CS189 (2) discussion 1 Pandas Review</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-10-05T11:48:56.000Z">10-05</time>
+              <a href="/2025/10/05/CS189%20(1)%20data%20tool/">CS189 (1) data tool</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-09-27T14:24:39.000Z">09-27</time>
+              <a href="/2025/09/27/%E7%A7%8B%E5%AD%A3week1%E5%91%A8%E7%BB%93/">秋季week1周结</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-09-21T12:44:06.000Z">09-21</time>
+              <a href="/2025/09/21/9.15-9.21%E5%B0%8F%E7%BB%93/">9.15-9.21小结</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-09-15T15:19:10.000Z">09-15</time>
+              <a href="/2025/09/15/9.8-9.14%20%E5%91%A8%E8%AE%B0/">9.8-9.14 周记</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-09-09T11:46:43.000Z">09-09</time>
+              <a href="/2025/09/09/9%20.1%20-9.7%20%E5%91%A8%E7%BB%93/">9 .1 -9.7 周结</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-09-06T16:00:00.000Z">09-07</time>
+              <a href="/2025/09/07/CSAPP%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">CSAPP学习笔记</a>
+              
+                <span class="row-category">公开课</span>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-09-06T16:00:00.000Z">09-07</time>
+              <a href="/2025/09/07/%E5%A4%A7%E4%B8%80%E5%9B%9E%E5%BF%86%E5%BD%95/">大一下回忆录</a>
+              
+                <span class="row-category">随笔</span>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-08-15T15:53:38.000Z">08-15</time>
+              <a href="/2025/08/15/%E5%BD%92%E4%B9%A1%E4%B8%80%E5%91%A8%E5%B0%8F%E8%AE%B0/">归乡一周小记</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-08-11T16:40:42.000Z">08-12</time>
+              <a href="/2025/08/12/%E8%87%AA%E5%88%B6%E5%8A%9B%E5%8F%AF%E4%BB%A5%E4%B8%80%E7%9B%B4%E4%BF%9D%E6%8C%81%E5%90%97%EF%BC%9F%E5%8F%97RSIP%E5%BD%B1%E5%93%8D%E7%9A%84%E4%B8%80%E4%BA%9B%E6%9C%89%E5%85%B3%E8%87%AA%E5%88%B6%E5%8A%9B%E7%9A%84%E6%80%9D%E8%80%83/">自制力可以一直保持吗？受RSIP影响的一些有关自制力的思考</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-08-10T06:20:15.000Z">08-10</time>
+              <a href="/2025/08/10/%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%81%B6%E9%81%87acm%E6%9A%91%E6%9C%9F%E9%9B%86%E8%AE%AD%E4%B8%83%E6%9C%88%E5%B0%8F%E5%AF%84/">零基础偶遇acm暑期集训七月小寄</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-08-10T05:16:30.000Z">08-10</time>
+              <a href="/2025/08/10/%E5%8D%8E%E4%B8%BA%E7%BB%83%E7%A7%8B%E6%B9%96%E4%B8%80%E6%97%A5%E6%B8%B8%E8%AE%B2%E5%BA%A7%E6%84%9F%E6%83%B3/">华为练秋湖一日游讲座感想</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-06-22T03:11:49.000Z">06-22</time>
+              <a href="/2025/06/22/Acwing%20785/">Acwing 785</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-06-04T05:33:29.000Z">06-04</time>
+              <a href="/2025/06/04/%E5%AE%8C%E7%BE%8E%E4%B8%BB%E4%B9%89%E7%9A%84%E9%98%B4%E5%BD%B1%E4%B8%8E%E9%AB%98%E6%95%88%E6%82%96%E8%AE%BA%E4%B8%8E%E6%9E%81%E7%AE%80%E4%B8%BB%E4%B9%89/">完美主义的阴影与高效悖论与极简主义</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-05-13T14:29:57.000Z">05-13</time>
+              <a href="/2025/05/13/CS106L/">CS106L</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-05-11T15:53:33.000Z">05-11</time>
+              <a href="/2025/05/11/%E3%80%8A%E9%80%9A%E5%BE%80%E8%B4%A2%E5%AF%8C%E8%87%AA%E7%94%B1%E4%B9%8B%E8%B7%AF%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">《通往财富自由之路》读书笔记</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-05-09T01:53:11.000Z">05-09</time>
+              <a href="/2025/05/09/%E8%A1%8C%E4%B8%BA%E6%A8%A1%E5%9E%8B%E7%9A%84%E6%94%B9%E8%BF%9B/">行为模型的改进</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-05-06T03:38:57.000Z">05-06</time>
+              <a href="/2025/05/06/%E6%98%A5%E5%AD%A3week7%E5%91%A8%E7%BB%93/">春季week7周结</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-05-01T05:13:04.000Z">05-01</time>
+              <a href="/2025/05/01/%E7%94%BB%E5%B7%A5%E5%9B%BE%E7%8C%9D%E6%AD%BB%E5%89%8D%E7%9A%84%E8%83%A1%E8%A8%80%E4%B9%B1%E8%AF%AD/">画工图猝死前的胡言乱语</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-04-28T16:00:00.000Z">04-29</time>
+              <a href="/2025/04/29/%E7%BB%8F%E6%B5%8E%E5%AD%A6%E5%8E%9F%E7%90%86/">经济学原理</a>
+              
+                <span class="row-category">经济学</span>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-04-21T02:46:20.000Z">04-21</time>
+              <a href="/2025/04/21/%E6%98%A5%E5%AD%A3week5/">春季week5</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-04-19T14:36:54.000Z">04-19</time>
+              <a href="/2025/04/19/%E6%98%A5%E5%AF%84/">春寄</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-04-13T14:10:01.000Z">04-13</time>
+              <a href="/2025/04/13/%E6%98%A5%E5%AD%A3week4%E5%A4%8D%E7%9B%98/">春季week4复盘</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-04-07T05:35:20.000Z">04-07</time>
+              <a href="/2025/04/07/%E6%98%A5%E5%AD%A3week3/">春季week3</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-04-05T04:16:47.000Z">04-05</time>
+              <a href="/2025/04/05/%E4%B8%80%E7%82%B9%E7%82%B9%E7%9F%A5%E4%B9%8E%E6%96%87%E5%90%8E%E7%9A%84%E6%80%BB%E7%BB%93%E5%8F%8D%E6%80%9D/">一点点知乎文后的总结反思</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-03-30T06:25:10.000Z">03-30</time>
+              <a href="/2025/03/30/%E6%98%A5%E5%AD%A3week2%E5%91%A8%E7%BB%93/">春季week2周结</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-03-22T16:00:00.000Z">03-23</time>
+              <a href="/2025/03/23/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96/">苍穹外卖</a>
+              
+                <span class="row-category">计算机学习</span>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-03-19T16:00:00.000Z">03-20</time>
+              <a href="/2025/03/20/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8Bnotion%E7%B3%BB%E7%BB%9F%E6%90%AD%E5%BB%BA/">从零开始notion系统搭建</a>
+              
+                <span class="row-category">体系</span>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-03-17T16:00:00.000Z">03-18</time>
+              <a href="/2025/03/18/%E4%BA%BA%E6%9C%88%E7%A5%9E%E8%AF%9D/">人月神话</a>
+              
+                <span class="row-category">计算机学习</span>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-03-16T15:43:54.000Z">03-16</time>
+              <a href="/2025/03/16/%E5%86%AC%E5%AD%A3%E8%80%83%E8%AF%95%E5%91%A8%E5%A4%8D%E7%9B%98/">冬季考试周复盘</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-03-12T16:00:00.000Z">03-13</time>
+              <a href="/2025/03/13/%E9%80%BB%E8%BE%91%E5%93%B2%E5%AD%A6%E8%AE%BA/">逻辑哲学论</a>
+              
+                <span class="row-category">哲学</span>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-03-09T16:00:00.000Z">03-10</time>
+              <a href="/2025/03/10/obsidian+hexo%E7%AC%94%E8%AE%B0%E6%B5%81/">obsidian+hexo笔记流</a>
+              
+                <span class="row-category">体系</span>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-03-03T16:00:00.000Z">03-04</time>
+              <a href="/2025/03/04/%E7%A7%AF%E6%9E%81%E5%BF%83%E7%90%86%E5%AD%A6/">积极心理学</a>
+              
+                <span class="row-category">公开课</span>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-03-01T16:00:00.000Z">03-02</time>
+              <a href="/2025/03/02/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E8%80%83%E8%AF%95%E5%90%8E%E7%9A%84%E5%8F%8D%E6%80%9D/">数据分析考试后的反思</a>
+              
+                <span class="row-category">学业</span>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-02-28T16:00:00.000Z">03-01</time>
+              <a href="/2025/03/01/%E5%AF%B9%E4%BA%8E%E8%BF%91%E6%9D%A5%E7%8A%B6%E5%86%B5%E7%9A%84%E5%8F%8D%E6%80%9D/">对于近来状况的反思</a>
+              
+                <span class="row-category">随笔</span>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-02-22T16:00:00.000Z">02-23</time>
+              <a href="/2025/02/23/%E4%B8%80%E7%82%B9%E9%9A%8F%E6%83%B3%E2%80%94%E2%80%94%E6%96%B0%E9%98%B6%E6%AE%B5%E7%9A%84%E5%B1%95%E5%BC%80/">一点随想</a>
+              
+                <span class="row-category">随笔</span>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-02-21T16:00:00.000Z">02-22</time>
+              <a href="/2025/02/22/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/">新的开始</a>
+              
+                <span class="row-category">网站</span>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-02-21T13:23:22.000Z">02-21</time>
+              <a href="/2025/02/21/%E4%B9%94%E5%B8%83%E6%96%AF%E4%BC%A0/">乔布斯传</a>
+              
+                <span class="row-category">随笔</span>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-02-05T16:48:16.000Z">02-06</time>
+              <a href="/2025/02/06/%E8%87%B4%E9%AB%98%E4%B8%AD%E7%94%9F%E2%80%94%E2%80%94%E5%9C%A8%E8%8D%92%E8%AF%9E%E7%9A%84%E4%B8%96%E7%95%8C%E9%87%8C%E4%BD%A0%E8%A6%81%E6%88%90%E4%B8%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E8%8B%B1%E9%9B%84/">致高中生——在荒诞的世界里你要成为自己的英雄</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-02-04T03:27:46.000Z">02-04</time>
+              <a href="/2025/02/04/data100%20lecture6%20%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">data100 lecture6 正则表达式</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-01-24T16:28:27.000Z">01-25</time>
+              <a href="/2025/01/25/2025-1-24/">2025-1-24</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-01-24T16:00:00.000Z">01-25</time>
+              <a href="/2025/01/25/hello-world/">Hello World</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-01-21T17:03:42.000Z">01-22</time>
+              <a href="/2025/01/22/2025-1-21/">2025-1-21</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-01-21T15:43:19.000Z">01-21</time>
+              <a href="/2025/01/21/2025-1-20/">2025-1-20</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-01-19T15:32:55.000Z">01-19</time>
+              <a href="/2025/01/19/2025-1-19/">2025-1-19</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-01-14T14:46:51.000Z">01-14</time>
+              <a href="/2025/01/14/2025-1-14/">2025-1-14</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-01-09T13:55:31.000Z">01-09</time>
+              <a href="/2025/01/09/2024%E5%9B%9E%E9%A1%BE%E4%B8%8E2025%E7%9A%84%E6%9C%BA%E9%81%87%E4%B8%8E%E6%8C%91%E6%88%98/">2024回顾与2025的机遇与挑战</a>
+              
+                <span class="row-category">summary</span>
+              
+            </li>
+          
+            <li>
+              <time datetime="2025-01-05T15:37:42.000Z">01-05</time>
+              <a href="/2025/01/05/2025%E7%AC%AC%E4%B8%80%E5%91%A8%E5%91%A8%E7%BB%93/">2025第一周周结</a>
+              
+                <span class="row-category">summary</span>
+              
+            </li>
+          
+        </ol>
+      </section>
+    
+      <section class="archive-year" id="y2024" data-year="2024">
+        <h2>
+          <span class="year-label">2024</span>
+          <span class="year-count">16 篇</span>
+        </h2>
+        <ol class="year-posts">
+          
+            <li>
+              <time datetime="2024-12-31T03:17:33.000Z">12-31</time>
+              <a href="/2024/12/31/JavaWeb%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86/">JavaWeb事务管理</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2024-12-30T15:33:30.000Z">12-30</time>
+              <a href="/2024/12/30/12%E6%9C%88%E5%B0%8F%E7%BB%93/">12月小结</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2024-12-29T15:15:49.000Z">12-29</time>
+              <a href="/2024/12/29/24%E5%B9%B4%E7%9A%84%E6%9C%80%E5%90%8E%E5%91%A8%E7%BB%93/">24年的最后周结</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2024-12-25T01:24:17.000Z">12-25</time>
+              <a href="/2024/12/25/JavaWebDAY5%E2%80%94%E2%80%94MySQL/">JavaWebDAY5——MySQL</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2024-12-24T01:58:33.000Z">12-24</time>
+              <a href="/2024/12/24/JavaWebDAY4/">JavaWebDAY4</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2024-12-23T15:29:52.000Z">12-23</time>
+              <a href="/2024/12/23/24-12-23/">24-12-23</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2024-12-22T12:48:24.000Z">12-22</time>
+              <a href="/2024/12/22/24-12-22/">24-12-22</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2024-12-22T09:13:20.000Z">12-22</time>
+              <a href="/2024/12/22/JavaWebDAY3/">JavaWebDAY3</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2024-12-21T15:13:26.000Z">12-21</time>
+              <a href="/2024/12/21/JavaWebDAY2/">JavaWebDAY2</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2024-12-21T12:57:28.000Z">12-21</time>
+              <a href="/2024/12/21/JavaWebDAY1/">JavaWebDAY1</a>
+              
+            </li>
+          
+            <li>
+              <time datetime="2024-12-17T15:44:20.000Z">12-17</time>
+              <a href="/2024/12/17/%E3%80%8A%E8%AF%B7%E5%81%9C%E6%AD%A2%E6%97%A0%E6%95%88%E7%A4%BE%E4%BA%A4%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">《请停止无效社交》读书笔记</a>
+              
+                <span class="row-category">随笔</span>
+              
+            </li>
+          
+            <li>
+              <time datetime="2024-12-12T05:38:01.000Z">12-12</time>
+              <a href="/2024/12/12/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/">二分查找</a>
+              
+                <span class="row-category">算法</span>
+              
+            </li>
+          
+            <li>
+              <time datetime="2024-11-13T15:55:29.000Z">11-13</time>
+              <a href="/2024/11/13/%E5%A4%A7%E4%B8%80%E7%A7%8B%E5%AD%A3%E5%9B%9E%E9%A1%BE/">大一秋季回顾</a>
+              
+                <span class="row-category">随笔</span>
+              
+            </li>
+          
+            <li>
+              <time datetime="2024-11-13T15:51:59.000Z">11-13</time>
+              <a href="/2024/11/13/%E8%A7%A3%E5%BF%A7%E6%9D%82%E8%B4%A7%E5%BA%97/">解忧杂货店</a>
+              
+                <span class="row-category">随笔</span>
+              
+            </li>
+          
+            <li>
+              <time datetime="2024-11-02T17:16:37.000Z">11-03</time>
+              <a href="/2024/11/03/%E5%A4%8D%E6%B4%BB/">复活</a>
+              
+                <span class="row-category">随笔</span>
+              
+            </li>
+          
+            <li>
+              <time datetime="2024-10-24T15:49:07.000Z">10-24</time>
+              <a href="/2024/10/24/%E7%99%BD%E5%A4%9C%E8%A1%8C/">白夜行</a>
+              
+                <span class="row-category">随笔</span>
+              
+            </li>
+          
+        </ol>
+      </section>
+    
+  </div>
+
 
   </main>
 
   <footer class="site-footer">
-    <div class="container">
+    <div class="container footer-inner">
       <span>© 2026 keynary</span>
+      <nav class="footer-links" aria-label="页脚链接">
+        
+          <a href="/atom.xml">RSS</a>
+        
+        
+          <a href="https://github.com/stoic-yang" rel="me noopener" target="_blank">GitHub</a>
+        
+      </nav>
     </div>
   </footer>
+
+  <button class="back-top" type="button" aria-label="回到顶部" title="回到顶部" hidden>
+    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 19V5M5.5 11.5 12 5l6.5 6.5"></path>
+    </svg>
+  </button>
+
   
 <script src="/js/ambient.js"></script>
 
+  <script defer src="/js/main.js"></script>
+  
 </body>
 </html>

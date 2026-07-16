@@ -4,10 +4,45 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>keynary</title>
+  <script>
+    (function () {
+      var stored = null;
+      try { stored = localStorage.getItem('ink-theme'); } catch (e) {}
+      var media = window.matchMedia('(prefers-color-scheme: dark)');
+      var theme = stored === 'light' || stored === 'dark'
+        ? stored
+        : (media.matches ? 'dark' : 'light');
+      var root = document.documentElement;
+      root.setAttribute('data-theme', theme);
+      if (!stored && media.addEventListener) {
+        media.addEventListener('change', function (event) {
+          root.setAttribute('data-theme', event.matches ? 'dark' : 'light');
+          var meta = document.getElementById('meta-theme-color');
+          if (meta) meta.content = event.matches ? '#141519' : '#f6f5f2';
+        });
+      }
+      document.addEventListener('DOMContentLoaded', function () {
+        var meta = document.getElementById('meta-theme-color');
+        if (meta && root.getAttribute('data-theme') === 'dark') meta.content = '#141519';
+      });
+    })();
+  </script>
+  <title>归档 · keynary</title>
   <meta name="description" content="stay hungry, stay foolish">
-  <meta name="color-scheme" content="light">
-  <meta name="theme-color" content="#f6f5f2">
+  <meta name="author" content="keynary">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f6f5f2" id="meta-theme-color">
+  <link rel="canonical" href="https://stoic-yang.github.io/archives/2025/03/">
+  <meta property="og:site_name" content="keynary">
+  <meta property="og:title" content="归档">
+  <meta property="og:description" content="stay hungry, stay foolish">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://stoic-yang.github.io/archives/2025/03/">
+  <meta property="og:locale" content="zh_CN">
+  
+    <meta name="twitter:card" content="summary">
+  
+  
   <link rel="icon" href="/images/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,10 +51,13 @@
     <link rel="alternate" type="application/atom+xml" title="keynary" href="/atom.xml">
   
   
+  
 <link rel="stylesheet" href="/css/style.css">
 
 <meta name="generator" content="Hexo 7.3.0"></head>
 <body class="site-shell">
+  <a class="skip-link" href="#main">跳到正文</a>
+
   <div class="ambient-background" aria-hidden="true">
     <span class="ambient-glow ambient-glow--pointer"></span>
     <span class="ambient-glow ambient-glow--blue"></span>
@@ -29,103 +67,135 @@
   <header class="site-header">
     <div class="container header-inner">
       <a class="site-title" href="/">keynary</a>
-      <nav class="site-nav" aria-label="主导航">
-        
-          <a href="/">首页</a>
-        
-          <a href="/archives/">归档</a>
-        
-          <a href="/about/">关于</a>
-        
-      </nav>
+      <div class="header-tools">
+        <nav class="site-nav" aria-label="主导航">
+          
+            <a href="/">首页</a>
+          
+            <a href="/archives/" aria-current="page">归档</a>
+          
+            <a href="/about/">关于</a>
+          
+        </nav>
+        <button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式">
+          <svg class="icon-sun" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <circle cx="12" cy="12" r="4.4"></circle>
+            <path d="M12 2.8v2.2M12 19v2.2M2.8 12h2.2M19 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6"></path>
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.4 14.2A8.6 8.6 0 0 1 9.8 3.6a8.6 8.6 0 1 0 10.6 10.6Z"></path>
+          </svg>
+        </button>
+      </div>
     </div>
   </header>
 
-  <main class="container">
+  <main class="container" id="main">
     
-<header class="page-header">
-  <h1>归档</h1>
-</header>
 
-<section class="archive-list">
-  
-    
-      <h2>2025</h2>
-    
-    <article>
-      <time datetime="2025-03-30T06:25:10.000Z">03-30</time>
-      <a href="/2025/03/30/%E6%98%A5%E5%AD%A3week2%E5%91%A8%E7%BB%93/">春季week2周结</a>
-    </article>
-  
-    
-    <article>
-      <time datetime="2025-03-22T16:00:00.000Z">03-23</time>
-      <a href="/2025/03/23/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96/">苍穹外卖</a>
-    </article>
-  
-    
-    <article>
-      <time datetime="2025-03-19T16:00:00.000Z">03-20</time>
-      <a href="/2025/03/20/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8Bnotion%E7%B3%BB%E7%BB%9F%E6%90%AD%E5%BB%BA/">从零开始notion系统搭建</a>
-    </article>
-  
-    
-    <article>
-      <time datetime="2025-03-17T16:00:00.000Z">03-18</time>
-      <a href="/2025/03/18/%E4%BA%BA%E6%9C%88%E7%A5%9E%E8%AF%9D/">人月神话</a>
-    </article>
-  
-    
-    <article>
-      <time datetime="2025-03-16T15:43:54.000Z">03-16</time>
-      <a href="/2025/03/16/%E5%86%AC%E5%AD%A3%E8%80%83%E8%AF%95%E5%91%A8%E5%A4%8D%E7%9B%98/">冬季考试周复盘</a>
-    </article>
-  
-    
-    <article>
-      <time datetime="2025-03-12T16:00:00.000Z">03-13</time>
-      <a href="/2025/03/13/%E9%80%BB%E8%BE%91%E5%93%B2%E5%AD%A6%E8%AE%BA/">逻辑哲学论</a>
-    </article>
-  
-    
-    <article>
-      <time datetime="2025-03-09T16:00:00.000Z">03-10</time>
-      <a href="/2025/03/10/obsidian+hexo%E7%AC%94%E8%AE%B0%E6%B5%81/">obsidian+hexo笔记流</a>
-    </article>
-  
-    
-    <article>
-      <time datetime="2025-03-03T16:00:00.000Z">03-04</time>
-      <a href="/2025/03/04/%E7%A7%AF%E6%9E%81%E5%BF%83%E7%90%86%E5%AD%A6/">积极心理学</a>
-    </article>
-  
-    
-    <article>
-      <time datetime="2025-03-01T16:00:00.000Z">03-02</time>
-      <a href="/2025/03/02/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E8%80%83%E8%AF%95%E5%90%8E%E7%9A%84%E5%8F%8D%E6%80%9D/">数据分析考试后的反思</a>
-    </article>
-  
-    
-    <article>
-      <time datetime="2025-02-28T16:00:00.000Z">03-01</time>
-      <a href="/2025/03/01/%E5%AF%B9%E4%BA%8E%E8%BF%91%E6%9D%A5%E7%8A%B6%E5%86%B5%E7%9A%84%E5%8F%8D%E6%80%9D/">对于近来状况的反思</a>
-    </article>
-  
-</section>
 
-<nav class="pagination" aria-label="分页">
-  <span class="page-number current">1</span>
-</nav>
+  
+  <header class="page-header">
+    <h1>2025 年 3 月归档</h1>
+  </header>
+
+  <section class="archive-list">
+    
+      
+        <h2>2025</h2>
+      
+      <article>
+        <time datetime="2025-03-30T06:25:10.000Z">03-30</time>
+        <a href="/2025/03/30/%E6%98%A5%E5%AD%A3week2%E5%91%A8%E7%BB%93/">春季week2周结</a>
+      </article>
+    
+      
+      <article>
+        <time datetime="2025-03-22T16:00:00.000Z">03-23</time>
+        <a href="/2025/03/23/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96/">苍穹外卖</a>
+      </article>
+    
+      
+      <article>
+        <time datetime="2025-03-19T16:00:00.000Z">03-20</time>
+        <a href="/2025/03/20/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8Bnotion%E7%B3%BB%E7%BB%9F%E6%90%AD%E5%BB%BA/">从零开始notion系统搭建</a>
+      </article>
+    
+      
+      <article>
+        <time datetime="2025-03-17T16:00:00.000Z">03-18</time>
+        <a href="/2025/03/18/%E4%BA%BA%E6%9C%88%E7%A5%9E%E8%AF%9D/">人月神话</a>
+      </article>
+    
+      
+      <article>
+        <time datetime="2025-03-16T15:43:54.000Z">03-16</time>
+        <a href="/2025/03/16/%E5%86%AC%E5%AD%A3%E8%80%83%E8%AF%95%E5%91%A8%E5%A4%8D%E7%9B%98/">冬季考试周复盘</a>
+      </article>
+    
+      
+      <article>
+        <time datetime="2025-03-12T16:00:00.000Z">03-13</time>
+        <a href="/2025/03/13/%E9%80%BB%E8%BE%91%E5%93%B2%E5%AD%A6%E8%AE%BA/">逻辑哲学论</a>
+      </article>
+    
+      
+      <article>
+        <time datetime="2025-03-09T16:00:00.000Z">03-10</time>
+        <a href="/2025/03/10/obsidian+hexo%E7%AC%94%E8%AE%B0%E6%B5%81/">obsidian+hexo笔记流</a>
+      </article>
+    
+      
+      <article>
+        <time datetime="2025-03-03T16:00:00.000Z">03-04</time>
+        <a href="/2025/03/04/%E7%A7%AF%E6%9E%81%E5%BF%83%E7%90%86%E5%AD%A6/">积极心理学</a>
+      </article>
+    
+      
+      <article>
+        <time datetime="2025-03-01T16:00:00.000Z">03-02</time>
+        <a href="/2025/03/02/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E8%80%83%E8%AF%95%E5%90%8E%E7%9A%84%E5%8F%8D%E6%80%9D/">数据分析考试后的反思</a>
+      </article>
+    
+      
+      <article>
+        <time datetime="2025-02-28T16:00:00.000Z">03-01</time>
+        <a href="/2025/03/01/%E5%AF%B9%E4%BA%8E%E8%BF%91%E6%9D%A5%E7%8A%B6%E5%86%B5%E7%9A%84%E5%8F%8D%E6%80%9D/">对于近来状况的反思</a>
+      </article>
+    
+  </section>
+
+  <nav class="pagination" aria-label="分页">
+    <span class="page-number current">1</span>
+  </nav>
+
 
   </main>
 
   <footer class="site-footer">
-    <div class="container">
+    <div class="container footer-inner">
       <span>© 2026 keynary</span>
+      <nav class="footer-links" aria-label="页脚链接">
+        
+          <a href="/atom.xml">RSS</a>
+        
+        
+          <a href="https://github.com/stoic-yang" rel="me noopener" target="_blank">GitHub</a>
+        
+      </nav>
     </div>
   </footer>
+
+  <button class="back-top" type="button" aria-label="回到顶部" title="回到顶部" hidden>
+    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 19V5M5.5 11.5 12 5l6.5 6.5"></path>
+    </svg>
+  </button>
+
   
 <script src="/js/ambient.js"></script>
 
+  <script defer src="/js/main.js"></script>
+  
 </body>
 </html>

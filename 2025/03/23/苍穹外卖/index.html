@@ -4,10 +4,48 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    (function () {
+      var stored = null;
+      try { stored = localStorage.getItem('ink-theme'); } catch (e) {}
+      var media = window.matchMedia('(prefers-color-scheme: dark)');
+      var theme = stored === 'light' || stored === 'dark'
+        ? stored
+        : (media.matches ? 'dark' : 'light');
+      var root = document.documentElement;
+      root.setAttribute('data-theme', theme);
+      if (!stored && media.addEventListener) {
+        media.addEventListener('change', function (event) {
+          root.setAttribute('data-theme', event.matches ? 'dark' : 'light');
+          var meta = document.getElementById('meta-theme-color');
+          if (meta) meta.content = event.matches ? '#141519' : '#f6f5f2';
+        });
+      }
+      document.addEventListener('DOMContentLoaded', function () {
+        var meta = document.getElementById('meta-theme-color');
+        if (meta && root.getAttribute('data-theme') === 'dark') meta.content = '#141519';
+      });
+    })();
+  </script>
   <title>苍穹外卖 · keynary</title>
-  <meta name="description" content="stay hungry, stay foolish">
-  <meta name="color-scheme" content="light">
-  <meta name="theme-color" content="#f6f5f2">
+  <meta name="description" content="该贴将记录笔者在学习该项目时遇到的问题及解决方法、笔记、想法和工作日志 Day 1初始环境的问题以及解决方案第一次运行这个项目的人，基本上会遇到初始环境启动问题。 前端，注意你的 80 端口是否被占用以及 nginx 文件是否放在了全英文文件夹下面如果你的 80 端口被占用，可以去修改 nginx. conf 下...">
+  <meta name="author" content="keynary">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f6f5f2" id="meta-theme-color">
+  <link rel="canonical" href="https://stoic-yang.github.io/2025/03/23/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96/">
+  <meta property="og:site_name" content="keynary">
+  <meta property="og:title" content="苍穹外卖">
+  <meta property="og:description" content="该贴将记录笔者在学习该项目时遇到的问题及解决方法、笔记、想法和工作日志 Day 1初始环境的问题以及解决方案第一次运行这个项目的人，基本上会遇到初始环境启动问题。 前端，注意你的 80 端口是否被占用以及 nginx 文件是否放在了全英文文件夹下面如果你的 80 端口被占用，可以去修改 nginx. conf 下...">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://stoic-yang.github.io/2025/03/23/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96/">
+  <meta property="og:locale" content="zh_CN">
+  
+    <meta property="og:image" content="https://stoic-yang.github.io/2025/03/23/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96/%E8%8B%8D%E7%A9%B9%E5%A4%96%E5%8D%96-20250313102731024.png">
+    <meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta property="article:published_time" content="2025-03-22T16:00:00.000Z">
+  
   <link rel="icon" href="/images/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,10 +54,13 @@
     <link rel="alternate" type="application/atom+xml" title="keynary" href="/atom.xml">
   
   
+  
 <link rel="stylesheet" href="/css/style.css">
 
 <meta name="generator" content="Hexo 7.3.0"></head>
 <body class="site-shell">
+  <a class="skip-link" href="#main">跳到正文</a>
+
   <div class="ambient-background" aria-hidden="true">
     <span class="ambient-glow ambient-glow--pointer"></span>
     <span class="ambient-glow ambient-glow--blue"></span>
@@ -29,24 +70,57 @@
   <header class="site-header">
     <div class="container header-inner">
       <a class="site-title" href="/">keynary</a>
-      <nav class="site-nav" aria-label="主导航">
-        
-          <a href="/">首页</a>
-        
-          <a href="/archives/">归档</a>
-        
-          <a href="/about/">关于</a>
-        
-      </nav>
+      <div class="header-tools">
+        <nav class="site-nav" aria-label="主导航">
+          
+            <a href="/">首页</a>
+          
+            <a href="/archives/">归档</a>
+          
+            <a href="/about/">关于</a>
+          
+        </nav>
+        <button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式">
+          <svg class="icon-sun" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <circle cx="12" cy="12" r="4.4"></circle>
+            <path d="M12 2.8v2.2M12 19v2.2M2.8 12h2.2M19 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6"></path>
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.4 14.2A8.6 8.6 0 0 1 9.8 3.6a8.6 8.6 0 1 0 10.6 10.6Z"></path>
+          </svg>
+        </button>
+      </div>
     </div>
   </header>
 
-  <main class="container">
-    <article class="post">
+  <main class="container" id="main">
+    
+<article class="post">
   <header class="post-header">
-    <time datetime="2025-03-22T16:00:00.000Z">2025-03-23</time>
+    <div class="post-meta">
+      <time datetime="2025-03-22T16:00:00.000Z">2025-03-23</time>
+      <span class="meta-sep" aria-hidden="true">·</span>
+      <span>约 2.7k 字</span>
+      <span class="meta-sep" aria-hidden="true">·</span>
+      <span>7 分钟</span>
+      
+        <span class="meta-sep" aria-hidden="true">·</span>
+        
+          <a class="meta-category" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%AD%A6%E4%B9%A0/">计算机学习</a>
+        
+      
+    </div>
     <h1>苍穹外卖</h1>
   </header>
+
+  
+    <nav class="post-toc" aria-label="本文目录">
+      <details class="toc-card">
+        <summary>目录</summary>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-1"><span class="toc-text">Day 1</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E7%8E%AF%E5%A2%83%E7%9A%84%E9%97%AE%E9%A2%98%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-text">初始环境的问题以及解决方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nginx-%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86"><span class="toc-text">nginx 反向代理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3"><span class="toc-text">接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Swagger"><span class="toc-text">Swagger</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lombok"><span class="toc-text">Lombok</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-2"><span class="toc-text">Day 2</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B0%E5%A2%9E%E5%91%98%E5%B7%A5%E2%80%94%E2%80%94500-%E9%94%99%E8%AF%AF%E7%A0%81"><span class="toc-text">新增员工——500 错误码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%8C%E5%96%84"><span class="toc-text">代码完善</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ThreadLocal"><span class="toc-text">ThreadLocal</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%98%E5%B7%A5%E7%BC%96%E8%BE%91"><span class="toc-text">员工编辑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mapper-xml-%E6%96%87%E4%BB%B6%E9%85%8D%E7%BD%AE%E9%94%99%E8%AF%AF"><span class="toc-text">Mapper xml 文件配置错误</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%8B%E6%88%B3%E5%88%86%E7%B1%BB%E6%8E%A5%E5%8F%A3%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-text">手戳分类接口遇到的问题</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-3"><span class="toc-text">Day 3</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%EF%BC%9A%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%85%AC%E5%85%B1%E5%AD%97%E6%AE%B5%E8%87%AA%E5%8A%A8%E5%A1%AB%E5%85%85%EF%BC%9F"><span class="toc-text">问题：如何实现公共字段自动填充？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%B7%E8%AF%BE%E4%B8%8E%E5%86%99%E4%BB%A3%E7%A0%81%E7%9A%84%E6%80%9D%E8%80%83"><span class="toc-text">刷课与写代码的思考</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="toc-text">文件上传的配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B9%BD%E9%BB%98-debug%EF%BC%88%E6%96%B0%E5%A2%9E%E8%8F%9C%E5%93%81%E5%8A%9F%E8%83%BD%EF%BC%89"><span class="toc-text">幽默 debug（新增菜品功能）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91"><span class="toc-text">业务逻辑</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-4"><span class="toc-text">Day 4</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-5-%E5%AE%9E%E6%88%98"><span class="toc-text">Day 5 (实战)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-7"><span class="toc-text">Day 7</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%8C%E7%BB%93%E6%84%9F%E6%83%B3"><span class="toc-text">完结感想</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%91%E7%9A%84%E6%94%B6%E8%8E%B7"><span class="toc-text">我的收获</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%91%E7%9A%84%E6%83%B3%E6%B3%95"><span class="toc-text">我的想法</span></a></li></ol></li></ol>
+      </details>
+    </nav>
+  
 
   <div class="post-content">
     <p>该贴将记录笔者在学习该项目时遇到的问题及解决方法、笔记、想法和工作日志</p>
@@ -189,12 +263,29 @@
   </main>
 
   <footer class="site-footer">
-    <div class="container">
+    <div class="container footer-inner">
       <span>© 2026 keynary</span>
+      <nav class="footer-links" aria-label="页脚链接">
+        
+          <a href="/atom.xml">RSS</a>
+        
+        
+          <a href="https://github.com/stoic-yang" rel="me noopener" target="_blank">GitHub</a>
+        
+      </nav>
     </div>
   </footer>
+
+  <button class="back-top" type="button" aria-label="回到顶部" title="回到顶部" hidden>
+    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 19V5M5.5 11.5 12 5l6.5 6.5"></path>
+    </svg>
+  </button>
+
   
 <script src="/js/ambient.js"></script>
 
+  <script defer src="/js/main.js"></script>
+  
 </body>
 </html>

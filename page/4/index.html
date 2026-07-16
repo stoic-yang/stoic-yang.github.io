@@ -4,10 +4,45 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>keynary</title>
+  <script>
+    (function () {
+      var stored = null;
+      try { stored = localStorage.getItem('ink-theme'); } catch (e) {}
+      var media = window.matchMedia('(prefers-color-scheme: dark)');
+      var theme = stored === 'light' || stored === 'dark'
+        ? stored
+        : (media.matches ? 'dark' : 'light');
+      var root = document.documentElement;
+      root.setAttribute('data-theme', theme);
+      if (!stored && media.addEventListener) {
+        media.addEventListener('change', function (event) {
+          root.setAttribute('data-theme', event.matches ? 'dark' : 'light');
+          var meta = document.getElementById('meta-theme-color');
+          if (meta) meta.content = event.matches ? '#141519' : '#f6f5f2';
+        });
+      }
+      document.addEventListener('DOMContentLoaded', function () {
+        var meta = document.getElementById('meta-theme-color');
+        if (meta && root.getAttribute('data-theme') === 'dark') meta.content = '#141519';
+      });
+    })();
+  </script>
+  <title>keynary · 第 4 页 · keynary</title>
   <meta name="description" content="stay hungry, stay foolish">
-  <meta name="color-scheme" content="light">
-  <meta name="theme-color" content="#f6f5f2">
+  <meta name="author" content="keynary">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f6f5f2" id="meta-theme-color">
+  <link rel="canonical" href="https://stoic-yang.github.io/page/4/">
+  <meta property="og:site_name" content="keynary">
+  <meta property="og:title" content="keynary · 第 4 页">
+  <meta property="og:description" content="stay hungry, stay foolish">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://stoic-yang.github.io/page/4/">
+  <meta property="og:locale" content="zh_CN">
+  
+    <meta name="twitter:card" content="summary">
+  
+  
   <link rel="icon" href="/images/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,10 +51,13 @@
     <link rel="alternate" type="application/atom+xml" title="keynary" href="/atom.xml">
   
   
+  
 <link rel="stylesheet" href="/css/style.css">
 
 <meta name="generator" content="Hexo 7.3.0"></head>
 <body class="site-shell">
+  <a class="skip-link" href="#main">跳到正文</a>
+
   <div class="ambient-background" aria-hidden="true">
     <span class="ambient-glow ambient-glow--pointer"></span>
     <span class="ambient-glow ambient-glow--blue"></span>
@@ -29,23 +67,47 @@
   <header class="site-header">
     <div class="container header-inner">
       <a class="site-title" href="/">keynary</a>
-      <nav class="site-nav" aria-label="主导航">
-        
-          <a href="/">首页</a>
-        
-          <a href="/archives/">归档</a>
-        
-          <a href="/about/">关于</a>
-        
-      </nav>
+      <div class="header-tools">
+        <nav class="site-nav" aria-label="主导航">
+          
+            <a href="/">首页</a>
+          
+            <a href="/archives/">归档</a>
+          
+            <a href="/about/">关于</a>
+          
+        </nav>
+        <button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式">
+          <svg class="icon-sun" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <circle cx="12" cy="12" r="4.4"></circle>
+            <path d="M12 2.8v2.2M12 19v2.2M2.8 12h2.2M19 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6"></path>
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.4 14.2A8.6 8.6 0 0 1 9.8 3.6a8.6 8.6 0 1 0 10.6 10.6Z"></path>
+          </svg>
+        </button>
+      </div>
     </div>
   </header>
 
-  <main class="container">
-    <section class="post-list" aria-label="文章列表">
+  <main class="container" id="main">
+    
+
+<section class="post-list" aria-label="文章列表">
   
     <article class="post-list-item">
-      <time datetime="2025-09-06T16:00:00.000Z">2025-09-07</time>
+      <div class="item-meta">
+        <time datetime="2025-09-06T16:00:00.000Z">2025-09-07</time>
+        
+          <span class="meta-sep" aria-hidden="true">·</span>
+          <a class="item-category" href="/categories/%E5%85%AC%E5%BC%80%E8%AF%BE/">公开课</a>
+        
+        
+        
+          <span class="meta-sep" aria-hidden="true">·</span>
+          <span>7 字</span>
+        
+      </div>
       <h2>
         <a href="/2025/09/07/CSAPP%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">CSAPP学习笔记</a>
       </h2>
@@ -56,7 +118,15 @@
     </article>
   
     <article class="post-list-item">
-      <time datetime="2025-08-15T15:53:38.000Z">2025-08-15</time>
+      <div class="item-meta">
+        <time datetime="2025-08-15T15:53:38.000Z">2025-08-15</time>
+        
+        
+        
+          <span class="meta-sep" aria-hidden="true">·</span>
+          <span>1.4k 字</span>
+        
+      </div>
       <h2>
         <a href="/2025/08/15/%E5%BD%92%E4%B9%A1%E4%B8%80%E5%91%A8%E5%B0%8F%E8%AE%B0/">归乡一周小记</a>
       </h2>
@@ -67,7 +137,15 @@
     </article>
   
     <article class="post-list-item">
-      <time datetime="2025-08-11T16:40:42.000Z">2025-08-12</time>
+      <div class="item-meta">
+        <time datetime="2025-08-11T16:40:42.000Z">2025-08-12</time>
+        
+        
+        
+          <span class="meta-sep" aria-hidden="true">·</span>
+          <span>1.3k 字</span>
+        
+      </div>
       <h2>
         <a href="/2025/08/12/%E8%87%AA%E5%88%B6%E5%8A%9B%E5%8F%AF%E4%BB%A5%E4%B8%80%E7%9B%B4%E4%BF%9D%E6%8C%81%E5%90%97%EF%BC%9F%E5%8F%97RSIP%E5%BD%B1%E5%93%8D%E7%9A%84%E4%B8%80%E4%BA%9B%E6%9C%89%E5%85%B3%E8%87%AA%E5%88%B6%E5%8A%9B%E7%9A%84%E6%80%9D%E8%80%83/">自制力可以一直保持吗？受RSIP影响的一些有关自制力的思考</a>
       </h2>
@@ -78,7 +156,15 @@
     </article>
   
     <article class="post-list-item">
-      <time datetime="2025-08-10T06:20:15.000Z">2025-08-10</time>
+      <div class="item-meta">
+        <time datetime="2025-08-10T06:20:15.000Z">2025-08-10</time>
+        
+        
+        
+          <span class="meta-sep" aria-hidden="true">·</span>
+          <span>1.1k 字</span>
+        
+      </div>
       <h2>
         <a href="/2025/08/10/%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%81%B6%E9%81%87acm%E6%9A%91%E6%9C%9F%E9%9B%86%E8%AE%AD%E4%B8%83%E6%9C%88%E5%B0%8F%E5%AF%84/">零基础偶遇acm暑期集训七月小寄</a>
       </h2>
@@ -89,7 +175,15 @@
     </article>
   
     <article class="post-list-item">
-      <time datetime="2025-08-10T05:16:30.000Z">2025-08-10</time>
+      <div class="item-meta">
+        <time datetime="2025-08-10T05:16:30.000Z">2025-08-10</time>
+        
+        
+        
+          <span class="meta-sep" aria-hidden="true">·</span>
+          <span>491 字</span>
+        
+      </div>
       <h2>
         <a href="/2025/08/10/%E5%8D%8E%E4%B8%BA%E7%BB%83%E7%A7%8B%E6%B9%96%E4%B8%80%E6%97%A5%E6%B8%B8%E8%AE%B2%E5%BA%A7%E6%84%9F%E6%83%B3/">华为练秋湖一日游讲座感想</a>
       </h2>
@@ -100,7 +194,15 @@
     </article>
   
     <article class="post-list-item">
-      <time datetime="2025-06-22T03:11:49.000Z">2025-06-22</time>
+      <div class="item-meta">
+        <time datetime="2025-06-22T03:11:49.000Z">2025-06-22</time>
+        
+        
+        
+          <span class="meta-sep" aria-hidden="true">·</span>
+          <span>51 字</span>
+        
+      </div>
       <h2>
         <a href="/2025/06/22/Acwing%20785/">Acwing 785</a>
       </h2>
@@ -111,7 +213,15 @@
     </article>
   
     <article class="post-list-item">
-      <time datetime="2025-06-04T05:33:29.000Z">2025-06-04</time>
+      <div class="item-meta">
+        <time datetime="2025-06-04T05:33:29.000Z">2025-06-04</time>
+        
+        
+        
+          <span class="meta-sep" aria-hidden="true">·</span>
+          <span>392 字</span>
+        
+      </div>
       <h2>
         <a href="/2025/06/04/%E5%AE%8C%E7%BE%8E%E4%B8%BB%E4%B9%89%E7%9A%84%E9%98%B4%E5%BD%B1%E4%B8%8E%E9%AB%98%E6%95%88%E6%82%96%E8%AE%BA%E4%B8%8E%E6%9E%81%E7%AE%80%E4%B8%BB%E4%B9%89/">完美主义的阴影与高效悖论与极简主义</a>
       </h2>
@@ -122,7 +232,15 @@
     </article>
   
     <article class="post-list-item">
-      <time datetime="2025-05-13T14:29:57.000Z">2025-05-13</time>
+      <div class="item-meta">
+        <time datetime="2025-05-13T14:29:57.000Z">2025-05-13</time>
+        
+        
+        
+          <span class="meta-sep" aria-hidden="true">·</span>
+          <span>41 字</span>
+        
+      </div>
       <h2>
         <a href="/2025/05/13/CS106L/">CS106L</a>
       </h2>
@@ -133,7 +251,15 @@
     </article>
   
     <article class="post-list-item">
-      <time datetime="2025-05-11T15:53:33.000Z">2025-05-11</time>
+      <div class="item-meta">
+        <time datetime="2025-05-11T15:53:33.000Z">2025-05-11</time>
+        
+        
+        
+          <span class="meta-sep" aria-hidden="true">·</span>
+          <span>2.9k 字</span>
+        
+      </div>
       <h2>
         <a href="/2025/05/11/%E3%80%8A%E9%80%9A%E5%BE%80%E8%B4%A2%E5%AF%8C%E8%87%AA%E7%94%B1%E4%B9%8B%E8%B7%AF%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">《通往财富自由之路》读书笔记</a>
       </h2>
@@ -144,7 +270,15 @@
     </article>
   
     <article class="post-list-item">
-      <time datetime="2025-05-09T01:53:11.000Z">2025-05-09</time>
+      <div class="item-meta">
+        <time datetime="2025-05-09T01:53:11.000Z">2025-05-09</time>
+        
+        
+        
+          <span class="meta-sep" aria-hidden="true">·</span>
+          <span>667 字</span>
+        
+      </div>
       <h2>
         <a href="/2025/05/09/%E8%A1%8C%E4%B8%BA%E6%A8%A1%E5%9E%8B%E7%9A%84%E6%94%B9%E8%BF%9B/">行为模型的改进</a>
       </h2>
@@ -163,12 +297,29 @@
   </main>
 
   <footer class="site-footer">
-    <div class="container">
+    <div class="container footer-inner">
       <span>© 2026 keynary</span>
+      <nav class="footer-links" aria-label="页脚链接">
+        
+          <a href="/atom.xml">RSS</a>
+        
+        
+          <a href="https://github.com/stoic-yang" rel="me noopener" target="_blank">GitHub</a>
+        
+      </nav>
     </div>
   </footer>
+
+  <button class="back-top" type="button" aria-label="回到顶部" title="回到顶部" hidden>
+    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 19V5M5.5 11.5 12 5l6.5 6.5"></path>
+    </svg>
+  </button>
+
   
 <script src="/js/ambient.js"></script>
 
+  <script defer src="/js/main.js"></script>
+  
 </body>
 </html>

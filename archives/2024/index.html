@@ -4,10 +4,45 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>keynary</title>
+  <script>
+    (function () {
+      var stored = null;
+      try { stored = localStorage.getItem('ink-theme'); } catch (e) {}
+      var media = window.matchMedia('(prefers-color-scheme: dark)');
+      var theme = stored === 'light' || stored === 'dark'
+        ? stored
+        : (media.matches ? 'dark' : 'light');
+      var root = document.documentElement;
+      root.setAttribute('data-theme', theme);
+      if (!stored && media.addEventListener) {
+        media.addEventListener('change', function (event) {
+          root.setAttribute('data-theme', event.matches ? 'dark' : 'light');
+          var meta = document.getElementById('meta-theme-color');
+          if (meta) meta.content = event.matches ? '#141519' : '#f6f5f2';
+        });
+      }
+      document.addEventListener('DOMContentLoaded', function () {
+        var meta = document.getElementById('meta-theme-color');
+        if (meta && root.getAttribute('data-theme') === 'dark') meta.content = '#141519';
+      });
+    })();
+  </script>
+  <title>归档 · keynary</title>
   <meta name="description" content="stay hungry, stay foolish">
-  <meta name="color-scheme" content="light">
-  <meta name="theme-color" content="#f6f5f2">
+  <meta name="author" content="keynary">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f6f5f2" id="meta-theme-color">
+  <link rel="canonical" href="https://stoic-yang.github.io/archives/2024/">
+  <meta property="og:site_name" content="keynary">
+  <meta property="og:title" content="归档">
+  <meta property="og:description" content="stay hungry, stay foolish">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://stoic-yang.github.io/archives/2024/">
+  <meta property="og:locale" content="zh_CN">
+  
+    <meta name="twitter:card" content="summary">
+  
+  
   <link rel="icon" href="/images/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,10 +51,13 @@
     <link rel="alternate" type="application/atom+xml" title="keynary" href="/atom.xml">
   
   
+  
 <link rel="stylesheet" href="/css/style.css">
 
 <meta name="generator" content="Hexo 7.3.0"></head>
 <body class="site-shell">
+  <a class="skip-link" href="#main">跳到正文</a>
+
   <div class="ambient-background" aria-hidden="true">
     <span class="ambient-glow ambient-glow--pointer"></span>
     <span class="ambient-glow ambient-glow--blue"></span>
@@ -29,103 +67,171 @@
   <header class="site-header">
     <div class="container header-inner">
       <a class="site-title" href="/">keynary</a>
-      <nav class="site-nav" aria-label="主导航">
-        
-          <a href="/">首页</a>
-        
-          <a href="/archives/">归档</a>
-        
-          <a href="/about/">关于</a>
-        
-      </nav>
+      <div class="header-tools">
+        <nav class="site-nav" aria-label="主导航">
+          
+            <a href="/">首页</a>
+          
+            <a href="/archives/" aria-current="page">归档</a>
+          
+            <a href="/about/">关于</a>
+          
+        </nav>
+        <button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式">
+          <svg class="icon-sun" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <circle cx="12" cy="12" r="4.4"></circle>
+            <path d="M12 2.8v2.2M12 19v2.2M2.8 12h2.2M19 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6"></path>
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.4 14.2A8.6 8.6 0 0 1 9.8 3.6a8.6 8.6 0 1 0 10.6 10.6Z"></path>
+          </svg>
+        </button>
+      </div>
     </div>
   </header>
 
-  <main class="container">
+  <main class="container" id="main">
     
-<header class="page-header">
-  <h1>归档</h1>
-</header>
 
-<section class="archive-list">
-  
-    
-      <h2>2024</h2>
-    
-    <article>
-      <time datetime="2024-12-31T03:17:33.000Z">12-31</time>
-      <a href="/2024/12/31/JavaWeb%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86/">JavaWeb事务管理</a>
-    </article>
-  
-    
-    <article>
-      <time datetime="2024-12-30T15:33:30.000Z">12-30</time>
-      <a href="/2024/12/30/12%E6%9C%88%E5%B0%8F%E7%BB%93/">12月小结</a>
-    </article>
-  
-    
-    <article>
-      <time datetime="2024-12-29T15:15:49.000Z">12-29</time>
-      <a href="/2024/12/29/24%E5%B9%B4%E7%9A%84%E6%9C%80%E5%90%8E%E5%91%A8%E7%BB%93/">24年的最后周结</a>
-    </article>
-  
-    
-    <article>
-      <time datetime="2024-12-25T01:24:17.000Z">12-25</time>
-      <a href="/2024/12/25/JavaWebDAY5%E2%80%94%E2%80%94MySQL/">JavaWebDAY5——MySQL</a>
-    </article>
-  
-    
-    <article>
-      <time datetime="2024-12-24T01:58:33.000Z">12-24</time>
-      <a href="/2024/12/24/JavaWebDAY4/">JavaWebDAY4</a>
-    </article>
-  
-    
-    <article>
-      <time datetime="2024-12-23T15:29:52.000Z">12-23</time>
-      <a href="/2024/12/23/24-12-23/">24-12-23</a>
-    </article>
-  
-    
-    <article>
-      <time datetime="2024-12-22T12:48:24.000Z">12-22</time>
-      <a href="/2024/12/22/24-12-22/">24-12-22</a>
-    </article>
-  
-    
-    <article>
-      <time datetime="2024-12-22T09:13:20.000Z">12-22</time>
-      <a href="/2024/12/22/JavaWebDAY3/">JavaWebDAY3</a>
-    </article>
-  
-    
-    <article>
-      <time datetime="2024-12-21T15:13:26.000Z">12-21</time>
-      <a href="/2024/12/21/JavaWebDAY2/">JavaWebDAY2</a>
-    </article>
-  
-    
-    <article>
-      <time datetime="2024-12-21T12:57:28.000Z">12-21</time>
-      <a href="/2024/12/21/JavaWebDAY1/">JavaWebDAY1</a>
-    </article>
-  
-</section>
 
-<nav class="pagination" aria-label="分页">
-  <span class="page-number current">1</span><a class="page-number" href="/archives/2024/page/2/">2</a><a class="extend next" rel="next" href="/archives/2024/page/2/">→</a>
-</nav>
+  
+  <header class="page-header">
+    <h1>2024 年归档</h1>
+  </header>
+
+  <section class="archive-list">
+    
+      
+        <h2>2024</h2>
+      
+      <article>
+        <time datetime="2024-12-31T03:17:33.000Z">12-31</time>
+        <a href="/2024/12/31/JavaWeb%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86/">JavaWeb事务管理</a>
+      </article>
+    
+      
+      <article>
+        <time datetime="2024-12-30T15:33:30.000Z">12-30</time>
+        <a href="/2024/12/30/12%E6%9C%88%E5%B0%8F%E7%BB%93/">12月小结</a>
+      </article>
+    
+      
+      <article>
+        <time datetime="2024-12-29T15:15:49.000Z">12-29</time>
+        <a href="/2024/12/29/24%E5%B9%B4%E7%9A%84%E6%9C%80%E5%90%8E%E5%91%A8%E7%BB%93/">24年的最后周结</a>
+      </article>
+    
+      
+      <article>
+        <time datetime="2024-12-25T01:24:17.000Z">12-25</time>
+        <a href="/2024/12/25/JavaWebDAY5%E2%80%94%E2%80%94MySQL/">JavaWebDAY5——MySQL</a>
+      </article>
+    
+      
+      <article>
+        <time datetime="2024-12-24T01:58:33.000Z">12-24</time>
+        <a href="/2024/12/24/JavaWebDAY4/">JavaWebDAY4</a>
+      </article>
+    
+      
+      <article>
+        <time datetime="2024-12-23T15:29:52.000Z">12-23</time>
+        <a href="/2024/12/23/24-12-23/">24-12-23</a>
+      </article>
+    
+      
+      <article>
+        <time datetime="2024-12-22T12:48:24.000Z">12-22</time>
+        <a href="/2024/12/22/24-12-22/">24-12-22</a>
+      </article>
+    
+      
+      <article>
+        <time datetime="2024-12-22T09:13:20.000Z">12-22</time>
+        <a href="/2024/12/22/JavaWebDAY3/">JavaWebDAY3</a>
+      </article>
+    
+      
+      <article>
+        <time datetime="2024-12-21T15:13:26.000Z">12-21</time>
+        <a href="/2024/12/21/JavaWebDAY2/">JavaWebDAY2</a>
+      </article>
+    
+      
+      <article>
+        <time datetime="2024-12-21T12:57:28.000Z">12-21</time>
+        <a href="/2024/12/21/JavaWebDAY1/">JavaWebDAY1</a>
+      </article>
+    
+      
+      <article>
+        <time datetime="2024-12-17T15:44:20.000Z">12-17</time>
+        <a href="/2024/12/17/%E3%80%8A%E8%AF%B7%E5%81%9C%E6%AD%A2%E6%97%A0%E6%95%88%E7%A4%BE%E4%BA%A4%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">《请停止无效社交》读书笔记</a>
+      </article>
+    
+      
+      <article>
+        <time datetime="2024-12-12T05:38:01.000Z">12-12</time>
+        <a href="/2024/12/12/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/">二分查找</a>
+      </article>
+    
+      
+      <article>
+        <time datetime="2024-11-13T15:55:29.000Z">11-13</time>
+        <a href="/2024/11/13/%E5%A4%A7%E4%B8%80%E7%A7%8B%E5%AD%A3%E5%9B%9E%E9%A1%BE/">大一秋季回顾</a>
+      </article>
+    
+      
+      <article>
+        <time datetime="2024-11-13T15:51:59.000Z">11-13</time>
+        <a href="/2024/11/13/%E8%A7%A3%E5%BF%A7%E6%9D%82%E8%B4%A7%E5%BA%97/">解忧杂货店</a>
+      </article>
+    
+      
+      <article>
+        <time datetime="2024-11-02T17:16:37.000Z">11-03</time>
+        <a href="/2024/11/03/%E5%A4%8D%E6%B4%BB/">复活</a>
+      </article>
+    
+      
+      <article>
+        <time datetime="2024-10-24T15:49:07.000Z">10-24</time>
+        <a href="/2024/10/24/%E7%99%BD%E5%A4%9C%E8%A1%8C/">白夜行</a>
+      </article>
+    
+  </section>
+
+  <nav class="pagination" aria-label="分页">
+    <span class="page-number current">1</span>
+  </nav>
+
 
   </main>
 
   <footer class="site-footer">
-    <div class="container">
+    <div class="container footer-inner">
       <span>© 2026 keynary</span>
+      <nav class="footer-links" aria-label="页脚链接">
+        
+          <a href="/atom.xml">RSS</a>
+        
+        
+          <a href="https://github.com/stoic-yang" rel="me noopener" target="_blank">GitHub</a>
+        
+      </nav>
     </div>
   </footer>
+
+  <button class="back-top" type="button" aria-label="回到顶部" title="回到顶部" hidden>
+    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 19V5M5.5 11.5 12 5l6.5 6.5"></path>
+    </svg>
+  </button>
+
   
 <script src="/js/ambient.js"></script>
 
+  <script defer src="/js/main.js"></script>
+  
 </body>
 </html>

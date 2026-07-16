@@ -4,10 +4,45 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    (function () {
+      var stored = null;
+      try { stored = localStorage.getItem('ink-theme'); } catch (e) {}
+      var media = window.matchMedia('(prefers-color-scheme: dark)');
+      var theme = stored === 'light' || stored === 'dark'
+        ? stored
+        : (media.matches ? 'dark' : 'light');
+      var root = document.documentElement;
+      root.setAttribute('data-theme', theme);
+      if (!stored && media.addEventListener) {
+        media.addEventListener('change', function (event) {
+          root.setAttribute('data-theme', event.matches ? 'dark' : 'light');
+          var meta = document.getElementById('meta-theme-color');
+          if (meta) meta.content = event.matches ? '#141519' : '#f6f5f2';
+        });
+      }
+      document.addEventListener('DOMContentLoaded', function () {
+        var meta = document.getElementById('meta-theme-color');
+        if (meta && root.getAttribute('data-theme') === 'dark') meta.content = '#141519';
+      });
+    })();
+  </script>
   <title>keynary</title>
   <meta name="description" content="stay hungry, stay foolish">
-  <meta name="color-scheme" content="light">
-  <meta name="theme-color" content="#f6f5f2">
+  <meta name="author" content="keynary">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f6f5f2" id="meta-theme-color">
+  <link rel="canonical" href="https://stoic-yang.github.io/">
+  <meta property="og:site_name" content="keynary">
+  <meta property="og:title" content="keynary">
+  <meta property="og:description" content="stay hungry, stay foolish">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://stoic-yang.github.io/">
+  <meta property="og:locale" content="zh_CN">
+  
+    <meta name="twitter:card" content="summary">
+  
+  
   <link rel="icon" href="/images/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,10 +51,13 @@
     <link rel="alternate" type="application/atom+xml" title="keynary" href="/atom.xml">
   
   
+  
 <link rel="stylesheet" href="/css/style.css">
 
 <meta name="generator" content="Hexo 7.3.0"></head>
 <body class="site-shell">
+  <a class="skip-link" href="#main">跳到正文</a>
+
   <div class="ambient-background" aria-hidden="true">
     <span class="ambient-glow ambient-glow--pointer"></span>
     <span class="ambient-glow ambient-glow--blue"></span>
@@ -29,23 +67,52 @@
   <header class="site-header">
     <div class="container header-inner">
       <a class="site-title" href="/">keynary</a>
-      <nav class="site-nav" aria-label="主导航">
-        
-          <a href="/">首页</a>
-        
-          <a href="/archives/">归档</a>
-        
-          <a href="/about/">关于</a>
-        
-      </nav>
+      <div class="header-tools">
+        <nav class="site-nav" aria-label="主导航">
+          
+            <a href="/" aria-current="page">首页</a>
+          
+            <a href="/archives/">归档</a>
+          
+            <a href="/about/">关于</a>
+          
+        </nav>
+        <button class="theme-toggle" type="button" aria-label="切换深浅色模式" title="切换深浅色模式">
+          <svg class="icon-sun" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <circle cx="12" cy="12" r="4.4"></circle>
+            <path d="M12 2.8v2.2M12 19v2.2M2.8 12h2.2M19 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6"></path>
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.4 14.2A8.6 8.6 0 0 1 9.8 3.6a8.6 8.6 0 1 0 10.6 10.6Z"></path>
+          </svg>
+        </button>
+      </div>
     </div>
   </header>
 
-  <main class="container">
-    <section class="post-list" aria-label="文章列表">
+  <main class="container" id="main">
+    
+  <section class="home-hero">
+    <h1 class="visually-hidden">keynary</h1>
+    <p class="hero-line">stay hungry, stay foolish</p>
+  </section>
+
+
+<section class="post-list" aria-label="文章列表">
   
     <article class="post-list-item">
-      <time datetime="2025-09-06T16:00:00.000Z">2025-09-07</time>
+      <div class="item-meta">
+        <time datetime="2025-09-06T16:00:00.000Z">2025-09-07</time>
+        
+          <span class="meta-sep" aria-hidden="true">·</span>
+          <a class="item-category" href="/categories/%E9%9A%8F%E7%AC%94/">随笔</a>
+        
+        
+        
+          <span class="meta-sep" aria-hidden="true">·</span>
+          <span>2.9k 字</span>
+        
+      </div>
       <h2>
         <a href="/2025/09/07/%E5%A4%A7%E4%B8%80%E5%9B%9E%E5%BF%86%E5%BD%95/">大一下回忆录</a>
       </h2>
@@ -56,18 +123,34 @@
     </article>
   
     <article class="post-list-item">
-      <time datetime="2026-05-18T10:36:36.000Z">2026-05-18</time>
+      <div class="item-meta">
+        <time datetime="2026-05-18T10:36:36.000Z">2026-05-18</time>
+        
+        
+        
+          <span class="meta-sep" aria-hidden="true">·</span>
+          <span>4.6k 字</span>
+        
+      </div>
       <h2>
         <a href="/2026/05/18/CS231n%20Softmax%20%E5%88%86%E7%B1%BB%E5%99%A8%E4%B8%8E%E4%BA%A4%E5%8F%89%E7%86%B5%E6%A2%AF%E5%BA%A6%EF%BC%881%EF%BC%89/">CS231n Softmax 分类器与交叉熵梯度（1）</a>
       </h2>
       
       
-        <p>Softmax 分类器与交叉熵梯度 [!abstract] 这篇笔记整理 CS231n assignment1 中 Softmax loss 的前向计算、交叉熵含义、梯度推导和 NumPy 实现。相关课程索引见 [[CS231n]]。 变量形状 符号 形状 含义 X N \times D 一个...</p>
+        <p>Softmax 分类器与交叉熵梯度 这篇笔记整理 CS231n assignment1 中 Softmax loss 的前向计算、交叉熵含义、梯度推导和 NumPy 实现。相关课程索引见 CS231n。 变量形状 符号 形状 含义 X N \times D 一个 minibatch 的输入数据...</p>
       
     </article>
   
     <article class="post-list-item">
-      <time datetime="2026-04-13T14:32:37.000Z">2026-04-13</time>
+      <div class="item-meta">
+        <time datetime="2026-04-13T14:32:37.000Z">2026-04-13</time>
+        
+        
+        
+          <span class="meta-sep" aria-hidden="true">·</span>
+          <span>1.8k 字</span>
+        
+      </div>
       <h2>
         <a href="/2026/04/13/%E5%A4%A7%E4%BA%8C%E8%A2%AB%E9%A2%84%E5%88%B6%E8%BF%9B%E8%AF%BE%E9%A2%98%E7%BB%84%E6%89%93%E5%B7%A5%E6%98%AF%E4%BB%80%E4%B9%88%E4%BD%93%E9%AA%8C%EF%BC%883%EF%BC%89/">大二被预制进课题组打工是什么体验（3）</a>
       </h2>
@@ -78,7 +161,15 @@
     </article>
   
     <article class="post-list-item">
-      <time datetime="2026-03-25T15:50:25.000Z">2026-03-25</time>
+      <div class="item-meta">
+        <time datetime="2026-03-25T15:50:25.000Z">2026-03-25</time>
+        
+        
+        
+          <span class="meta-sep" aria-hidden="true">·</span>
+          <span>556 字</span>
+        
+      </div>
       <h2>
         <a href="/2026/03/25/CF2074EFG/">CF2074EFG</a>
       </h2>
@@ -89,7 +180,15 @@
     </article>
   
     <article class="post-list-item">
-      <time datetime="2026-03-16T12:32:41.000Z">2026-03-16</time>
+      <div class="item-meta">
+        <time datetime="2026-03-16T12:32:41.000Z">2026-03-16</time>
+        
+        
+        
+          <span class="meta-sep" aria-hidden="true">·</span>
+          <span>3.0k 字</span>
+        
+      </div>
       <h2>
         <a href="/2026/03/16/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%9AMultimodalHD/">论文阅读：MultimodalHD</a>
       </h2>
@@ -100,7 +199,15 @@
     </article>
   
     <article class="post-list-item">
-      <time datetime="2026-03-13T11:27:42.000Z">2026-03-13</time>
+      <div class="item-meta">
+        <time datetime="2026-03-13T11:27:42.000Z">2026-03-13</time>
+        
+        
+        
+          <span class="meta-sep" aria-hidden="true">·</span>
+          <span>488 字</span>
+        
+      </div>
       <h2>
         <a href="/2026/03/13/ActivityWatch%E8%87%AA%E5%8A%A8%E5%8C%96%E6%97%B6%E9%97%B4%E8%AE%B0%E5%BD%95%E4%BD%93%E7%B3%BB/">ActivityWatch自动化时间记录体系</a>
       </h2>
@@ -111,7 +218,15 @@
     </article>
   
     <article class="post-list-item">
-      <time datetime="2026-03-13T05:21:25.000Z">2026-03-13</time>
+      <div class="item-meta">
+        <time datetime="2026-03-13T05:21:25.000Z">2026-03-13</time>
+        
+        
+        
+          <span class="meta-sep" aria-hidden="true">·</span>
+          <span>2.0k 字</span>
+        
+      </div>
       <h2>
         <a href="/2026/03/13/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E4%B8%8E%E5%A4%8D%E7%8E%B0%EF%BC%9AFedMultimodal%EF%BC%9AA%20Benchmark%20For%20Multimodal%20Federated%20Learning/">论文阅读与复现：FedMultimodal:A Benchmark For Multimodal Federated Learning</a>
       </h2>
@@ -122,7 +237,15 @@
     </article>
   
     <article class="post-list-item">
-      <time datetime="2026-03-04T14:44:38.000Z">2026-03-04</time>
+      <div class="item-meta">
+        <time datetime="2026-03-04T14:44:38.000Z">2026-03-04</time>
+        
+        
+        
+          <span class="meta-sep" aria-hidden="true">·</span>
+          <span>580 字</span>
+        
+      </div>
       <h2>
         <a href="/2026/03/04/oj_dashboard%E2%80%94%E2%80%94%E8%81%9A%E5%90%88Codeforces%E3%80%81atcoder%E3%80%81leetcode%E6%8F%90%E4%BA%A4%E8%AE%B0%E5%BD%95%E5%BD%A2%E6%88%90%E7%83%AD%E5%8A%9B%E5%9B%BE%E7%9A%84%E5%B7%A5%E5%85%B7/">oj_dashboard——聚合Codeforces、atcoder、leetcode提交记录形成热力图的工具</a>
       </h2>
@@ -133,7 +256,15 @@
     </article>
   
     <article class="post-list-item">
-      <time datetime="2026-02-22T10:19:56.000Z">2026-02-22</time>
+      <div class="item-meta">
+        <time datetime="2026-02-22T10:19:56.000Z">2026-02-22</time>
+        
+        
+        
+          <span class="meta-sep" aria-hidden="true">·</span>
+          <span>1.7k 字</span>
+        
+      </div>
       <h2>
         <a href="/2026/02/22/%E5%A4%A7%E4%BA%8C%E8%A2%AB%E9%A2%84%E5%88%B6%E8%BF%9B%E5%AD%A6%E6%A0%A1%E8%AF%BE%E9%A2%98%E7%BB%84%E6%89%93%E5%B7%A5%E6%98%AF%E4%BB%80%E4%B9%88%E4%BD%93%E9%AA%8C%EF%BC%882%EF%BC%89/">大二被预制进学校课题组打工是什么体验（2）</a>
       </h2>
@@ -144,7 +275,15 @@
     </article>
   
     <article class="post-list-item">
-      <time datetime="2026-02-22T05:21:55.000Z">2026-02-22</time>
+      <div class="item-meta">
+        <time datetime="2026-02-22T05:21:55.000Z">2026-02-22</time>
+        
+        
+        
+          <span class="meta-sep" aria-hidden="true">·</span>
+          <span>1.8k 字</span>
+        
+      </div>
       <h2>
         <a href="/2026/02/22/%E5%A4%A7%E4%BA%8C%E8%A2%AB%E9%A2%84%E5%88%B6%E8%BF%9B%E5%AD%A6%E6%A0%A1%E8%AF%BE%E9%A2%98%E7%BB%84%E6%89%93%E5%B7%A5%E6%98%AF%E4%BB%80%E4%B9%88%E4%BD%93%E9%AA%8C(1)/">大二被预制进学校课题组打工是什么体验(1)</a>
       </h2>
@@ -163,12 +302,29 @@
   </main>
 
   <footer class="site-footer">
-    <div class="container">
+    <div class="container footer-inner">
       <span>© 2026 keynary</span>
+      <nav class="footer-links" aria-label="页脚链接">
+        
+          <a href="/atom.xml">RSS</a>
+        
+        
+          <a href="https://github.com/stoic-yang" rel="me noopener" target="_blank">GitHub</a>
+        
+      </nav>
     </div>
   </footer>
+
+  <button class="back-top" type="button" aria-label="回到顶部" title="回到顶部" hidden>
+    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 19V5M5.5 11.5 12 5l6.5 6.5"></path>
+    </svg>
+  </button>
+
   
 <script src="/js/ambient.js"></script>
 
+  <script defer src="/js/main.js"></script>
+  
 </body>
 </html>
