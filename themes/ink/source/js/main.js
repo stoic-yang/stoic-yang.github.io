@@ -6,12 +6,29 @@
   const toggle = document.querySelector('.theme-toggle');
   if (toggle) {
     let fadeTimer = 0;
+    const syncToggleState = () => {
+      const isDark = root.getAttribute('data-theme') === 'dark';
+      const label = isDark
+        ? '当前为深色模式，切换到浅色模式'
+        : '当前为浅色模式，切换到深色模式';
+      toggle.setAttribute('aria-label', label);
+      toggle.setAttribute('title', label);
+      toggle.setAttribute('aria-pressed', String(isDark));
+    };
     const applyTheme = (next) => {
       root.setAttribute('data-theme', next);
       try { localStorage.setItem('ink-theme', next); } catch (e) {}
       const meta = document.getElementById('meta-theme-color');
       if (meta) meta.content = next === 'dark' ? '#141519' : '#f6f5f2';
+      syncToggleState();
     };
+    syncToggleState();
+    if ('MutationObserver' in window) {
+      new MutationObserver(syncToggleState).observe(root, {
+        attributes: true,
+        attributeFilter: ['data-theme']
+      });
+    }
     toggle.addEventListener('click', () => {
       const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
       if (reducedMotion.matches) {

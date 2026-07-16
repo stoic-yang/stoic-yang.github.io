@@ -5,90 +5,88 @@
     : page.tag
       ? '标签：' + page.tag
       : page.year
-        ? page.year + (page.month ? ' 年 ' + page.month + ' 月' : ' 年') + '归档'
+        ? page.year + (page.month ? ' 年 ' + Number(page.month) + ' 月归档' : ' 年归档')
         : '归档';
+
+  const years = [];
+  const byYear = {};
+  page.posts.each(function(post) {
+    const y = date(post.date, 'YYYY');
+    const m = date(post.date, 'MM');
+    if (!byYear[y]) {
+      byYear[y] = {
+        count: 0,
+        months: [],
+        byMonth: {}
+      };
+      years.push(y);
+    }
+    if (!byYear[y].byMonth[m]) {
+      byYear[y].byMonth[m] = [];
+      byYear[y].months.push(m);
+    }
+    byYear[y].byMonth[m].push(post);
+    byYear[y].count += 1;
+  });
+
+  const total = page.posts.length;
+  const span = years.length > 1
+    ? years[years.length - 1] + ' – ' + years[0]
+    : (years[0] || '');
 %>
 
-<% if (isMainArchive) { %>
-  <%
-    /* Group all posts by year, newest year first (page.posts is date-desc). */
-    const years = [];
-    const byYear = {};
-    page.posts.each(function(post) {
-      const y = date(post.date, 'YYYY');
-      if (!byYear[y]) {
-        byYear[y] = [];
-        years.push(y);
-      }
-      byYear[y].push(post);
-    });
-    const total = page.posts.length;
-    const span = years.length > 1
-      ? years[years.length - 1] + ' – ' + years[0]
-      : (years[0] || '');
-  %>
-
-  <header class="page-header">
-    <h1><%= archiveTitle %></h1>
+<header class="page-header">
+  <h1><%= archiveTitle %></h1>
+  <% if (isMainArchive) { %>
     <p class="archive-total">共 <%= total %> 篇<% if (span) { %> · <%= span %><% } %></p>
-  </header>
-
-  <% if (years.length) { %>
-    <nav class="archive-nav" aria-label="按年份检索">
-      <% years.forEach(function(y) { %>
-        <a href="#y<%= y %>">
-          <span class="nav-year"><%= y %></span>
-          <span class="nav-count"><%= byYear[y].length %></span>
-        </a>
-      <% }); %>
-    </nav>
   <% } %>
+</header>
 
-  <div class="archive-timeline">
+<% if (isMainArchive && years.length) { %>
+  <nav class="archive-nav" aria-label="按年份检索">
     <% years.forEach(function(y) { %>
-      <section class="archive-year" id="y<%= y %>" data-year="<%= y %>">
-        <h2>
-          <span class="year-label"><%= y %></span>
-          <span class="year-count"><%= byYear[y].length %> 篇</span>
-        </h2>
-        <ol class="year-posts">
-          <% byYear[y].forEach(function(post) { %>
-            <li>
-              <time datetime="<%= date_xml(post.date) %>"><%= date(post.date, 'MM-DD') %></time>
-              <a href="<%= url_for(post.path) %>"><%= post.title || '无题' %></a>
-              <% if (post.categories && post.categories.length) { %>
-                <span class="row-category"><%= post.categories.first().name %></span>
-              <% } %>
-            </li>
-          <% }); %>
-        </ol>
-      </section>
+      <a href="#y<%= y %>">
+        <span class="nav-year"><%= y %></span>
+        <span class="nav-count"><%= byYear[y].count %></span>
+      </a>
     <% }); %>
-  </div>
-<% } else { %>
-  <%
-    let currentYear = '';
-  %>
-  <header class="page-header">
-    <h1><%= archiveTitle %></h1>
-  </header>
+  </nav>
+<% } %>
 
-  <section class="archive-list">
-    <% page.posts.each(function(post) { %>
-      <%
-        const postYear = date(post.date, 'YYYY');
-        if (postYear !== currentYear) {
-          currentYear = postYear;
-      %>
-        <h2><%= currentYear %></h2>
-      <% } %>
-      <article>
-        <time datetime="<%= date_xml(post.date) %>"><%= date(post.date, 'MM-DD') %></time>
-        <a href="<%= url_for(post.path) %>"><%= post.title || '无题' %></a>
-      </article>
-    <% }); %>
-  </section>
+<div class="archive-timeline">
+  <% years.forEach(function(y) { %>
+    <section class="archive-year" id="y<%= y %>" data-year="<%= y %>">
+      <h2>
+        <span class="year-label"><%= y %> 年</span>
+        <span class="year-count"><%= byYear[y].count %> 篇</span>
+      </h2>
 
+      <div class="archive-months">
+        <% byYear[y].months.forEach(function(m) { %>
+          <section class="archive-month">
+            <h3>
+              <span class="month-label"><%= Number(m) %> 月</span>
+              <span class="month-count"><%= byYear[y].byMonth[m].length %> 篇</span>
+            </h3>
+            <ol class="month-posts">
+              <% byYear[y].byMonth[m].forEach(function(post) { %>
+                <li>
+                  <time datetime="<%= date_xml(post.date) %>"><%= Number(date(post.date, 'DD')) %> 日</time>
+                  <a href="<%= url_for(post.path) %>"><%= post.title || '无题' %></a>
+                  <% if (post.categories && post.categories.length) { %>
+                    <span class="row-category"><%= post.categories.first().name %></span>
+                  <% } %>
+                </li>
+              <% }); %>
+            </ol>
+          </section>
+        <% }); %>
+      </div>
+    </section>
+  <% }); %>
+</div>
+
+<% if (page.total && page.total > 1) { %>
   <nav class="pagination" aria-label="分页">
     <%- paginator({ prev_text: '←', next_text: '→' }) %>
   </nav>

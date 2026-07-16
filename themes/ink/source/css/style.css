@@ -409,11 +409,11 @@ summary:focus-visible {
   display: none;
 }
 
-:root:not([data-theme="dark"]) .theme-toggle .icon-moon {
+:root:not([data-theme="dark"]) .theme-toggle .icon-sun {
   display: block;
 }
 
-:root[data-theme="dark"] .theme-toggle .icon-sun {
+:root[data-theme="dark"] .theme-toggle .icon-moon {
   display: block;
 }
 
@@ -1347,45 +1347,67 @@ main.container {
   user-select: none;
 }
 
-.archive-year h2 {
+.archive-year > h2 {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin: 0 0 12px;
+  margin: 0 0 20px;
   color: var(--accent-deep);
   font-family: var(--font-display);
   font-size: 1.18rem;
 }
 
-.year-posts {
+.archive-months {
+  display: grid;
+  gap: 20px;
+}
+
+.archive-month h3 {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  margin: 0 0 6px;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 0.98rem;
+}
+
+.month-count {
+  color: var(--faint);
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 560;
+}
+
+.month-posts {
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.year-posts li {
+.month-posts li {
   display: grid;
-  grid-template-columns: 56px minmax(0, 1fr) auto;
+  grid-template-columns: 48px minmax(0, 1fr) auto;
   gap: 14px;
   align-items: baseline;
   padding: 10px 2px;
   border-top: 1px solid var(--line);
 }
 
-.year-posts time {
+.month-posts time {
   color: var(--faint);
   font-size: 0.78rem;
   font-variant-numeric: tabular-nums;
   font-weight: 620;
-  letter-spacing: 0.06em;
+  white-space: nowrap;
 }
 
-.year-posts a {
+.month-posts a {
   text-decoration: none;
   transition: color 150ms ease;
 }
 
-.year-posts a:hover {
+.month-posts a:hover {
   color: var(--accent-deep);
 }
 
@@ -1664,8 +1686,8 @@ main.container {
     scroll-margin-top: 126px;
   }
 
-  .year-posts li {
-    grid-template-columns: 48px minmax(0, 1fr);
+  .month-posts li {
+    grid-template-columns: 44px minmax(0, 1fr);
     gap: 12px;
   }
 
