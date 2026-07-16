@@ -2,15 +2,30 @@
   const root = document.documentElement;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-  /* ---------- theme toggle ---------- */
+  /* ---------- theme toggle (cross-fade) ---------- */
   const toggle = document.querySelector('.theme-toggle');
   if (toggle) {
-    toggle.addEventListener('click', () => {
-      const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    let fadeTimer = 0;
+    const applyTheme = (next) => {
       root.setAttribute('data-theme', next);
       try { localStorage.setItem('ink-theme', next); } catch (e) {}
       const meta = document.getElementById('meta-theme-color');
       if (meta) meta.content = next === 'dark' ? '#141519' : '#f6f5f2';
+    };
+    toggle.addEventListener('click', () => {
+      const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      if (reducedMotion.matches) {
+        applyTheme(next);
+      } else if (document.startViewTransition) {
+        document.startViewTransition(() => applyTheme(next));
+      } else {
+        root.classList.add('theme-switching');
+        applyTheme(next);
+        window.clearTimeout(fadeTimer);
+        fadeTimer = window.setTimeout(() => {
+          root.classList.remove('theme-switching');
+        }, 420);
+      }
     });
   }
 
@@ -122,6 +137,34 @@
         }, { rootMargin: '-80px 0px -70% 0px', threshold: 0 });
         headings.forEach((heading) => observer.observe(heading));
       }
+    }
+  }
+
+  /* ---------- archive year nav highlight ---------- */
+  const archiveNav = document.querySelector('.archive-nav');
+  if (archiveNav && 'IntersectionObserver' in window) {
+    const links = new Map();
+    archiveNav.querySelectorAll('a[href^="#"]').forEach((link) => {
+      links.set((link.getAttribute('href') || '').slice(1), link);
+    });
+    if (links.size) {
+      let activeLink = null;
+      const setActive = (id) => {
+        const link = links.get(id);
+        if (!link || link === activeLink) return;
+        if (activeLink) activeLink.classList.remove('is-active');
+        link.classList.add('is-active');
+        activeLink = link;
+      };
+      const observer = new IntersectionObserver((entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+        if (visible.length) setActive(visible[0].target.id);
+      }, { rootMargin: '-140px 0px -55% 0px', threshold: 0 });
+      document.querySelectorAll('.archive-year[id]').forEach((section) => {
+        observer.observe(section);
+      });
     }
   }
 

@@ -419,7 +419,7 @@ summary:focus-visible {
 
 main.container {
   min-height: calc(100vh - 170px);
-  padding-block: 76px 108px;
+  padding-block: 52px 108px;
 }
 
 /* Ink · home hero ------------------------------------------------------------ */
@@ -459,6 +459,14 @@ main.container {
   font-weight: 700;
   line-height: 1.18;
   letter-spacing: -0.03em;
+}
+
+/* Post titles are long Chinese sentences — keep them to one or two lines. */
+.post-header h1 {
+  font-size: clamp(1.7rem, 4.2vw, 2.45rem);
+  line-height: 1.32;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
 }
 
 .post-list {
@@ -657,10 +665,10 @@ main.container {
 @media (min-width: 1360px) {
   .post-toc {
     position: fixed;
-    top: 106px;
+    top: 124px;
     left: calc(50% + 434px);
     width: min(236px, calc(50vw - 450px));
-    max-height: calc(100vh - 170px);
+    max-height: calc(100vh - 190px);
     margin-bottom: 0;
     overflow-y: auto;
     overscroll-behavior: contain;
@@ -670,10 +678,6 @@ main.container {
   .post-toc .toc-card {
     border: 0;
     background: transparent;
-  }
-
-  .post-toc .toc-card summary {
-    pointer-events: none;
   }
 
   .post-toc .toc-card[open] summary {
@@ -1243,6 +1247,157 @@ main.container {
   color: var(--accent-deep);
 }
 
+/* Ink · archive timeline (main /archives/ page) --------------------------------- */
+
+.archive-nav {
+  position: sticky;
+  top: 76px;
+  z-index: 15;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 28px;
+  margin-inline: -10px;
+  padding: 9px 10px;
+  border-radius: 18px;
+  background: rgba(246, 245, 242, 0.78);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  backdrop-filter: blur(16px) saturate(140%);
+}
+
+:root[data-theme="dark"] .archive-nav {
+  background: rgba(20, 21, 25, 0.74);
+}
+
+.archive-nav a {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 7px;
+  padding: 6px 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: var(--paper-hover);
+  text-decoration: none;
+  transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease;
+}
+
+:root[data-theme="dark"] .archive-nav a {
+  background: rgba(30, 31, 40, 0.78);
+}
+
+.archive-nav .nav-year {
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+
+.archive-nav .nav-count {
+  color: var(--faint);
+  font-size: 0.72rem;
+  font-weight: 620;
+  font-variant-numeric: tabular-nums;
+}
+
+.archive-nav a:hover {
+  border-color: rgba(98, 104, 217, 0.4);
+}
+
+.archive-nav a.is-active,
+:root[data-theme="dark"] .archive-nav a.is-active {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.archive-nav a.is-active .nav-count {
+  color: inherit;
+  opacity: 0.75;
+}
+
+.archive-timeline {
+  display: grid;
+  gap: 18px;
+}
+
+.archive-year {
+  position: relative;
+  padding: clamp(24px, 4vw, 34px);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: var(--paper);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+  scroll-margin-top: 148px;
+}
+
+.archive-year::before {
+  content: attr(data-year);
+  position: absolute;
+  top: -0.18em;
+  right: 10px;
+  font-family: var(--font-display);
+  font-size: clamp(4.2rem, 9vw, 6.2rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+  opacity: 0.05;
+  pointer-events: none;
+  user-select: none;
+}
+
+.archive-year h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 12px;
+  color: var(--accent-deep);
+  font-family: var(--font-display);
+  font-size: 1.18rem;
+}
+
+.year-posts {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.year-posts li {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: baseline;
+  padding: 10px 2px;
+  border-top: 1px solid var(--line);
+}
+
+.year-posts time {
+  color: var(--faint);
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 620;
+  letter-spacing: 0.06em;
+}
+
+.year-posts a {
+  text-decoration: none;
+  transition: color 150ms ease;
+}
+
+.year-posts a:hover {
+  color: var(--accent-deep);
+}
+
+.row-category {
+  padding: 1px 8px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--faint);
+  font-size: 0.72rem;
+  white-space: nowrap;
+}
+
 .pagination {
   display: flex;
   flex-wrap: wrap;
@@ -1431,16 +1586,23 @@ main.container {
   }
 
   main.container {
-    padding-block: 45px 72px;
+    padding-block: 34px 72px;
   }
 
   .home-hero {
     margin-bottom: 34px;
   }
 
-  .page-header h1,
-  .post-header h1 {
+  .page-header h1 {
     font-size: clamp(2rem, 11vw, 2.8rem);
+  }
+
+  .post-header h1 {
+    font-size: clamp(1.42rem, 6.4vw, 1.78rem);
+  }
+
+  .post-header {
+    margin-bottom: 30px;
   }
 
   .post-list-item {
@@ -1487,6 +1649,30 @@ main.container {
     gap: 12px;
   }
 
+  .archive-nav {
+    top: 74px;
+    margin-bottom: 22px;
+  }
+
+  .archive-nav a {
+    padding: 5px 12px;
+  }
+
+  .archive-year {
+    padding: 22px 19px;
+    border-radius: 17px;
+    scroll-margin-top: 126px;
+  }
+
+  .year-posts li {
+    grid-template-columns: 48px minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .row-category {
+    display: none;
+  }
+
   .post-navigation {
     grid-template-columns: 1fr;
   }
@@ -1520,6 +1706,29 @@ main.container {
   .theme-toggle {
     margin-right: 2px;
   }
+}
+
+/* Ink · theme cross-fade ------------------------------------------------------------------ */
+
+/* Modern browsers: whole-page cross-fade via the View Transitions API */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 360ms;
+  animation-timing-function: ease;
+}
+
+/* Fallback: transient color transition while .theme-switching is on <html> */
+.theme-switching,
+.theme-switching *,
+.theme-switching *::before,
+.theme-switching *::after {
+  transition:
+    background-color 360ms ease,
+    color 360ms ease,
+    border-color 360ms ease,
+    box-shadow 360ms ease,
+    fill 360ms ease,
+    stroke 360ms ease !important;
 }
 
 /* Ink · motion & print ------------------------------------------------------------------ */

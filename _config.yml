@@ -81,3 +81,7 @@ feed:
     output: atom.xml
   jsonFeed:
     enable: false
+archive_generator:
+  per_page: 0
+  yearly: true
+  monthly: true

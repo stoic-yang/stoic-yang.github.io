@@ -1,42 +1,95 @@
 <%
+  const isMainArchive = !page.category && !page.tag && !page.year;
   const archiveTitle = page.category
     ? '分类：' + page.category
     : page.tag
       ? '标签：' + page.tag
-      : '归档';
-  const isMainArchive = !page.category && !page.tag;
-  const yearCounts = {};
-  if (isMainArchive) {
-    site.posts.each(function(post) {
-      const y = date(post.date, 'YYYY');
-      yearCounts[y] = (yearCounts[y] || 0) + 1;
-    });
-  }
-  let currentYear = '';
+      : page.year
+        ? page.year + (page.month ? ' 年 ' + page.month + ' 月' : ' 年') + '归档'
+        : '归档';
 %>
-<header class="page-header">
-  <h1><%= archiveTitle %></h1>
-  <% if (isMainArchive) { %>
-    <p class="archive-total">共 <%= site.posts.length %> 篇</p>
+
+<% if (isMainArchive) { %>
+  <%
+    /* Group all posts by year, newest year first (page.posts is date-desc). */
+    const years = [];
+    const byYear = {};
+    page.posts.each(function(post) {
+      const y = date(post.date, 'YYYY');
+      if (!byYear[y]) {
+        byYear[y] = [];
+        years.push(y);
+      }
+      byYear[y].push(post);
+    });
+    const total = page.posts.length;
+    const span = years.length > 1
+      ? years[years.length - 1] + ' – ' + years[0]
+      : (years[0] || '');
+  %>
+
+  <header class="page-header">
+    <h1><%= archiveTitle %></h1>
+    <p class="archive-total">共 <%= total %> 篇<% if (span) { %> · <%= span %><% } %></p>
+  </header>
+
+  <% if (years.length) { %>
+    <nav class="archive-nav" aria-label="按年份检索">
+      <% years.forEach(function(y) { %>
+        <a href="#y<%= y %>">
+          <span class="nav-year"><%= y %></span>
+          <span class="nav-count"><%= byYear[y].length %></span>
+        </a>
+      <% }); %>
+    </nav>
   <% } %>
-</header>
 
-<section class="archive-list">
-  <% page.posts.each(function(post) { %>
-    <%
-      const postYear = date(post.date, 'YYYY');
-      if (postYear !== currentYear) {
-        currentYear = postYear;
-    %>
-      <h2><%= currentYear %><% if (isMainArchive && yearCounts[currentYear]) { %> <span class="year-count"><%= yearCounts[currentYear] %></span><% } %></h2>
-    <% } %>
-    <article>
-      <time datetime="<%= date_xml(post.date) %>"><%= date(post.date, 'MM-DD') %></time>
-      <a href="<%= url_for(post.path) %>"><%= post.title || '无题' %></a>
-    </article>
-  <% }); %>
-</section>
+  <div class="archive-timeline">
+    <% years.forEach(function(y) { %>
+      <section class="archive-year" id="y<%= y %>" data-year="<%= y %>">
+        <h2>
+          <span class="year-label"><%= y %></span>
+          <span class="year-count"><%= byYear[y].length %> 篇</span>
+        </h2>
+        <ol class="year-posts">
+          <% byYear[y].forEach(function(post) { %>
+            <li>
+              <time datetime="<%= date_xml(post.date) %>"><%= date(post.date, 'MM-DD') %></time>
+              <a href="<%= url_for(post.path) %>"><%= post.title || '无题' %></a>
+              <% if (post.categories && post.categories.length) { %>
+                <span class="row-category"><%= post.categories.first().name %></span>
+              <% } %>
+            </li>
+          <% }); %>
+        </ol>
+      </section>
+    <% }); %>
+  </div>
+<% } else { %>
+  <%
+    let currentYear = '';
+  %>
+  <header class="page-header">
+    <h1><%= archiveTitle %></h1>
+  </header>
 
-<nav class="pagination" aria-label="分页">
-  <%- paginator({ prev_text: '←', next_text: '→' }) %>
-</nav>
+  <section class="archive-list">
+    <% page.posts.each(function(post) { %>
+      <%
+        const postYear = date(post.date, 'YYYY');
+        if (postYear !== currentYear) {
+          currentYear = postYear;
+      %>
+        <h2><%= currentYear %></h2>
+      <% } %>
+      <article>
+        <time datetime="<%= date_xml(post.date) %>"><%= date(post.date, 'MM-DD') %></time>
+        <a href="<%= url_for(post.path) %>"><%= post.title || '无题' %></a>
+      </article>
+    <% }); %>
+  </section>
+
+  <nav class="pagination" aria-label="分页">
+    <%- paginator({ prev_text: '←', next_text: '→' }) %>
+  </nav>
+<% } %>
