@@ -1,8 +1,38 @@
+<%
+  const plainText = strip_html(page.content || '').replace(/\s/g, '');
+  const charCount = plainText.length;
+  const readMinutes = Math.max(1, Math.round(charCount / 400));
+  const tocHtml = toc(page.content, { list_number: false, max_depth: 3 })
+    .replace(/\$([^$<>]{1,80}?)\$/g, '$1');
+  const tocItems = (tocHtml.match(/<li/g) || []).length;
+  const showToc = tocItems >= 2;
+%>
 <article class="post">
   <header class="post-header">
-    <time datetime="<%= date_xml(page.date) %>"><%= date(page.date, 'YYYY-MM-DD') %></time>
+    <div class="post-meta">
+      <time datetime="<%= date_xml(page.date) %>"><%= date(page.date, 'YYYY-MM-DD') %></time>
+      <span class="meta-sep" aria-hidden="true">·</span>
+      <span>约 <%= charCount >= 1000 ? (charCount / 1000).toFixed(1) + 'k' : charCount %> 字</span>
+      <span class="meta-sep" aria-hidden="true">·</span>
+      <span><%= readMinutes %> 分钟</span>
+      <% if (page.categories && page.categories.length) { %>
+        <span class="meta-sep" aria-hidden="true">·</span>
+        <% page.categories.each(function(category) { %>
+          <a class="meta-category" href="<%= url_for(category.path) %>"><%= category.name %></a>
+        <% }); %>
+      <% } %>
+    </div>
     <h1><%= page.title %></h1>
   </header>
+
+  <% if (showToc) { %>
+    <nav class="post-toc" aria-label="本文目录">
+      <details class="toc-card">
+        <summary>目录</summary>
+        <%- tocHtml %>
+      </details>
+    </nav>
+  <% } %>
 
   <div class="post-content">
     <%- page.content %>

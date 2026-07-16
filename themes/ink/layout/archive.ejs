@@ -4,10 +4,21 @@
     : page.tag
       ? '标签：' + page.tag
       : '归档';
+  const isMainArchive = !page.category && !page.tag;
+  const yearCounts = {};
+  if (isMainArchive) {
+    site.posts.each(function(post) {
+      const y = date(post.date, 'YYYY');
+      yearCounts[y] = (yearCounts[y] || 0) + 1;
+    });
+  }
   let currentYear = '';
 %>
 <header class="page-header">
   <h1><%= archiveTitle %></h1>
+  <% if (isMainArchive) { %>
+    <p class="archive-total">共 <%= site.posts.length %> 篇</p>
+  <% } %>
 </header>
 
 <section class="archive-list">
@@ -17,7 +28,7 @@
       if (postYear !== currentYear) {
         currentYear = postYear;
     %>
-      <h2><%= currentYear %></h2>
+      <h2><%= currentYear %><% if (isMainArchive && yearCounts[currentYear]) { %> <span class="year-count"><%= yearCounts[currentYear] %></span><% } %></h2>
     <% } %>
     <article>
       <time datetime="<%= date_xml(post.date) %>"><%= date(post.date, 'MM-DD') %></time>

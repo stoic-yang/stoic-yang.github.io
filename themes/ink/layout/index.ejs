@@ -1,12 +1,35 @@
+<% if (is_home() && (!page.current || page.current === 1) && config.description) { %>
+  <section class="home-hero">
+    <h1 class="visually-hidden"><%= config.title %></h1>
+    <p class="hero-line"><%= config.description %></p>
+  </section>
+<% } %>
+
 <section class="post-list" aria-label="文章列表">
   <% page.posts.each(function(post) { %>
     <article class="post-list-item">
-      <time datetime="<%= date_xml(post.date) %>"><%= date(post.date, 'YYYY-MM-DD') %></time>
+      <div class="item-meta">
+        <time datetime="<%= date_xml(post.date) %>"><%= date(post.date, 'YYYY-MM-DD') %></time>
+        <% if (post.categories && post.categories.length) { %>
+          <span class="meta-sep" aria-hidden="true">·</span>
+          <a class="item-category" href="<%= url_for(post.categories.first().path) %>"><%= post.categories.first().name %></a>
+        <% } %>
+        <%
+          const charCount = strip_html(post.content || '').replace(/\s/g, '').length;
+        %>
+        <% if (charCount > 0) { %>
+          <span class="meta-sep" aria-hidden="true">·</span>
+          <span><%= charCount >= 1000 ? (charCount / 1000).toFixed(1) + 'k' : charCount %> 字</span>
+        <% } %>
+      </div>
       <h2>
         <a href="<%= url_for(post.path) %>"><%= post.title || '无题' %></a>
       </h2>
       <%
         const summary = strip_html(post.excerpt || post.content || '')
+          .replace(/\[\[([^\]|]+)\|([^\]]+)\]\]/g, '$2')
+          .replace(/\[\[([^\]]+)\]\]/g, '$1')
+          .replace(/\[!\w+\][+-]?\s*/g, '')
           .replace(/\s+/g, ' ')
           .trim();
       %>
