@@ -42,6 +42,9 @@
   const feedPath = atomFeed && atomFeed.enable !== false
     ? atomFeed.output || 'atom.xml'
     : '';
+  const assetVersion = theme.asset_version
+    ? '?v=' + encodeURIComponent(String(theme.asset_version))
+    : '';
 
   /* ---- math (KaTeX vendored under themes/ink/source/vendor/katex) ---- */
   const needsMath = (is_post() || is_page()) &&
@@ -113,9 +116,9 @@
     <link rel="alternate" type="application/atom+xml" title="<%= config.title %>" href="<%= url_for(feedPath) %>">
   <% } %>
   <% if (needsMath) { %>
-    <link rel="stylesheet" href="<%- url_for('vendor/katex/katex.min.css') %>">
+    <link rel="stylesheet" href="<%- url_for('vendor/katex/katex.min.css') + assetVersion %>">
   <% } %>
-  <%- css('css/style.css') %>
+  <link rel="stylesheet" href="<%- url_for('css/style.css') + assetVersion %>">
 </head>
 <body class="site-shell">
   <a class="skip-link" href="#main">跳到正文</a>
@@ -172,11 +175,11 @@
     </svg>
   </button>
 
-  <%- js('js/ambient.js') %>
-  <script defer src="<%- url_for('js/main.js') %>"></script>
+  <script src="<%- url_for('js/ambient.js') + assetVersion %>"></script>
+  <script defer src="<%- url_for('js/main.js') + assetVersion %>"></script>
   <% if (needsMath) { %>
-    <script defer src="<%- url_for('vendor/katex/katex.min.js') %>"></script>
-    <script defer src="<%- url_for('js/math.js') %>"></script>
+    <script defer src="<%- url_for('vendor/katex/katex.min.js') + assetVersion %>"></script>
+    <script defer src="<%- url_for('js/math.js') + assetVersion %>"></script>
   <% } %>
 </body>
 </html>

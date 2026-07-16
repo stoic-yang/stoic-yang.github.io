@@ -3,5 +3,7 @@ menu:
   归档: /archives/
   关于: /about/
 
+asset_version: "20260716-archive-fix"
+
 footer:
   github: https://github.com/stoic-yang
