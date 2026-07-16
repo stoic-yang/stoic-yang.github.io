@@ -1,5 +1,5 @@
 # Alternate site name
-alternate: zarathu
+alternate:
 
 open_graph:
   #twitter_id:
@@ -32,7 +32,7 @@ auto_scroll: true
 # Whether to show the loading cat
 loader:
   start: true # When entering the page
-  switch: true # When switching to another page
+  switch: false # When switching to another page
 
 # click with Firework
 fireworks:
@@ -96,8 +96,8 @@ menu:
      archives: /archives/ || list-alt
      categories: /categories/ || th
      tags: /tags/ || tags
-   #friends: /friends/ || heart
-   #links: /links/ || magic
+   友链: /friends/ || heart
+   链接: /links/ || magic
 
 # Social Links
 # Usage: `Key: permalink || icon || color`
@@ -108,7 +108,7 @@ social:
   #github: https://github.com/yourname || github || "#191717"
   #google: https://plus.google.com/yourname || google
   #twitter: https://twitter.com/yourname || twitter || "#00aff0"
-  #zhihu: https://www.zhihu.com/people/yourname || zhihu || "#1e88e5"
+  zhihu: https://www.zhihu.com/people/zaratu || zhihu || "#1e88e5"
   #music: https://music.163.com/#/user/home?id=yourid || cloud-music || "#e60026"
   #weibo: https://weibo.com/yourname || weibo || "#ea716e"
   #about: https://about.me/yourname || address-card || "#3b5998"
@@ -151,7 +151,7 @@ post:
 # Reward (Donate)
 reward:
   # If true, reward will be displayed in every article by default.
-  enable: true
+  enable: false
   account:
     wechatpay: /wechatpay.png
     alipay: /alipay.png
@@ -186,7 +186,7 @@ creative_commons:
 valine:
   appId: BBQpg87gquNC7UQ1AoqBQDZ9-gzGzoHsz
   appKey: ydgHAHDbjqtnSC4eTALghZ4M
-  placeholder: ヽ(○´∀`)ﾉ♪ # Comment box placeholder
+  placeholder: 请输入 # Comment box placeholder
   avatar: mp # Gravatar style : mp, identicon, monsterid, wavatar, robohash, retro
   pageSize: 10 # Pagination size
   lang: zh-CN
@@ -196,9 +196,9 @@ valine:
   powerMode: true
   tagMeta:
     visitor: 新朋友
-    master: 主人
-    friend: 小伙伴
-    investor: 金主粑粑
+    master: 管理员
+    friend: 老朋友
+    investor: 金主
   tagColor:
     master: "var(--color-orange)"
     friend: "var(--color-aqua)"

@@ -24,6 +24,12 @@
   </div>
   {%- endif %}
 
+  {% if theme.footer.counter %}
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_site_pv">这里填前缀（如总访问量）<span id="busuanzi_value_site_pv"></span>这里填后缀（如次）</span>
+    <span id="busuanzi_container_site_uv">这里填前缀（如总访客数）<span id="busuanzi_value_site_uv"></span>这里填后缀（如人）</span>
+  {% endif %}
+
   {%- if theme.footer.powered %}
   <div class="powered-by">
     {{ __('footer.powered', _url('https://hexo.io', 'Hexo') + ' & Theme.' + _url('https://github.com/amehime/hexo-theme-shoka', 'Shoka')) }}

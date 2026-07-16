@@ -1,0 +1,22 @@
+<section class="post-list" aria-label="文章列表">
+  <% page.posts.each(function(post) { %>
+    <article class="post-list-item">
+      <time datetime="<%= date_xml(post.date) %>"><%= date(post.date, 'YYYY-MM-DD') %></time>
+      <h2>
+        <a href="<%= url_for(post.path) %>"><%= post.title || '无题' %></a>
+      </h2>
+      <%
+        const summary = strip_html(post.excerpt || post.content || '')
+          .replace(/\s+/g, ' ')
+          .trim();
+      %>
+      <% if (summary) { %>
+        <p><%= truncate(summary, { length: 150 }) %></p>
+      <% } %>
+    </article>
+  <% }); %>
+</section>
+
+<nav class="pagination" aria-label="分页">
+  <%- paginator({ prev_text: '←', next_text: '→' }) %>
+</nav>

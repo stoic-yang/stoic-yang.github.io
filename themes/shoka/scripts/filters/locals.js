@@ -39,14 +39,31 @@ hexo.extend.filter.register('template_locals', locals => {
     locals.page.title = pangu.spacing(locals.page.title);
   }
   locals.page.lastcat = '';
+
+  // 修改部分 - 开始
   if (locals.page.categories) {
-    locals.page.categories.map((cat) => {
-      if(cat.name) {
+    // 检查是否为数组或有 map 方法
+    if (Array.isArray(locals.page.categories) || typeof locals.page.categories.map === 'function') {
+      // 原来的代码
+      locals.page.categories.map((cat) => {
+        if(cat.name) {
+          cat.name = locals.page.lastcat = pangu.spacing(cat.name);
+        }
+        return cat;
+      });
+    } else {
+      // 如果不是数组但有 name 属性，将其转换为数组
+      if (locals.page.categories.name) {
+        const cat = locals.page.categories;
+        locals.page.categories = [cat];
         cat.name = locals.page.lastcat = pangu.spacing(cat.name);
+      } else {
+        // 否则设为空数组
+        locals.page.categories = [];
       }
-      return cat;
-    })
+    }
   }
+  // 修改部分 - 结束
 
   if (locals.page.category) {
     locals.page.title = pangu.spacing(locals.page.category);

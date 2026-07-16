@@ -1,0 +1,46 @@
+<article class="post">
+  <header class="post-header">
+    <time datetime="<%= date_xml(page.date) %>"><%= date(page.date, 'YYYY-MM-DD') %></time>
+    <h1><%= page.title %></h1>
+  </header>
+
+  <div class="post-content">
+    <%- page.content %>
+  </div>
+
+  <% if ((page.categories && page.categories.length) || (page.tags && page.tags.length)) { %>
+    <footer class="post-taxonomy">
+      <% if (page.categories && page.categories.length) { %>
+        <div>
+          <span>分类</span>
+          <% page.categories.each(function(category) { %>
+            <a href="<%= url_for(category.path) %>"><%= category.name %></a>
+          <% }); %>
+        </div>
+      <% } %>
+      <% if (page.tags && page.tags.length) { %>
+        <div>
+          <span>标签</span>
+          <% page.tags.each(function(tag) { %>
+            <a href="<%= url_for(tag.path) %>"><%= tag.name %></a>
+          <% }); %>
+        </div>
+      <% } %>
+    </footer>
+  <% } %>
+</article>
+
+<nav class="post-navigation" aria-label="文章导航">
+  <% if (page.prev) { %>
+    <a href="<%= url_for(page.prev.path) %>">
+      <span>上一篇</span>
+      <strong><%= page.prev.title %></strong>
+    </a>
+  <% } %>
+  <% if (page.next) { %>
+    <a href="<%= url_for(page.next.path) %>">
+      <span>下一篇</span>
+      <strong><%= page.next.title %></strong>
+    </a>
+  <% } %>
+</nav>
